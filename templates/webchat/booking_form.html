@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	    <title> Book - Form </title>
+	    
+		<!-- 引入 jQuery Mobile 样式 -->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<!-- 引入 jQuery 库 -->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- 引入 jQuery Mobile 库 -->
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+		
+	</head>
+	<body>
+		<div>
+			<p>
+				{% if messages|length == 2 %}
+					请正确输入必填项目后，重新提交。
+				{% endif %}
+			    <div><form action="../booking/" method="get">
+			        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名<b style="color:#FF0000">*</b> : <input type="text" name="name" size="10" minlength="2" maxlength="10" required>
+			        电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话<b style="color:#FF0000">*</b> : <input type="text" name="phonenumber" size="10" minlength="11" maxlength="11" required>
+			        会&nbsp;&nbsp;员&nbsp;号 : <input type="text" name="membercard" size="10" maxlength="10">
+			        预约医生 : <input type="text" name="bookeddoctor" size="10" maxlength="10">
+			        预约项目 : <input type="text" name="bookeditem" size="10" maxlength="20">
+			        预约时间<b style="color:#FF0000">*</b><dfn style="color:#808080">(月份 时间，如0906 13:00)</dfn> : <input type="text" name="bookedtime" size="10" maxlength="20" required>
+			        <input type="submit" value="OK">
+			    </form></div>
+		    </p>
+	    </div>
+	</body>
+</html>

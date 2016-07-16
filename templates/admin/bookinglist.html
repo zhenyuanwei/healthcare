@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<meta http-equiv="refresh" content="300" /> 
+	    <title> Book - List </title>
+	    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+	</head>
+	<body>
+		{% if bookingList|length == 0 %}
+			<li>There is no booking!</li>
+		{% else %}
+			<table border="1">
+				<tr>
+					<td>No.</td>
+					<td>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</td>
+					<td>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</td>
+					<td>会&nbsp;&nbsp;员&nbsp;号</td>
+					<td>预约医生</td>
+					<td>预约项目</td>
+					<td>预约时间</td>
+					<td>Completed</td>
+					<td>Cancel</td>
+				</tr>
+				{% for bookingInfo in bookingList %}
+					<tr>
+						<td>{{ bookingInfo.id }}</td>
+						<td>{{ bookingInfo.name }}</td>
+						<td>{{ bookingInfo.phonenumber }}</td>
+						<td>{{ bookingInfo.membercard }}</td>
+						<td>{{ bookingInfo.bookeddoctor }}</td>
+						<td>{{ bookingInfo.bookeditem }}</td>
+						<td>{{ bookingInfo.bookedtime }}</td>
+						<td><a href="../complatedBooking/?id={{ bookingInfo.id }}">Completed</a></td>
+					    <td><a href="../cancelBooking/?id={{ bookingInfo.id }}">Cancel</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+	</body>
+</html>
