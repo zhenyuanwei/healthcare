@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8" /> 
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
-	    <title> Book - Form </title>
+	    <title> Booking </title>
 	    
 		<!-- 引入 jQuery Mobile 样式 -->
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -21,12 +21,57 @@
 					请正确输入必填项目后，重新提交。
 				{% endif %}
 			    <div><form action="../booking/" method="get">
-			        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名<b style="color:#FF0000">*</b> : <input type="text" name="name" size="10" minlength="2" maxlength="10" required>
-			        电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话<b style="color:#FF0000">*</b> : <input type="text" name="phonenumber" size="10" minlength="11" maxlength="11" required>
-			        会&nbsp;&nbsp;员&nbsp;号 : <input type="text" name="membercard" size="10" maxlength="10">
-			        预约医生 : <input type="text" name="bookeddoctor" size="10" maxlength="10">
-			        预约项目 : <input type="text" name="bookeditem" size="10" maxlength="20">
-			        预约时间<b style="color:#FF0000">*</b><dfn style="color:#808080">(月份 时间，如0906 13:00)</dfn> : <input type="text" name="bookedtime" size="10" maxlength="20" required>
+				    <div class="ui-field-contain">
+				    	<label for="name">姓名<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="name" id="name" size="10" minlength="2" maxlength="10">
+					</div>
+			        
+			        <div class="ui-field-contain">
+				    	<label for="phonenumber">电话<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="phonenumber" id="phonenumber" size="10" minlength="11" maxlength="11">
+					</div>
+					
+					<div class="ui-field-contain">
+				    	<label for="membercard">会员号 : </label>
+				    	<input type="text" name="membercard" id="membercard" size="10" maxlength="10">
+					</div>
+			        
+			        <div class="ui-field-contain">
+				    	<label for="bookeddoctor">预约医生 : </label>
+				    	<select name="bookeddoctor" id="bookeddoctor">
+						    <option value="standard">Standard: 7 day</option>
+						    <option value="rush">Rush: 3 days</option>
+						    <option value="express">Express: next day</option>
+						    <option value="overnight">Overnight</option>
+						</select>
+					</div>
+			        
+					<div class="ui-field-contain">
+				    	<label for="bookeditem">预约项目 : </label>
+				        <select name="bookeditem" id="bookeditem">
+						    <option value="standard">Standard: 7 day</option>
+						    <option value="rush">Rush: 3 days</option>
+						    <option value="express">Express: next day</option>
+						    <option value="overnight">Overnight</option>
+						</select>
+					</div>
+
+					<div class="ui-field-contain">
+				    	<label for="bookedtime">预约时间<b style="color:#FF0000">*</b></label>
+						<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true">
+						    <option value="standard">Standard: 7 day</option>
+						    <option value="rush">Rush: 3 days</option>
+						    <option value="express">Express: next day</option>
+						    <option value="overnight">Overnight</option>
+						</select>
+						<select name="bookedtime" id="bookedtime" data-mini="true" data-inline="true">
+						    <option value="standard">Standard: 7 day</option>
+						    <option value="rush">Rush: 3 days</option>
+						    <option value="express">Express: next day</option>
+						    <option value="overnight">Overnight</option>
+						</select>
+					</div>
+					
 			        <input type="submit" value="OK">
 			    </form></div>
 		    </p>
