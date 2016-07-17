@@ -68,7 +68,17 @@ def booking(request):
         bookingInfo.save()
         '''return to next page'''
         usedTemplate = get_template('webchat/booking.html')
-        html = usedTemplate.render(request.GET)
+        outputDic = {}
+        outputDic['name'] = name
+        outputDic['phonenumber'] = phonenumber
+        outputDic['membercard'] = membercard
+        outputDic['bookedtime'] = bookedtime
+        
+        if request.GET['bookeddoctor'].strip() == '0' :
+            outputDic['bookeddoctor'] = ''
+        if request.GET['bookeditem'].strip() == '0' :
+            outputDic['bookeditem'] = ''   
+        html = usedTemplate.render(outputDic)
         return HttpResponse(html)
     else :
         messageDic = {'messages' : 'OK'}

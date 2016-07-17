@@ -29,8 +29,16 @@ def doLogin(request):
         tmpList = BookingInfo.objects.all().extra(where=["status in ('1')"])
         bookingList = []
         for bookinginfo in tmpList:
-            bookinginfo.bookeddoctor = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
-            bookinginfo.bookeditem = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+            if bookinginfo.bookeddoctor.strip() != '0' :
+                bookinginfo.bookeddoctor = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
+            else :
+                bookinginfo.bookeddoctor = ''
+            
+            if bookinginfo.bookeditem.strip() != '0' :
+                bookinginfo.bookeditem = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+            else :
+                bookinginfo.bookeditem = ''
+            
             bookingList.append(bookinginfo)
         bookingListDic = {'bookingList' : bookingList}
         html = usedTemplate.render(bookingListDic)
