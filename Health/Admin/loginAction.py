@@ -26,9 +26,9 @@ def doLogin(request):
     adminUser = AdminUser.objects.filter(username = username1, password = password1)
     if adminUser :
         usedTemplate = get_template('admin/bookinglist.html')
-        list = BookingInfo.objects.all().extra(where=["status in ('1')"])
+        tmpList = BookingInfo.objects.all().extra(where=["status in ('1')"])
         bookingList = []
-        for bookinginfo in list:
+        for bookinginfo in tmpList:
             bookinginfo.bookeddoctor = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
             bookinginfo.bookeditem = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
             bookingList.append(bookinginfo)
