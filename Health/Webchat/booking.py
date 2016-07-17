@@ -9,11 +9,23 @@ from django.template.loader import get_template
 from HealthModel.models import BookingInfo
 from Health.formatValidation import phoneNumberCheck
 from Health.formatValidation import required
+from HealthModel.models import DoctorInfo
+from HealthModel.models import ServiceType
+import datetime
+import math
 
 "@csrf_exempt"
 def booking_form(request):
+    doctorInfoList = DoctorInfo.objects.all()
+    serviceTypeList = ServiceType.objects.all()
+    today = datetime.datetime.now()
+    dayList = []
+    for i in range(1, 8):
+        dayList.append((today + datetime.timedelta(days=i)).strftime('%Y%m%d'))
+    
+    ListDic = {'doctorInfoList' : doctorInfoList, 'serviceTypeList' : serviceTypeList, 'dayList' : dayList}
     usedTemplate = get_template('webchat/booking_form.html')
-    html = usedTemplate.render()
+    html = usedTemplate.render(ListDic)
     return HttpResponse(html)
     """return render_to_response('webchat/booking_form.html')"""
 
@@ -29,7 +41,7 @@ def booking(request):
     membercard = request.GET['membercard']
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
-    bookedtime = request.GET['bookedtime']
+    bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
     
     checkFlag = True;
     if not required(name) :

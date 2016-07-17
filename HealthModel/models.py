@@ -8,19 +8,6 @@ class AdminUser(models.Model):
     username = models.CharField(max_length = 10)
     password = models.CharField(max_length = 20)
 
-
-class BookingInfo(models.Model):
-    id = models.AutoField(primary_key=True)
-    phonenumber = models.CharField(max_length = 11)
-    name = models.CharField(max_length = 20)
-    membercard = models.CharField(max_length = 20)
-    bookeddoctor = models.CharField(max_length = 20)
-    bookeditem = models.CharField(max_length = 50)
-    bookedtime = models.CharField(max_length = 20)
-    webchatid = models.CharField(max_length = 50)
-    status = models.CharField(max_length = 1)
-    
-
 class Membership(models.Model):
     id = models.AutoField(primary_key=True)
     discounttype = models.CharField(max_length = 20)
@@ -42,5 +29,17 @@ class DoctorServiceType(models.Model):
     doctorid = models.IntegerField()
     servicetypeid = models.IntegerField()
     servicename = models.CharField(max_length = 50)
+    
+class BookingInfo(models.Model):
+    id = models.AutoField(primary_key=True)
+    phonenumber = models.CharField(max_length = 11)
+    name = models.CharField(max_length = 20)
+    membercard = models.CharField(max_length = 20)
+    bookeddoctor = models.CharField(max_length = 20)
+    bookeditem = models.CharField(max_length = 50)
+    bookedtime = models.CharField(max_length = 20)
+    webchatid = models.CharField(max_length = 50)
+    status = models.CharField(max_length = 1)
+    
     
     

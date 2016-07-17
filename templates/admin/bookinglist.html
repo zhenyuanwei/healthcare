@@ -10,6 +10,7 @@
 	<body>
 		{% if bookingList|length == 0 %}
 			<li>There is no booking!</li>
+			{{ sql }}
 		{% else %}
 			<table border="1">
 				<tr>

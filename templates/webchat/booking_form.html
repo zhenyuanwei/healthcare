@@ -40,8 +40,9 @@
 				    	<label for="bookeddoctor">预约医生 : </label>
 				    	<select name="bookeddoctor" id="bookeddoctor">
 						    <option value="0"></option>
-							<option value="1">文医生</option>
-						    <option value="2">冷医生</option>
+							{% for doctorInfo in doctorInfoList %}
+								<option value="{{ doctorInfo.id }}">{{ doctorInfo.doctorname }}</option>
+							{% endfor %}
 						</select>
 					</div>
 			        
@@ -49,21 +50,20 @@
 				    	<label for="bookeditem">预约项目 : </label>
 				        <select name="bookeditem" id="bookeditem">
 						    <option value="0"></option>
-						    <option value="1">推拿</option>
-						    <option value="2">针灸</option>
-						    <option value="3">三伏贴</option>
+							{% for serviceType in serviceTypeList %}
+								<option value="{{ serviceType.id }}">{{ serviceType.servicename }}</option>
+							{% endfor %}
 						</select>
 					</div>
 
 					<div class="ui-field-contain">
 				    	<label for="bookedtime">预约时间<b style="color:#FF0000">*</b></label>
 						<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true">
-						    <option value="standard">Standard: 7 day</option>
-						    <option value="rush">Rush: 3 days</option>
-						    <option value="express">Express: next day</option>
-						    <option value="overnight">Overnight</option>
+						    {% for optionDay in dayList %}
+								<option value="{{ optionDay }}">{{ optionDay }}</option>
+							{% endfor %}
 						</select>
-						<select name="bookedtime" id="bookedtime" data-mini="true" data-inline="true">
+						<select name="bookedhour" id="bookedhour" data-mini="true" data-inline="true">
 						    <option value="07:00">07:00</option>
 							<option value="08:00">08:00</option>
 							<option value="09:00">09:00</option>
