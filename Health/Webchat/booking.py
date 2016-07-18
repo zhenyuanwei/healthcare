@@ -60,8 +60,8 @@ def booking(request):
         bookingInfo.name = name
         bookingInfo.phonenumber = phonenumber
         bookingInfo.membercard = membercard
-        bookingInfo.bookeddoctor = bookeddoctor + ' '
-        bookingInfo.bookeditem = bookeditem + ' '
+        bookingInfo.bookeddoctor = bookeddoctor
+        bookingInfo.bookeditem = bookeditem
         bookingInfo.bookedtime = bookedtime
         bookingInfo.webchatid = ' '
         bookingInfo.status = '1'
@@ -76,8 +76,13 @@ def booking(request):
         
         if request.GET['bookeddoctor'].strip() == '0' :
             outputDic['bookeddoctor'] = ''
+        else :
+            outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeditem).doctorname
+            
         if request.GET['bookeditem'].strip() == '0' :
-            outputDic['bookeditem'] = ''   
+            outputDic['bookeditem'] = '' 
+        else :
+            outputDic['bookeditem'] = ServiceType.objects.get(id=bookeditem).servicename
         html = usedTemplate.render(outputDic)
         return HttpResponse(html)
     else :
