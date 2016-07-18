@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^Health/Admin/doLogin/$', loginAction.doLogin),
     url(r'^Health/Admin/complatedBooking/$', booking.bookingCompleted),
     url(r'^Health/Admin/cancelBooking/$', booking.bookingCancel),
+    url(r'^Health/Admin/bookinglist/$', loginAction.bookingList),
     url(r'^Health/Admin/doctor/$', dbmainten.goDoctorInfo),
     url(r'^Health/Admin/dodoctor/$', dbmainten.addDoctorInfo),
     url(r'^Health/Admin/servicetype/$', dbmainten.goServiceType),

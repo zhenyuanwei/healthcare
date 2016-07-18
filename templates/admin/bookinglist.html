@@ -13,23 +13,32 @@
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 	</head>
-	<body>
+	<body class="ui-mobile-viewport ui-overlay-a" id="ui-page-top" style="">
+		<div data-role="navbar">
+		    <ul>
+				<li><a href="../bookinglist/" class="ui-btn-active">预定一览</a></li>
+				<li><a href="../doctor/">医生信息维护</a></li>
+				<li><a href="../servicetype/">服务项目维护</a></li>
+			</ul>
+		</div><!-- /navbar -->
 		{% if bookingList|length == 0 %}
-			<li>There is no booking!</li>
+			<p>There is no booking!</p>
 			{{ sql }}
 		{% else %}
-			<table border="1">
-				<tr>
-					<td>No.</td>
-					<td>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</td>
-					<td>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</td>
-					<td>会&nbsp;&nbsp;员&nbsp;号</td>
-					<td>预约医生</td>
-					<td>预约项目</td>
-					<td>预约时间</td>
-					<td>Completed</td>
-					<td>Cancel</td>
-				</tr>
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+						<th>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</th>
+						<th>会&nbsp;&nbsp;员&nbsp;号</th>
+						<th>预约医生</th>
+						<th>预约项目</th>
+						<th>预约时间</th>
+						<th>Completed</th>
+						<th>Cancel</th>
+					</tr>
+				</thead>
 				{% for bookingInfo in bookingList %}
 					<tr>
 						<td>{{ bookingInfo.id }}</td>
