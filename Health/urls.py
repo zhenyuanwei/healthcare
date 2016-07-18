@@ -22,8 +22,8 @@ urlpatterns = [
 
 from django.conf.urls import *
 from Health.Webchat import booking
-from Health.Admin import adminuserDB
 from Health.Admin import loginAction
+from Health.Admin import dbmainten
 
 urlpatterns = [
     url(r'^Health/booking_form/$', booking.booking_form),
@@ -32,6 +32,10 @@ urlpatterns = [
     url(r'^Health/Admin/doLogin/$', loginAction.doLogin),
     url(r'^Health/Admin/complatedBooking/$', booking.bookingCompleted),
     url(r'^Health/Admin/cancelBooking/$', booking.bookingCancel),
+    url(r'^Health/Admin/doctor/$', dbmainten.goDoctorInfo),
+    url(r'^Health/Admin/dodoctor/$', dbmainten.addDoctorInfo),
+    url(r'^Health/Admin/servicetype/$', dbmainten.goServiceType),
+    url(r'^Health/Admin/doservicetype/$', dbmainten.doServiceType),
 ] 
 
 "url('Health/', hello),"

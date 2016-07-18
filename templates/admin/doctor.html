@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	    <title> Booking </title>
+	    
+		<!-- 引入 jQuery Mobile 样式 -->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<!-- 引入 jQuery 库 -->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- 引入 jQuery Mobile 库 -->
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+		
+	</head>
+	<body>
+		<div>
+			<p>
+			    <div><form action="../dodoctor/" method="get">
+				    <div class="ui-field-contain">
+				    	<label for="doctorname">姓名<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="doctorname" id="doctorname" size="10" minlength="2" maxlength="10">
+					</div>
+			        
+			        <div class="ui-field-contain">
+				    	<label for="phonenumber">电话<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="phonenumber" id="phonenumber" size="10" minlength="11" maxlength="11">
+					</div>
+					
+					<div class="ui-field-contain">
+				    	<label for="webchatid">微信号 : </label>
+				    	<input type="text" name="webchatid" id="webchatid" size="10" maxlength="10">
+					</div>
+			        <input type="submit" value="OK">
+			    </form></div>
+		    </p>
+	    </div>
+	</body>
+</html>
