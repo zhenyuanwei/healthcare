@@ -12,7 +12,7 @@ from Health.formatValidation import required
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 import datetime
-import math
+from Health.Webchat.myweixin import getUser
 
 "@csrf_exempt"
 def booking_form(request):
@@ -21,9 +21,11 @@ def booking_form(request):
     today = datetime.datetime.now()
     dayList = []
     for i in range(1, 8):
-        dayList.append((today + datetime.timedelta(days=i)).strftime('%Y%m%d'))
-    
-    ListDic = {'doctorInfoList' : doctorInfoList, 'serviceTypeList' : serviceTypeList, 'dayList' : dayList}
+        dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
+    #user = getUser('http://localhost:8000/Health/booking_form/');
+    ListDic = {'doctorInfoList' : doctorInfoList, 
+               'serviceTypeList' : serviceTypeList, 
+               'dayList' : dayList}
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(ListDic)
     return HttpResponse(html)

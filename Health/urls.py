@@ -37,6 +37,8 @@ urlpatterns = [
     url(r'^Health/Admin/dodoctor/$', dbmainten.addDoctorInfo),
     url(r'^Health/Admin/servicetype/$', dbmainten.goServiceType),
     url(r'^Health/Admin/doservicetype/$', dbmainten.doServiceType),
+    url(r'^Health/Admin/membership/$', dbmainten.goMembership),
+    url(r'^Health/Admin/domembership/$', dbmainten.doMembership),
 ] 
 
 "url('Health/', hello),"

@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	    <title> Booking </title>
+	    
+		<!-- 引入 jQuery Mobile 样式 -->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<!-- 引入 jQuery 库 -->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- 引入 jQuery Mobile 库 -->
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+		
+	</head>
+	<body>
+		<div>
+			<div data-role="navbar">
+			    <ul>
+					<li><a href="../bookinglist/">预定一览</a></li>
+					<li><a href="../doctor/">医生信息维护</a></li>
+					<li><a href="../servicetype/">服务项目维护</a></li>
+					<li><a href="../membership/" class="ui-btn-active">会员管理</a></li>
+				</ul>
+			</div><!-- /navbar -->
+		    <div><form action="../domembership/" method="get">
+			    <div class="ui-field-contain">
+			    	<label for="vipno">会员号 ：<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="vipno" id="vipno" size="10" maxlength="10">
+			    </div>
+			    <div class="ui-field-contain">
+			    	<label for="vipname">会员姓名 ：<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="vipname" id="vipname" size="10" maxlength="10">
+			    </div>
+			    <div class="ui-field-contain">	
+			    	<label for="phonenumber">会员电话 ：<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="10">
+			    </div>
+			    <div class="ui-field-contain">	
+			    	<label for="discountrate">会员折扣 ：<b style="color:#FF0000">*</b> : </label>
+			    	<select name="discountrate" id="discountrate">
+			    		<option value="0.5">钻石</option>
+			    		<option value="0.7">金星</option>
+						<option value="0.8">银星</option>
+					</select>
+				</div>
+
+		        <input type="submit" value="OK">
+		    </form></div>
+	    </div>
+	</body>
+</html>

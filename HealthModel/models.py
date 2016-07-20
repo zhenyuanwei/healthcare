@@ -10,8 +10,16 @@ class AdminUser(models.Model):
 
 class Membership(models.Model):
     id = models.AutoField(primary_key=True)
+    vipno = models.CharField(max_length = 10)
+    vipname = models.CharField(max_length = 10)
+    phonenumber = models.CharField(max_length = 11)
+    password = models.CharField(max_length = 10)
+    amount = models.FloatField()
+    lastamount = models.FloatField()
     discounttype = models.CharField(max_length = 20)
     discountrate = models.FloatField()
+    webchatid = models.CharField(max_length = 50)
+    
     
 class DoctorInfo(models.Model):
     id = models.AutoField(primary_key=True)

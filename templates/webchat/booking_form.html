@@ -18,17 +18,17 @@
 		<div>
 			<p>
 				{% if messages|length == 2 %}
-					请正确输入必填项目后，重新提交。
+					<p style="color:#FF0000">请正确输入必填项目后，重新提交。</p>
 				{% endif %}
 			    <div><form action="../booking/" method="get">
 				    <div class="ui-field-contain">
-				    	<label for="name">姓名<b style="color:#FF0000">*</b> : </label>
-				    	<input type="text" name="name" id="name" size="10" minlength="2" maxlength="10">
+				    	<label for="name">姓名 : <b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="name" id="name" size="10"maxlength="10">
 					</div>
 			        
 			        <div class="ui-field-contain">
-				    	<label for="phonenumber">电话<b style="color:#FF0000">*</b> : </label>
-				    	<input type="text" name="phonenumber" id="phonenumber" size="10" minlength="11" maxlength="11">
+				    	<label for="phonenumber">电话 : <b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11">
 					</div>
 					
 					<div class="ui-field-contain">
@@ -81,7 +81,7 @@
 						</select>
 					</div>
 					
-			        <input type="submit" value="OK">
+			        <button type="submit">提交</button>
 			    </form></div>
 		    </p>
 	    </div>
