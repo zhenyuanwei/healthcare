@@ -12,7 +12,6 @@ from Health.formatValidation import required
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 import datetime
-from Health.Webchat.myweixin import getUser
 
 "@csrf_exempt"
 def booking_form(request):
