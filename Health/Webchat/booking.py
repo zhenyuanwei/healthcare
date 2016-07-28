@@ -12,6 +12,9 @@ from Health.formatValidation import required
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 import datetime
+from Health.Webchat.myweixin import getOpenID
+from membershipmanage import getMembership
+from HealthModel.models import Membership
 
 "@csrf_exempt"
 def booking_form(request):
@@ -114,4 +117,34 @@ def bookingCancel(request):
     bookingListDic = {'bookingList' : bookingList}
     html = usedTemplate.render(bookingListDic)
     return HttpResponse(html)
-    
+
+def mybooking(request):
+    REDIRECT_URI = ''
+    CODE = ''
+    openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
+    membership = getMembership(openId=openId)
+    if membership :
+        vipno = membership.vipno
+        bookingInfo = BookingInfo.objects.filter(membercard=vipno, status=1)
+        outputDic = {}
+        outputDic['name'] = bookingInfo.name
+        outputDic['phonenumber'] = bookingInfo.phonenumber
+        outputDic['membercard'] = bookingInfo.membercard
+        outputDic['bookedtime'] = bookingInfo.bookedtime
+        
+        if bookingInfo.bookeddoctor.strip() == '0' :
+            outputDic['bookeddoctor'] = ''
+        else :
+            outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookingInfo.bookeddoctor.strip()).doctorname
+            
+        if bookingInfo.bookeditem.strip() == '0' :
+            outputDic['bookeditem'] = '' 
+        else :
+            outputDic['bookeditem'] = ServiceType.objects.get(id=bookingInfo.bookeditem.strip()).servicename
+        usedTemplate = get_template('webchat/booking.html')
+        html = usedTemplate.render(outputDic)
+        return HttpResponse(html)
+    else :
+        usedTemplate = get_template('webchat/message.html')
+        html = usedTemplate.render()
+        return HttpResponse(html)

@@ -5,9 +5,11 @@ def hello(request):
 
 
 from django.shortcuts import render
+from Health.Webchat.myweixin import getOpenID
 
 def hello(request):
     context          = {}
-    context['hello'] = 'Hello World - test'
+    openid = getOpenID('http://www.ibm.com/Health/booking_form/')
+    context['hello'] = openid
     return render(request, 'hello.html', context)
     "return render(request, 'webchat/booking_form.html', context)"

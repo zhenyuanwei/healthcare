@@ -19,15 +19,22 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]'''
-
-from django.conf.urls import *
+from django.conf.urls import url
+from Health import helloworld
 from Health.Webchat import booking
 from Health.Admin import loginAction
 from Health.Admin import dbmainten
+from Health.Webchat import membershipmanage
+from Health.Webchat import introduce
 
 urlpatterns = [
+    url(r'^Health/hello/$', helloworld.hello),
+    url(r'^Health/introduce/$', introduce.introduce),
     url(r'^Health/booking_form/$', booking.booking_form),
     url(r'^Health/booking/$', booking.booking),
+    url(r'^Health/bindMembershipCheck/$', membershipmanage.bindMembershipCheck),
+    url(r'^Health/bindMembership/$', membershipmanage.bindMembership),
+    url(r'^Health/mybooking/$', booking.mybooking),
     url(r'^Health/Admin/login/$', loginAction.login),
     url(r'^Health/Admin/doLogin/$', loginAction.doLogin),
     url(r'^Health/Admin/complatedBooking/$', booking.bookingCompleted),
@@ -41,11 +48,5 @@ urlpatterns = [
     url(r'^Health/Admin/domembership/$', dbmainten.doMembership),
 ] 
 
-"url('Health/', hello),"
-
-"""urlpatterns = patterns("",
-    ('^Health', hello),
-    (r'^booking_form/$', search.booking_form),
-)"""
 
 
