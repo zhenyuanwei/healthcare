@@ -4,7 +4,7 @@ Created on Jul 19, 2016
 @author: weizhenyuan
 '''
 #from weixin.client import WeixinMpAPI
-from wechatpy.oauth import WeChatOAuth
+#from wechatpy.oauth import WeChatOAuth
 
 '''def getUser(REDIRECT_URI):
     scope = ("snsapi_base", )
