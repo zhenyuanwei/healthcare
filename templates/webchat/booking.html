@@ -4,13 +4,18 @@
     <title>Booking</title>
 </head>
 <body>
-	<p><br>您的预约内容如下，请准时到诊所就诊:</br>
-			<br>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</br>
-	        <br>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</br>
-	        <br>会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</br>
-	        <br>预约医生 : {{ bookeddoctor }}</br>
-	        <br>预约项目 : {{ bookeditem }}</br>
-	        <br>预约时间 : {{ bookedtime }}</br>
+	<p>
+		{% if isMessage|length == 2 %}
+			<br><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></br>
+		{% else %}
+			<br>您的预约内容如下，请准时到诊所就诊:</br>
+		{% endif %}
+		<br>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</br>
+		<br>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</br>
+		<br>会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</br>
+		<br>预约医生 : {{ bookeddoctor }}</br>
+		<br>预约项目 : {{ bookeditem }}</br>
+		<br>预约时间 : {{ bookedtime }}</br>
 	</p>
 </body>
 </html>

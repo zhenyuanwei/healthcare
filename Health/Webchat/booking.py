@@ -24,10 +24,25 @@ def booking_form(request):
     dayList = []
     for i in range(1, 8):
         dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
-    #user = getUser('http://localhost:8000/Health/booking_form/');
+
+    REDIRECT_URI = ''
+    CODE = ''
+    openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
+    membership = getMembership(openId=openId)
+    vipno = ''
+    vipname = ''
+    phonenumber = ''
+    if membership :
+        vipno = membership.vipno
+        vipname = membership.vipname
+        phonenumber = membership.phonenumber
+    
     ListDic = {'doctorInfoList' : doctorInfoList, 
                'serviceTypeList' : serviceTypeList, 
-               'dayList' : dayList}
+               'dayList' : dayList,
+               'vipno' : vipno,
+               'vipname' : vipname,
+               'phonenumber' : phonenumber}
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(ListDic)
     return HttpResponse(html)
@@ -59,36 +74,65 @@ def booking(request):
     if not required(bookedtime) :
         checkFlag = False
     
+    #check booking
+    checkDBFlag = False
+    tempBookingList = BookingInfo.objects.filter(phonenumber=phonenumber, status='1')
+    if tempBookingList :
+        checkDBFlag = True
+
     if checkFlag :
-        bookingInfo = BookingInfo()
-        bookingInfo.name = name
-        bookingInfo.phonenumber = phonenumber
-        bookingInfo.membercard = membercard
-        bookingInfo.bookeddoctor = bookeddoctor
-        bookingInfo.bookeditem = bookeditem
-        bookingInfo.bookedtime = bookedtime
-        bookingInfo.webchatid = ' '
-        bookingInfo.status = '1'
-        bookingInfo.save()
-        '''return to next page'''
-        usedTemplate = get_template('webchat/booking.html')
-        outputDic = {}
-        outputDic['name'] = name
-        outputDic['phonenumber'] = phonenumber
-        outputDic['membercard'] = membercard
-        outputDic['bookedtime'] = bookedtime
-        
-        if request.GET['bookeddoctor'].strip() == '0' :
-            outputDic['bookeddoctor'] = ''
-        else :
-            outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeditem).doctorname
+        if checkDBFlag :
+            tempBooking = tempBookingList.get()
+            outputDic = {}
+            outputDic['name'] = tempBooking.name
+            outputDic['phonenumber'] = tempBooking.phonenumber
+            outputDic['membercard'] = tempBooking.membercard
+            outputDic['bookedtime'] = tempBooking.bookedtime
             
-        if request.GET['bookeditem'].strip() == '0' :
-            outputDic['bookeditem'] = '' 
+            if tempBooking.bookeddoctor.strip() == '0' :
+                outputDic['bookeddoctor'] = ''
+            else :
+                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=tempBooking.bookeddoctor.strip()).doctorname
+                
+            if tempBooking.bookeditem.strip() == '0' :
+                outputDic['bookeditem'] = '' 
+            else :
+                outputDic['bookeditem'] = ServiceType.objects.get(id=tempBooking.bookeditem.strip()).servicename
+            
+            outputDic['isMessage'] = 'OK'
+            usedTemplate = get_template('webchat/booking.html')
+            html = usedTemplate.render(outputDic)
+            return HttpResponse(html) 
         else :
-            outputDic['bookeditem'] = ServiceType.objects.get(id=bookeditem).servicename
-        html = usedTemplate.render(outputDic)
-        return HttpResponse(html)
+            bookingInfo = BookingInfo()
+            bookingInfo.name = name
+            bookingInfo.phonenumber = phonenumber
+            bookingInfo.membercard = membercard
+            bookingInfo.bookeddoctor = bookeddoctor
+            bookingInfo.bookeditem = bookeditem
+            bookingInfo.bookedtime = bookedtime
+            bookingInfo.webchatid = ' '
+            bookingInfo.status = '1'
+            bookingInfo.save()
+            '''return to next page'''
+            usedTemplate = get_template('webchat/booking.html')
+            outputDic = {}
+            outputDic['name'] = name
+            outputDic['phonenumber'] = phonenumber
+            outputDic['membercard'] = membercard
+            outputDic['bookedtime'] = bookedtime
+            
+            if request.GET['bookeddoctor'].strip() == '0' :
+                outputDic['bookeddoctor'] = ''
+            else :
+                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeditem).doctorname
+                
+            if request.GET['bookeditem'].strip() == '0' :
+                outputDic['bookeditem'] = '' 
+            else :
+                outputDic['bookeditem'] = ServiceType.objects.get(id=bookeditem).servicename
+            html = usedTemplate.render(outputDic)
+            return HttpResponse(html)
     else :
         messageDic = {'messages' : 'OK'}
         usedTemplate = get_template('webchat/booking_form.html')
