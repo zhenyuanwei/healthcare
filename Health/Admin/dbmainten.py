@@ -85,21 +85,20 @@ def goUpdateDoctorInfo(request):
 def goServiceType(request):
     outDic = {}
     outDic['hightlight'] = '3'
-    serviceId = ''
+    usedTemplate = get_template('admin/servicetype.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goServiceTypeUpdate(request):
+    serviceid = request.GET['id']
+    outDic = {}
+    outDic['hightlight'] = '3'
     try :
-        serviceId = request.GET['id']
-    except :
-        print '------there is no service id, it will be tread as adding------'
-    
-    service = ServiceType()
-    service.id = 0
-    try :
-        if serviceId.strip() != '' :
-            service = ServiceType.objects.get(id=serviceId)
-    except :
-        print '-------there is no service type id = '  + serviceId + '----------'
-    finally: 
+        service = ServiceType.objects.get(id=serviceid)
         outDic['service'] = service
+    except :
+        print '------------there is no service type id = ' + serviceid + ' ----------'
+    finally:
         usedTemplate = get_template('admin/servicetype.html')
         html = usedTemplate.render(outDic)
         return HttpResponse(html)

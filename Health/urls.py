@@ -49,6 +49,7 @@ urlpatterns = [
     url(r'^Health/Admin/servicetype/$', dbmainten.goServiceType),
     url(r'^Health/Admin/servicetypelist/$', dbmainten.goServiceTypeList),
     url(r'^Health/Admin/servicetypedelete/$', dbmainten.deleteServiceType),
+    url(r'^Health/Admin/servicetypeupdate/$', dbmainten.goServiceTypeUpdate),
     url(r'^Health/Admin/doservicetype/$', dbmainten.doServiceType),
     url(r'^Health/Admin/membershiplist/$', dbmainten.goMembershipList),
     url(r'^Health/Admin/membershipdelete/$', dbmainten.goMembershipDelete),
