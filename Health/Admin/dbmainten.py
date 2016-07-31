@@ -86,14 +86,14 @@ def goServiceType(request):
     outDic = {}
     outDic['hightlight'] = '3'
     serviceId = request.GET['id']
+    service = ServiceType()
     try :
-        service = ServiceType()
         if serviceId.strip() != '' :
             service = ServiceType.objects.get(id=serviceId)
-        outDic['service'] = service
     except :
         print '-------there is no service type id = '  + serviceId + '----------'
     finally: 
+        outDic['service'] = service
         usedTemplate = get_template('admin/servicetype.html')
         html = usedTemplate.render(outDic)
         return HttpResponse(html)
