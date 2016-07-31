@@ -72,7 +72,7 @@ def goMembership(request):
 
 def goMembershipList(request):
     membershiplist = Membership.objects.all()
-    usedTemplate = get_template('admin/membershipList.html')
+    usedTemplate = get_template('admin/membershiplist.html')
     outDic = {}
     outDic['membershipList'] = membershiplist
     outDic['hightlight'] = '4'
