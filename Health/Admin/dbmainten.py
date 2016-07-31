@@ -85,7 +85,12 @@ def goUpdateDoctorInfo(request):
 def goServiceType(request):
     outDic = {}
     outDic['hightlight'] = '3'
-    serviceId = request.GET['id']
+    serviceId = ''
+    try :
+        serviceId = request.GET['id']
+    except :
+        print '------there is no service id, it will be tread as adding------'
+    
     service = ServiceType()
     try :
         if serviceId.strip() != '' :
