@@ -21,7 +21,9 @@ def addAdminUser(request):
 
 def goDoctorInfo(request):
     usedTemplate = get_template('admin/doctor.html')
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '2'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def addDoctorInfo(request):
@@ -34,12 +36,16 @@ def addDoctorInfo(request):
     doctor.webchatid = webchatId
     doctor.save()
     usedTemplate = get_template('admin/success.html')
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '2'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def goServiceType(request):
     usedTemplate = get_template('admin/servicetype.html')
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '3'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def doServiceType(request):
@@ -50,12 +56,16 @@ def doServiceType(request):
     serviceType.servicerate = servicerate
     serviceType.save()
     usedTemplate = get_template('admin/success.html')
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '3'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def goMembership(request):
     usedTemplate = get_template('admin/membership.html')
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '4'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def doMembership(request):
@@ -80,6 +90,8 @@ def doMembership(request):
     membership.discounttype = discounttype
     membership.webchatid = webchatid
     membership.save()
-    html = usedTemplate.render()
+    outDic = {}
+    outDic['hightlight'] = '4'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
     

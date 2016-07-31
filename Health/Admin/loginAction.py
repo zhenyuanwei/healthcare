@@ -35,8 +35,10 @@ def bookingList(request):
             bookinginfo.bookeditem = ''
         
         bookingList.append(bookinginfo)
-    bookingListDic = {'bookingList' : bookingList}
-    html = usedTemplate.render(bookingListDic)
+    outDic = {}
+    outDic['bookingList'] = bookingList
+    outDic['hightlight'] = '1'
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
     
 def doLogin(request):
