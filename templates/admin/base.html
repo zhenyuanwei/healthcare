@@ -19,11 +19,27 @@
 					<li><a href="../bookinglist/" {% if hightlight == '1' %}class="ui-btn-active"{% endif %}>预定一览</a></li>
 					<li><a href="../doctor/" {% if hightlight == '2' %}class="ui-btn-active"{% endif %}>医生信息维护</a></li>
 					<li><a href="../servicetype/" {% if hightlight == '3' %}class="ui-btn-active"{% endif %}>服务项目维护</a></li>
-					<li><a href="../membership/" {% if hightlight == '4' %}class="ui-btn-active"{% endif %}>会员管理</a></li>
-					<li><a href="＃" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>结账</a></li>
+					<li><a href="../membershiplist/" {% if hightlight == '4' %}class="ui-btn-active"{% endif %}>会员管理</a></li>
+					<li><a href="＃" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>非预约结账</a></li>
 					<li><a href="＃" {% if hightlight == '6' %}class="ui-btn-active"{% endif %}>收入统计</a></li>
 				</ul>
 			</div><!-- /navbar -->
+			{% if hightlight == '2' %}
+			<div><hr>
+			<ul><li><a href="../doctor/">医生登记</a></li></ul>
+			</div>
+			{% endif %}
+			{% if hightlight == '3' %}
+			<div><hr>
+			<ul><li><a href="../servicetype/">服务项目登记</a></li></ul>
+			</div>
+			{% endif %}
+			{% if hightlight == '4' %}
+			<div><hr>
+			<ul><li><a href="../membership/">会员注册</a></li></ul>
+			</div>
+			{% endif %}
+			
 			<div id="content">
 	        {% block content %}{% endblock %}
 	    	</div>

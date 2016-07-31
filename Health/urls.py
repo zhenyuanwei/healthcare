@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^Health/bindMembershipCheck/$', membershipmanage.bindMembershipCheck),
     url(r'^Health/bindMembership/$', membershipmanage.bindMembership),
     url(r'^Health/mybooking/$', booking.mybooking),
+    #Below is for administrator
     url(r'^Health/Admin/login/$', loginAction.login),
     url(r'^Health/Admin/doLogin/$', loginAction.doLogin),
     url(r'^Health/Admin/complatedBooking/$', booking.bookingCompleted),
@@ -44,6 +45,10 @@ urlpatterns = [
     url(r'^Health/Admin/dodoctor/$', dbmainten.addDoctorInfo),
     url(r'^Health/Admin/servicetype/$', dbmainten.goServiceType),
     url(r'^Health/Admin/doservicetype/$', dbmainten.doServiceType),
+    url(r'^Health/Admin/membershiplist/$', dbmainten.goMembershipList),
+    url(r'^Health/Admin/membershipdelete/$', dbmainten.goMembershipDelete),
+    url(r'^Health/Admin/membershipupdate/$', dbmainten.goMembershipUpdate),
+    url(r'^Health/Admin/membershipupdateamount/$', dbmainten.goMembershipAmountUpdate),
     url(r'^Health/Admin/membership/$', dbmainten.goMembership),
     url(r'^Health/Admin/domembership/$', dbmainten.doMembership),
 ] 

@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+		{% if membershipList|length == 0 %}
+			<p>现在没有会员</p>
+			{{ sql }}
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>姓名</th>
+						<th>身份证</th>
+						<th>电话</th>
+						<th>会员号</th>
+						<th>会员折扣</th>
+						<th>账户余额</th>
+						<th>会员充值</th>
+						<th>会员信息更新</th>
+						<th>会员删除</th>
+					</tr>
+				</thead>
+				{% for membership in membershipList %}
+					<tr>
+						<td>{{ membership.id }}</td>
+						<td>{{ membership.vipname }}</td>
+						<td>{{ membership.vipnameid }}</td>
+						<td>{{ membership.phonenumber }}</td>
+						<td>{{ membership.vipno }}</td>
+						<td>{{ membership.discountrate }}</td>
+						<td>{{ membership.amount }}</td>
+						<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
+					    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
+					    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

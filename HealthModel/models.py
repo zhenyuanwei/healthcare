@@ -10,8 +10,9 @@ class AdminUser(models.Model):
 
 class Membership(models.Model):
     id = models.AutoField(primary_key=True)
-    vipno = models.CharField(max_length = 10)
+    vipno = models.CharField(max_length = 11)
     vipname = models.CharField(max_length = 10)
+    vipnameid = models.CharField(max_length = 18)
     phonenumber = models.CharField(max_length = 11)
     password = models.CharField(max_length = 10)
     amount = models.FloatField()
