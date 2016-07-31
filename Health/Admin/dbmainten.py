@@ -27,40 +27,112 @@ def goDoctorInfo(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def addDoctorInfo(request):
-    docotrName = request.GET['doctorname']
-    phoneNumber = request.GET['phonenumber']
-    webchatId = request.GET['webchatid']
-    doctor = DoctorInfo()
-    doctor.doctorname = docotrName
-    doctor.phonenumber = phoneNumber
-    doctor.webchatid = webchatId
-    doctor.save()
-    usedTemplate = get_template('admin/success.html')
+def goDoctorInfoList(request):
+    usedTemplate = get_template('admin/doctorlist.html')
+    doctorlist = DoctorInfo.objects.all()
     outDic = {}
     outDic['hightlight'] = '2'
+    outDic['doctorList'] = doctorlist
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def addDoctorInfo(request):
+    doctorid = request.GET['doctorid'] 
+    docotrName = request.GET['doctorname']
+    phoneNumber = request.GET['phonenumber']
+    webchatId = request.GET['webchatid']
+    
+    try :
+        if doctorid.strip() == '' :
+            doctor = DoctorInfo() # for add doctor
+        else :
+            doctor = DoctorInfo.objects.get(id=doctorid) # for update doctor
+            
+        doctor.doctorname = docotrName
+        doctor.phonenumber = phoneNumber
+        doctor.webchatid = webchatId
+        doctor.save()
+    except :
+        print '-------there is no doctor id = ' + doctorid + '--------'
+        
+    finally:
+        return goDoctorInfoList(request=request)
+
+def deleteDoctorInfo(request):
+    doctorid = request.GET['id']
+    try :
+        doctor = DoctorInfo.objects.get(id=doctorid)
+        doctor.delete()
+    except :
+        print '------there is no doctor id = ' + doctorid + '----------'
+    finally:
+        return goDoctorInfoList(request=request)
+    
+def goUpdateDoctorInfo(request):
+    doctorid = request.GET['id']
+    try :
+        doctor = DoctorInfo.objects.get(id=doctorid)
+    except :
+        print '------there is no doctor id = ' + doctorid + '----------'
+    finally:
+        usedTemplate = get_template('admin/doctor.html')
+        outDic = {}
+        outDic['hightlight'] = '2'
+        outDic['doctorinfo'] = doctor
+        html = usedTemplate.render(outDic)
+        return HttpResponse(html)
+
 def goServiceType(request):
-    usedTemplate = get_template('admin/servicetype.html')
     outDic = {}
     outDic['hightlight'] = '3'
+    serviceId = request.GET['id']
+    try :
+        service = ServiceType()
+        if serviceId.strip() != '' :
+            service = ServiceType.objects.get(id=serviceId)
+        outDic['service'] = service
+    except :
+        print '-------there is no service type id = '  + serviceId + '----------'
+    finally: 
+        usedTemplate = get_template('admin/servicetype.html')
+        html = usedTemplate.render(outDic)
+        return HttpResponse(html)
+
+def deleteServiceType(request):
+    serviceId = request.GET['id']
+    try :
+        service = ServiceType.objects.get(id=serviceId)
+        service.delete()
+    except :
+        print '------there is no service type id = '  + serviceId + '----------'
+    finally:
+        return goServiceTypeList(request=request)
+
+def goServiceTypeList(request):
+    usedTemplate = get_template('admin/servicetypelist.html')
+    serviceList = ServiceType.objects.all()
+    outDic = {}
+    outDic['hightlight'] = '3'
+    outDic['serviceList'] = serviceList
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def doServiceType(request):
+    serviceid = request.GET['serviceid']
     servicename = request.GET['servicename']
     servicerate = request.GET['servicerate']
-    serviceType = ServiceType()
-    serviceType.servicename = servicename
-    serviceType.servicerate = servicerate
-    serviceType.save()
-    usedTemplate = get_template('admin/success.html')
-    outDic = {}
-    outDic['hightlight'] = '3'
-    html = usedTemplate.render(outDic)
-    return HttpResponse(html)
+    try :
+        if serviceid.strip() == '' :
+            serviceType = ServiceType()
+        else :
+            serviceType = ServiceType.objects.get(id=serviceid)
+        serviceType.servicename = servicename
+        serviceType.servicerate = servicerate
+        serviceType.save()
+    except :
+        print '------there is no service type id=' + serviceid + '--------'
+    finally:
+        return goServiceTypeList(request=request)
 
 def goMembership(request):
     usedTemplate = get_template('admin/membership.html')
@@ -81,15 +153,13 @@ def goMembershipList(request):
 
 def goMembershipDelete(request):
     temId = request.GET['id']
-    membership = Membership.objects.get(id = temId)
-    membership.delete()
-    membershiplist = Membership.objects.all()
-    usedTemplate = get_template('admin/membershiplist.html')
-    outDic = {}
-    outDic['membershipList'] = membershiplist
-    outDic['hightlight'] = '4'
-    html = usedTemplate.render(outDic)
-    return HttpResponse(html)
+    try :
+        membership = Membership.objects.get(id = temId)
+        membership.delete()
+    except :
+        print '---------there is no membership id = '  + temId + '----------'
+    finally:   
+        return HttpResponseRedirect("../membershiplist/")
 
 def goMembershipUpdate(request):
     temId = request.GET['id']

@@ -25,12 +25,24 @@ def bookingList(request):
     bookingList = []
     for bookinginfo in tmpList:
         if bookinginfo.bookeddoctor.strip() != '0' :
-            bookinginfo.bookeddoctor = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
+            tmpStr = ''
+            try :
+                tmpStr = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
+            except :
+                print '-------there is no doctor' + bookinginfo.bookeddoctor + '----------'
+            finally:
+                bookinginfo.bookeddoctor = tmpStr
         else :
             bookinginfo.bookeddoctor = ''
         
         if bookinginfo.bookeditem.strip() != '0' :
-            bookinginfo.bookeditem = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+            tmpStr = ''
+            try :
+                tmpStr = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+            except :
+                print '-------there is no service type' + bookinginfo.bookeditem + '----------'
+            finally:
+                bookinginfo.bookeditem = tmpStr
         else :
             bookinginfo.bookeditem = ''
         

@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% block title %}医生信息一览{% endblock %}
+{% block content %}
+		{% if serviceList|length == 0 %}
+			<p>现在没有定义服务项目。</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>服务项目</th>
+						<th>价格</th>
+						<th>信息更新</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				{% for service in serviceList %}
+					<tr>
+						<td>{{ service.id }}</td>
+						<td>{{ service.servicename }}</td>
+						<td>{{ service.servicerate }}</td>
+					    <td><a href="../servicetype/?id={{ service.id }}">信息更新</a></td>
+					    <td><a href="../servicetypedelete/?id={{ service.id }}">删除</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

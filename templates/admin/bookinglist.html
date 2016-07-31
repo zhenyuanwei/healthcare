@@ -2,8 +2,7 @@
 {% block title %}预定信息一览{% endblock %}
 {% block content %}
 		{% if bookingList|length == 0 %}
-			<p>There is no booking!</p>
-			{{ sql }}
+			<p>没有未处理的预约!</p>
 		{% else %}
 			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 				</thead>

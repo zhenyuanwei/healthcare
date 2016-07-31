@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% block title %}医生信息一览{% endblock %}
+{% block content %}
+		{% if doctorList|length == 0 %}
+			<p>现在没有医生</p>
+			{{ sql }}
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>姓名</th>
+						<th>电话</th>
+						<th>信息更新</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				{% for doctorinfo in doctorList %}
+					<tr>
+						<td>{{ doctorinfo.id }}</td>
+						<td>{{ doctorinfo.doctorname }}</td>
+						<td>{{ doctorinfo.phonenumber }}</td>
+					    <td><a href="../doctorupdate/?id={{ doctorinfo.id }}">信息更新</a></td>
+					    <td><a href="../dodoctordelete/?id={{ doctorinfo.id }}">删除</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}
