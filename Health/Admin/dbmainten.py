@@ -84,7 +84,7 @@ def goMembershipDelete(request):
     membership = Membership.objects.get(id = temId)
     membership.delete()
     membershiplist = Membership.objects.all()
-    usedTemplate = get_template('admin/membershipList.html')
+    usedTemplate = get_template('admin/membershiplist.html')
     outDic = {}
     outDic['membershipList'] = membershiplist
     outDic['hightlight'] = '4'
