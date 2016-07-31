@@ -92,6 +92,7 @@ def goServiceType(request):
         print '------there is no service id, it will be tread as adding------'
     
     service = ServiceType()
+    service.id = 0
     try :
         if serviceId.strip() != '' :
             service = ServiceType.objects.get(id=serviceId)
