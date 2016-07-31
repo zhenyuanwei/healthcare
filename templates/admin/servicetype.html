@@ -6,12 +6,12 @@
 				    <div class="ui-field-contain">
 				    	<input type="hidden" name="serviceid" id="serviceid" size="10" minlength="2" maxlength="20" value="{{ service.id }}">
 				    	<label for="servicename">项目名<b style="color:#FF0000">*</b> : </label>
-				    	<input type="text" name="servicename" id="servicename" size="10" minlength="2" maxlength="20" {% if service.id !=0 %} value="{{ service.servicename }}" {% endif %}>
+				    	<input type="text" name="servicename" id="servicename" size="10" minlength="2" maxlength="20" {% if service.id != 0 %} value="{{ service.servicename }}" {% endif %}>
 					</div>
 			        
 			        <div class="ui-field-contain">
 				    	<label for="servicerate">单价<b style="color:#FF0000">*</b> : </label>
-				    	<input type="text" name="servicerate" id="servicerate" size="10" minlength="11" maxlength="10" {% if service.id !=0 %} value="{{ service.servicerate }}"  {% endif %}>
+				    	<input type="text" name="servicerate" id="servicerate" size="10" minlength="11" maxlength="10" {% if service.id != 0 %} value="{{ service.servicerate }}"  {% endif %}>
 					</div>
 
 			        <input type="submit" value="OK">
