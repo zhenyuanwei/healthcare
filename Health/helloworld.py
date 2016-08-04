@@ -9,7 +9,7 @@ from Health.Webchat.myweixin import getOpenID
 
 def hello(request):
     context          = {}
-    openid = getOpenID('http://www.ibm.com/Health/booking_form/')
+    openid = getOpenID(REDIRECT_URI='', CODE='')
     context['hello'] = openid
     return render(request, 'hello.html', context)
     "return render(request, 'webchat/booking_form.html', context)"

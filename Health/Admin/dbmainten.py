@@ -259,7 +259,6 @@ def updateMembership(request):
     membership.save()
 
 def updateMembershipAmount(request):
-    print 'amount'
     vipid = request.GET['vipid']
     amount = 0
     if request.GET['amount'].strip() :
