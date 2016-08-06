@@ -26,6 +26,7 @@ from Health.Admin import loginAction
 from Health.Admin import dbmainten
 from Health.Webchat import membershipmanage
 from Health.Webchat import introduce
+from Health.Admin import payment
 
 urlpatterns = [
     url(r'^hello/$', helloworld.hello),
@@ -57,6 +58,8 @@ urlpatterns = [
     url(r'^admin/membershipupdateamount/$', dbmainten.goMembershipAmountUpdate),
     url(r'^admin/membership/$', dbmainten.goMembership),
     url(r'^admin/domembership/$', dbmainten.doMembership),
+    url(r'^admin/goprepayment/$', payment.goPrePayment),
+    url(r'^admin/doprepayment/$', payment.doPrePayment),
 ] 
 
 

@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}结账{% endblock %}
+{% block content %}
+<p>
+	<div><form action="../＃/" method="get">
+		<div class="ui-field-contain">
+	   	<label for="paymenttype">结账方式 : </label>
+	   	<input type="text" name="paymenttype" id="paymenttype" size="10" disabled>
+	   	</div>
+	
+		<div class="ui-field-contain">
+	   	<label for="vipno">会员卡号 : </label>
+	   	<input type="text" name="vipno" id="vipno" size="10" disabled>
+	   	</div>
+	      
+	    <div class="ui-field-contain">
+	   	<label for="doctor">服务医生 : </label>
+	   	<input type="text" name="doctor" id="doctor" size="10" disabled>
+		</div>
+	
+		<div class="ui-field-contain">
+	   	<label for="servicetype">服务项目 : </label>
+	   	<input type="text" name="servicetype" id="servicetype" size="10" disabled>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicerate">单价 : </label>
+	   	<input type="text" name="servicerate" id="servicerate" size="10" disabled>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicediscount">折扣 : </label>
+	   	<input type="text" name="servicediscount" id="servicediscount" size="10" disabled>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="amount">应收金额<b style="color:#FF0000">*</b> : </label>
+	   	<input type="text" name="amount" id="amount" size="10" maxlength="11" value="{{ amount }}">
+		</div>
+		
+		<center>
+	     	<button type="submit" class="ui-btn ui-btn-inline">结账</button>
+	     	<button type="button" class="ui-btn ui-btn-inline" onclick="javascript:history.go(-1)">返回</button>
+	     </center>
+     </form></div>
+</p>
+{% endblock %}
+			

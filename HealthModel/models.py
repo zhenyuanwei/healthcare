@@ -50,5 +50,14 @@ class BookingInfo(models.Model):
     webchatid = models.CharField(max_length = 50)
     status = models.CharField(max_length = 1)
     
+class Transaction(models.Model):
+    id = models.AutoField(primary_key=True)
+    membershipId = models.CharField(max_length = 10)
+    doctorId = models.CharField(max_length = 10)
+    servicetypeId = models.CharField(max_length = 10)
+    paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card
+    amount = models.FloatField()
+    transactionDate = models.DateField()
+    
     
     

@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+		{% if bookingList|length == 0 %}
+			<p>没有未处理的预约!</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+						<th>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</th>
+						<th>会&nbsp;&nbsp;员&nbsp;号</th>
+						<th>预约医生</th>
+						<th>预约项目</th>
+						<th>预约时间</th>
+						<th>Completed</th>
+						<th>Cancel</th>
+					</tr>
+				</thead>
+				{% for bookingInfo in bookingList %}
+					<tr>
+						<td>{{ bookingInfo.id }}</td>
+						<td>{{ bookingInfo.name }}</td>
+						<td>{{ bookingInfo.phonenumber }}</td>
+						<td>{{ bookingInfo.membercard }}</td>
+						<td>{{ bookingInfo.bookeddoctor }}</td>
+						<td>{{ bookingInfo.bookeditem }}</td>
+						<td>{{ bookingInfo.bookedtime }}</td>
+						<td><a href="../complatedBooking/?id={{ bookingInfo.id }}">Completed</a></td>
+					    <td><a href="../cancelBooking/?id={{ bookingInfo.id }}">Cancel</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}
