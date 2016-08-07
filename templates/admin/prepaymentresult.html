@@ -2,10 +2,10 @@
 {% block title %}结账{% endblock %}
 {% block content %}
 <p>
-	<div><form action="../＃/" method="get">
+	<div><form action="../dopayment/" method="get">
 		<div class="ui-field-contain">
 	   	<label for="paymenttype">结账方式 : </label><label>{% if paymenttype == '01'%}现金结账{% else %}会员卡结账{% endif %}</label>
-	   	<input type="hidden" name="paymenttype" id="paymenttype" size="10" value="{{ paymenttype }}" disabled>
+	   	<input type="hidden" name="paymenttype" id="paymenttype" size="10" value="{{ paymenttype }}">
 	   	</div>
 	
 		{% if membership %}
@@ -19,27 +19,27 @@
 	   	<label for="vipno">会员卡号 : </label><label>{{ vipno }}</label>
 	   	</div>
 	   	{% endif %}
-	   	<input type="hidden" name="vipno" id="vipno" size="10" value="{{ vipno }}" disabled>
+	   	<input type="hidden" name="membershipid" id="membershipid" size="10" value="{{ membership.id }}">
 	   	
 	      
 	    <div class="ui-field-contain">
 	   	<label for="doctor">服务医生 : </label><label>{{ doctorInfo.doctorname }}</label>
-	   	<input type="hidden" name="doctor" id="doctor" size="10" value="{{ doctor }}" disabled>
+	   	<input type="hidden" name="doctor" id="doctor" size="10" value="{{ doctor }}">
 		</div>
 	
 		<div class="ui-field-contain">
 	   	<label for="servicetype">服务项目 : </label><label>{{ service.servicename }}</label>
-	   	<input type="hidden" name="servicetype" id="servicetype" size="10" value="{{ servicetype }}" disabled>
+	   	<input type="hidden" name="servicetype" id="servicetype" size="10" value="{{ servicetype }}">
 		</div>
 		
 		<div class="ui-field-contain">
 	   	<label for="servicerate">单价 : </label><label>{{ servicerate }}</label>
-	   	<input type="hidden" name="servicerate" id="servicerate" size="10" value="{{ servicerate }}" disabled>
+	   	<input type="hidden" name="servicerate" id="servicerate" size="10" value="{{ servicerate }}">
 		</div>
 		
 		<div class="ui-field-contain">
 	   	<label for="servicediscount">折扣 : </label><label>{{ servicediscount }}</label>
-	   	<input type="hidden" name="servicediscount" id="servicediscount" size="10" value="{{ servicediscount }}" disabled>
+	   	<input type="hidden" name="servicediscount" id="servicediscount" size="10" value="{{ servicediscount }}">
 		</div>
 		
 		<div class="ui-field-contain">

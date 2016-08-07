@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}结账{% endblock %}
+{% block content %}
+
+{% if isMessage|length == 2 %}
+	<p style="color:#FF0000">会员（{{ membership.vipname }}{{ membership.vipno }}）余额不足(余额为：{{ membership.amount }})，结账失败，请充值后，重新结账！</p>
+{% else %}
+<p>
+	<b style="color:#FF0000">结账完成，详细信息如下：</b>
+	<div>
+		<div class="ui-field-contain">
+	   	<label for="paymenttype">结账方式 : </label><label>{% if paymenttype == '01'%}现金结账{% else %}会员卡结账{% endif %}</label>
+	   	</div>
+	
+		{% if membership %}
+		<div class="ui-field-contain">
+	   	<label>会员姓名 : </label><label>{{ membership.vipname }}</label>
+		</div>
+		
+	   	<div class="ui-field-contain">
+	   	<label for="vipno">会员卡号 : </label><label>{{ membership.vipno }}</label>
+	   	</div>
+	   	{% endif %}
+	      
+	    <div class="ui-field-contain">
+	   	<label for="doctor">服务医生 : </label><label>{{ doctorInfo.doctorname }}</label>
+		</div>
+	
+		<div class="ui-field-contain">
+	   	<label for="servicetype">服务项目 : </label><label>{{ service.servicename }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicerate">单价 : </label><label>{{ service.servicerate }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicediscount">折扣 : </label><label>{{ servicediscount }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="amount">实收金额 : </label><label>{{ amount }}</label>
+		</div>
+     </div>
+</p>
+{% endif %}
+{% endblock %}
+			

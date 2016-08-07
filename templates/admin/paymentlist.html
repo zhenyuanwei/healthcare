@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+		{% if paymentList|length == 0 %}
+			<p>今天到目前为止，没有结账记录！</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>结账方式</th>
+						<th>会员姓名</th>
+						<th>会员号</th>
+						<th>医生</th>
+						<th>项目</th>
+						<th>金额</th>
+					</tr>
+				</thead>
+				{% for payment in paymentList %}
+					<tr>
+						<td>{{ payment.id }}</td>
+						{% if payment.paymenttype == '01' %}
+						<td>现金结账</td>
+						{% elif payment.paymenttype == '02' %}
+						<td>会员卡结账</td>
+						{% else %}
+						<td></td>
+						{% endif %}
+						<td>{{ payment.vipname }}</td>
+						<td>{{ payment.vipno }}</td>
+						<td>{{ payment.doctorname }}</td>
+						<td>{{ payment.servicename }}</td>
+						<td>{{ payment.amount }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

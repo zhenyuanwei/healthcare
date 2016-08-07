@@ -60,6 +60,8 @@ urlpatterns = [
     url(r'^admin/domembership/$', dbmainten.doMembership),
     url(r'^admin/goprepayment/$', payment.goPrePayment),
     url(r'^admin/doprepayment/$', payment.doPrePayment),
+    url(r'^admin/dopayment/$', payment.doPayment),
+    url(r'^admin/gopaymentlist/$', payment.goPaymentList),
 ] 
 
 
