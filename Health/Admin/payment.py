@@ -34,17 +34,36 @@ def doPrePayment(request):
     amount = 0
     #calculate the amount start
     try :
-        membership = Membership.objects.get(vipno=vipno)
         doctorInfo = DoctorInfo.objects.get(id=doctor)
+        outDic['doctorInfo'] = doctorInfo
         service = ServiceType.objects.get(id=servicetype)
+        outDic['service'] = service
+        if paymenttype == '02' :
+            membership = Membership.objects.get(vipno=vipno)
+            servicediscount = membership.discountrate
+            outDic['membership'] = membership
+            
+        servicerate = service.servicerate
+        amount = servicerate * float(servicediscount)
+        #amount = int(amount)
     except :
         print '--------there is no membership : vipno = ' + vipno + '------------'
         outDic['isMessage'] = 'OK'
+        doctorList = DoctorInfo.objects.all()
+        servicetypeList = ServiceType.objects.all()
+        outDic['doctorList'] = doctorList
+        outDic['servicetypeList'] = servicetypeList
         usedTemplate = get_template('admin/prepayment.html')
         html = usedTemplate.render(outDic)
-        #return HttpResponse(html)
+        return HttpResponse(html)
     finally:
         outDic['amount'] = amount
+        outDic['paymenttype'] = paymenttype
+        outDic['vipno'] = vipno
+        outDic['doctor'] = doctor
+        outDic['servicetype'] = servicetype
+        outDic['servicerate'] = servicerate
+        outDic['servicediscount'] = servicediscount
     #calculate the amount end
     
     usedTemplate = get_template('admin/prepaymentresult.html')
