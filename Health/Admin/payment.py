@@ -143,10 +143,9 @@ def doPayment(request):
 def goPaymentList(request):
     outDic = {}
     outDic['hightlight'] = '6'
-    today = date.today()
-    #dstr = '2014-09-08 21:32:12'
-    #today = datetime.strptime(dstr, '%Y-%m-%d %H:%M:%S').date()
-    paymentList = getPaymentList(startdate=today, enddate=today)
+    today = str(date.today())
+    #today = '2016-08'
+    paymentList = getPaymentList(querydate=today)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
     html = usedTemplate.render(outDic)
@@ -155,19 +154,21 @@ def goPaymentList(request):
 def searchPaymentList(request):
     outDic = {}
     outDic['hightlight'] = '6'
-    dstr = '2014-09-08 21:32:12'
-    today = datetime.strptime(dstr, '%Y-%m-%d %H:%M:%S').date()
-    paymentList = getPaymentList(startdate=today, enddate=today)
+    querydate = '2014-09-08'
+    paymentList = getPaymentList(querydate=querydate)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def getPaymentList(startdate, enddate):
-    raw_sql = "select * from health.HealthModel_transaction where transactionDate >= '" + str(startdate) + "' "
-    raw_sql = raw_sql + "and transactionDate <= '" + str(enddate) + "'"
-    print raw_sql
-    transactionList = Transaction.objects.raw(raw_sql)
+def getPaymentList(querydate, doctorId=''):
+    #raw_sql = "select * from health.HealthModel_transaction where 1 = 1 "
+    #transactionList = None
+    if doctorId == '':
+        transactionList = Transaction.objects.filter(transactionDate__startswith=querydate)
+    else :
+        transactionList = Transaction.objects.filter(transactionDate__startswith=querydate,doctorId=doctorId)
+    
     paymentList = []
     totalamount = 0
     for transaction in transactionList :
