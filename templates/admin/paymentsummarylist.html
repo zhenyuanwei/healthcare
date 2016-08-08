@@ -1,0 +1,85 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+<div>
+	<div><form action="../querysummaryquery/" method="get">
+		<div class="ui-field-contain">
+	   	<label for="queryyear">年份 : </label>
+	   	<select name="queryyear" id="queryyear" data-mini="true" data-inline="true">
+		    {% for optionyear in yearList %}
+				<option value="{{ optionyear }}">{{ optionyear }}</option>
+			{% endfor %}
+		</select>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="querymonth">月份 : </label>
+	   	<select name="querymonth" id="querymonth" data-mini="true" data-inline="true">
+	   		<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+			<option value="01">01</option>
+			<option value="02">02</option>
+			<option value="03">03</option>
+			<option value="04">04</option>
+			<option value="05">05</option>
+			<option value="06">06</option>
+			<option value="07">07</option>
+			<option value="08">08</option>
+			<option value="09">09</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+		</select>
+	   	</div>
+	   	
+	   	<div class="ui-field-contain">
+	   	<label for="doctorid">医生 : </label>
+	   	<select name="doctorid" id="doctorid" data-mini="true" data-inline="true">
+	   		<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+			{% for doctor in doctrList %}
+				<option value="{{ doctor.id }}">{{ doctor.doctorname }}</option>
+			{% endfor %}
+		</select>
+		<input class="ui-btn ui-btn-inline" type="submit" value="查询" data-mini="true" data-inline="true">
+	   	</div>
+		
+     </form></div>
+	<div>
+	{% if paymentList|length == 0 %}
+		<p>今天到目前为止，没有结账记录！</p>
+	{% else %}
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			</thead>
+				<tr>
+					<th>No.</th>
+					<th>结账方式</th>
+					<th>会员姓名</th>
+					<th>会员号</th>
+					<th>医生</th>
+					<th>项目</th>
+					<th>金额</th>
+					<th>日期</th>
+				</tr>
+			</thead>
+			{% for payment in paymentList %}
+				<tr>
+					<td>{{ payment.id }}</td>
+					{% if payment.paymenttype == '01' %}
+					<td>现金结账</td>
+					{% elif payment.paymenttype == '02' %}
+					<td>会员卡结账</td>
+					{% else %}
+					<td></td>
+					{% endif %}
+					<td>{{ payment.vipname }}</td>
+					<td>{{ payment.vipno }}</td>
+					<td>{{ payment.doctorname }}</td>
+					<td>{{ payment.servicename }}</td>
+					<td>{{ payment.amount }}</td>
+					<td>{{ payment.paymentdate }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+	</div>
+</div>
+{% endblock %}

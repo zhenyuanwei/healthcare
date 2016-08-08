@@ -184,13 +184,21 @@ def searchPaymentList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def getPaymentList(querydate, doctorId=''):
-    #raw_sql = "select * from health.HealthModel_transaction where 1 = 1 "
-    #transactionList = None
-    if doctorId == '':
-        transactionList = Transaction.objects.filter(transactionDate__startswith=querydate)
-    else :
-        transactionList = Transaction.objects.filter(transactionDate__startswith=querydate,doctorId=doctorId)
+def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
+    transactionList = Transaction.objects.all()
+    
+    if querydate != '' :
+        transactionList = Transaction.objects.filter(transactionDate=querydate)
+    
+    if queryyear != '' :
+        transactionList = Transaction.objects.filter(transactionDate__year=queryyear)
+    
+    if querymonth != '' :
+        transactionList = Transaction.objects.filter(transactionDate__month=querymonth)
+    
+    if doctorId != '' :
+        transactionList = transactionList.filter(doctorId=doctorId)
+    
     
     paymentList = []
     totalamount = 0
@@ -217,6 +225,60 @@ def getPaymentList(querydate, doctorId=''):
     payment = Payment()
     payment.servicename = 'Total'
     payment.amount = totalamount
-    payment.paymentdate = datetime.strptime(querydate, '%Y-%m-%d').date
+    
+    summarydate = ''
+    if querydate != '' :
+        summarydate = datetime.strptime(querydate, '%Y-%m-%d').date
+    if queryyear != '' :
+        summarydate = queryyear
+    if querymonth != '' :
+        summarydate = summarydate + '-' +querymonth
+        
+    payment.paymentdate = summarydate
     paymentList.append(payment)
     return paymentList
+
+def goPaymentSummaryList(request):
+    outDic = {}
+    outDic['hightlight'] = '6'
+    
+    #query form show
+    yearList = []
+    year = datetime.strftime(date.today(), '%Y')
+    for i in range(0, 5) :
+        yearList.append(int(year) - i)
+    outDic['yearList'] = yearList
+    doctrList = DoctorInfo.objects.all()
+    outDic['doctrList'] = doctrList
+    #query form show
+        
+    #today = str(date.today())
+    paymentList = getPaymentList(queryyear=year)
+    outDic['paymentList'] = paymentList
+    usedTemplate = get_template('admin/paymentsummarylist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def searchPaymentSummaryList(request):
+    outDic = {}
+    outDic['hightlight'] = '6'
+    
+    #query form show
+    yearList = []
+    year = datetime.strftime(date.today(), '%Y')
+    for i in range(0, 5) :
+        yearList.append(int(year) - i)
+    outDic['yearList'] = yearList
+    doctrList = DoctorInfo.objects.all()
+    outDic['doctrList'] = doctrList
+    #query form show
+        
+    queryyear = request.GET['queryyear']
+    querymonth = request.GET['querymonth']
+    doctorId = request.GET['doctorid']
+    paymentList = getPaymentList(queryyear=queryyear, querymonth=querymonth, doctorId=doctorId)
+    outDic['paymentList'] = paymentList
+    usedTemplate = get_template('admin/paymentsummarylist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
