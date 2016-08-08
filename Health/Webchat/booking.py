@@ -25,7 +25,7 @@ def booking_form(request):
     for i in range(1, 8):
         dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
 
-    REDIRECT_URI = ''
+    REDIRECT_URI = 'www.pengchengguoyi.cn/health/webchat/booking_form/'
     CODE = ''
     openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
     membership = getMembership(openId=openId)

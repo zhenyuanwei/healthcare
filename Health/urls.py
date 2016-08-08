@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'^admin/doprepayment/$', payment.doPrePayment),
     url(r'^admin/dopayment/$', payment.doPayment),
     url(r'^admin/gopaymentlist/$', payment.goPaymentList),
+    url(r'^admin/querypaymentlist/$', payment.searchPaymentList),
 ] 
 
 

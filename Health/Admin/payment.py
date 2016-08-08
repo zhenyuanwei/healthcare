@@ -12,6 +12,7 @@ from HealthModel.models import Membership
 from HealthModel.models import Transaction
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
 
 class Payment :
     id = 0
@@ -143,8 +144,18 @@ def doPayment(request):
 def goPaymentList(request):
     outDic = {}
     outDic['hightlight'] = '6'
+    
+    #query form show
+    dayList = []
+    tempday = datetime.now()
+    for i in range(1, 8) :
+        dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
+    outDic['dayList'] = dayList
+    doctrList = DoctorInfo.objects.all()
+    outDic['doctrList'] = doctrList
+    #query form show
+        
     today = str(date.today())
-    #today = '2016-08'
     paymentList = getPaymentList(querydate=today)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
@@ -154,8 +165,20 @@ def goPaymentList(request):
 def searchPaymentList(request):
     outDic = {}
     outDic['hightlight'] = '6'
-    querydate = '2014-09-08'
-    paymentList = getPaymentList(querydate=querydate)
+    
+    #query form show
+    dayList = []
+    tempday = datetime.now()
+    for i in range(1, 8) :
+        dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
+    outDic['dayList'] = dayList
+    doctrList = DoctorInfo.objects.all()
+    outDic['doctrList'] = doctrList
+    #query form show
+    
+    querydate = request.GET['querydate']
+    doctorId = request.GET['doctorid']
+    paymentList = getPaymentList(querydate=querydate, doctorId=doctorId)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
     html = usedTemplate.render(outDic)
@@ -194,5 +217,6 @@ def getPaymentList(querydate, doctorId=''):
     payment = Payment()
     payment.servicename = 'Total'
     payment.amount = totalamount
+    payment.paymentdate = datetime.strptime(querydate, '%Y-%m-%d').date
     paymentList.append(payment)
     return paymentList
