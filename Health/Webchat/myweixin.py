@@ -3,7 +3,7 @@ Created on Jul 19, 2016
 
 @author: weizhenyuan
 '''
-from wechatpy.oauth import WeChatOAuth
+#from wechatpy.oauth import WeChatOAuth
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -20,8 +20,8 @@ def goRedirect(page):
     #baseurl = 'http://127.0.0.1:8000/webchat/'
     REDIRECT_URI = baseurl + page
     #scope = 'snsapi_userinfo'
-    weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
-    goUrl = weChatOAuth.authorize_url
+    #weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
+    #goUrl = weChatOAuth.authorize_url
     return goUrl
     #return REDIRECT_URI
 
@@ -31,7 +31,8 @@ def getOpenID(code, page=''):
     baseurl = 'http://www.pengchengguoyi.cn/health/webchat/'
     REDIRECT_URI = baseurl + page
     #scope = 'snsapi_userinfo'
-    weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
-    res = weChatOAuth.fetch_access_token(code=code)
-    openId = res['openid']
+    #weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
+    #res = weChatOAuth.fetch_access_token(code=code)
+    #openId = res['openid']
+    openId = ''
     return openId
