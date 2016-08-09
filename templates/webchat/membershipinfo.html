@@ -2,15 +2,22 @@
 <head>
 	<meta charset="utf-8" /> 
     <title>Booking</title>
+    <!-- 引入 jQuery Mobile 样式 -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<!-- 引入 jQuery 库 -->
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- 引入 jQuery Mobile 库 -->
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 </head>
 <body>
-	<p><br>您的预约内容如下，请准时到诊所就诊:</br>
-			<br>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</br>
-	        <br>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</br>
-	        <br>会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</br>
-	        <br>预约医生 : {{ bookeddoctor }}</br>
-	        <br>预约项目 : {{ bookeditem }}</br>
-	        <br>预约时间 : {{ bookedtime }}</br>
+	<p><br>您的会员信息如下:</br>
+			<br>姓名 : {{ membership.vipname }}</br>
+	        <br>电话 : {{ membership.phonenumber }}</br>
+	        <br>会员号 : {{ membership.vipno }}</br>
+	        <br>会员折扣 : {{ membership.discountrate }}</br>
+	        <br>余额 : {{ membership.amount }}</br>
 	</p>
 </body>
 </html>
