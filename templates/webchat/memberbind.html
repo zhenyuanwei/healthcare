@@ -20,8 +20,9 @@
 			<p style="color:#FF0000">会员卡号或者手机号码错误，请检查后，重新输入。</p>
 		{% endif %}
 	    <form action="../bindMembership/" method="get">
-	        会员卡号 : <input type="text" name="vipno" size="10" maxlength="10" required>
-	        手机号码 : <input type="text" name="phonenumber" size="10" maxlength="10" required>
+	        会员卡号 : <input type="text" name="vipno" size="10" maxlength="10">
+	        手机号码 : <input type="text" name="phonenumber" size="10" maxlength="10">
+	        <input type="hidden" name="openId" size="10" maxlength="10" value="{{ openId }}">
 	        <center>
 		        <button class="ui-btn ui-btn-inline" type="submit">绑定</button>
 		        <button class="ui-btn ui-btn-inline" type="reset">取消</button>

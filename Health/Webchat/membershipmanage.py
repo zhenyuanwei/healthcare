@@ -33,12 +33,14 @@ def bindMembershipCheck(request):
         html = usedTemplate.render(membershipDic)
         return HttpResponse(html)
     else :
+        outDic = {}
+        outDic['openId'] = openId
         usedTemplate = get_template('webchat/memberbind.html')
         html = usedTemplate.render()
         return HttpResponse(html)
     
 def bindMembership(request):
-    openId = '000'
+    openId = request.GET['openId']
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['vipno']
     membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
