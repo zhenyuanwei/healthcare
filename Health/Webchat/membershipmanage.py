@@ -36,7 +36,7 @@ def bindMembershipCheck(request):
         outDic = {}
         outDic['openId'] = openId
         usedTemplate = get_template('webchat/memberbind.html')
-        html = usedTemplate.render()
+        html = usedTemplate.render(outDic)
         return HttpResponse(html)
     
 def bindMembership(request):

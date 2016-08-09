@@ -37,14 +37,19 @@ def booking_form(request):
         dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
 
     
-    membership = getMembership(openId=openId)
     vipno = ''
     vipname = ''
     phonenumber = ''
-    if membership :
+    
+    try :
+        membership = getMembership(openId=openId)
         vipno = membership.vipno
         vipname = membership.vipname
         phonenumber = membership.phonenumber
+    except :
+        vipno = ''
+        vipname = ''
+        phonenumber = ''
     
     ListDic = {'doctorInfoList' : doctorInfoList, 
                'serviceTypeList' : serviceTypeList, 
