@@ -9,11 +9,11 @@ from Health.Webchat.myweixin import getOpenID
 from HealthModel.models import Membership
 from Health.formatValidation import phoneNumberCheck
 def getMembership(openId):
-    membership = Membership.objects.filter(webchatid=openId)
+    membership = Membership.objects.get(webchatid=openId)
     return membership
 
 def getMembership2(vipno, phonenumber):
-    membership = Membership.objects.filter(vipno=vipno, phonenumber=phonenumber)
+    membership = Membership.objects.get(vipno=vipno, phonenumber=phonenumber)
     return membership
 
 def bindMembershipCheck(request):
@@ -43,15 +43,15 @@ def bindMembership(request):
     openId = request.GET['openId']
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['vipno']
-    membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
-    if membership :
+    try :
+        membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
         membership.webchatid = openId
         membership.save()
         usedTemplate = get_template('webchat/membershipinfo.html')
         membershipDic = {'membership' : membership}
         html = usedTemplate.render(membershipDic)
         return HttpResponse(html)
-    else :
+    except :
         usedTemplate = get_template('webchat/memberbind.html')
         messageDic = {'messages' : 'OK'}
         html = usedTemplate.render(messageDic)
