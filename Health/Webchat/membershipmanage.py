@@ -26,13 +26,13 @@ def bindMembershipCheck(request):
         openId = '000'
         print '------------this user is not binded-----------'
     #get webchat user
-    membership = getMembership(openId=openId)
-    if membership :
+    try :
+        membership = getMembership(openId=openId)
         usedTemplate = get_template('webchat/membershipinfo.html')
         membershipDic = {'membership' : membership}
         html = usedTemplate.render(membershipDic)
         return HttpResponse(html)
-    else :
+    except :
         outDic = {}
         outDic['openId'] = openId
         usedTemplate = get_template('webchat/memberbind.html')
