@@ -9,8 +9,8 @@ from Health.Webchat.myweixin import getOpenID
 
 def hello(request):
     context          = {}
-    #openid = getOpenID(REDIRECT_URI='', CODE='')
-    code = request.GET['code']
-    context['hello'] = code
-    return render(request, 'hello.html', context)
-    "return render(request, 'webchat/booking_form.html', context)"
+    
+    #code = request.GET['code']
+    #context['hello'] = code
+    #return render(request, 'hello.html', context)
+    return getOpenID(REDIRECT_URI='', CODE='')

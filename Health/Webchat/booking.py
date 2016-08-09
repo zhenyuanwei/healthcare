@@ -18,6 +18,16 @@ from HealthModel.models import Membership
 
 "@csrf_exempt"
 def booking_form(request):
+    #get webchat user
+    openId = '000'
+    try :
+        code = request.GET['code']
+        openId = getOpenID(code=code)
+    except :
+        openId = '000'
+        print '------------this user is not binded-----------'
+    #get webchat user
+    
     doctorInfoList = DoctorInfo.objects.all()
     serviceTypeList = ServiceType.objects.all()
     today = datetime.datetime.now()
@@ -25,9 +35,7 @@ def booking_form(request):
     for i in range(1, 8):
         dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
 
-    REDIRECT_URI = 'www.pengchengguoyi.cn/health/webchat/booking_form/'
-    CODE = ''
-    openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
+    
     membership = getMembership(openId=openId)
     vipno = ''
     vipname = ''
@@ -163,9 +171,16 @@ def bookingCancel(request):
     return HttpResponse(html)
 
 def mybooking(request):
-    REDIRECT_URI = ''
-    CODE = ''
-    openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
+    #get webchat user
+    openId = '000'
+    try :
+        code = request.GET['code']
+        openId = getOpenID(code=code)
+    except :
+        openId = '000'
+        print '------------this user is not binded-----------'
+    #get webchat user
+    
     membership = getMembership(openId=openId)
     if membership :
         vipno = membership.vipno

@@ -17,9 +17,15 @@ def getMembership2(vipno, phonenumber):
     return membership
 
 def bindMembershipCheck(request):
-    REDIRECT_URI = ''
-    CODE = ''
-    openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
+    #get webchat user
+    openId = '000'
+    try :
+        code = request.GET['code']
+        openId = getOpenID(code=code)
+    except :
+        openId = '000'
+        print '------------this user is not binded-----------'
+    #get webchat user
     membership = getMembership(openId=openId)
     if membership :
         usedTemplate = get_template('webchat/membershipinfo.html')
@@ -32,13 +38,11 @@ def bindMembershipCheck(request):
         return HttpResponse(html)
     
 def bindMembership(request):
+    openId = '000'
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['vipno']
     membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
     if membership :
-        REDIRECT_URI = ''
-        CODE = ''
-        openId = getOpenID(REDIRECT_URI=REDIRECT_URI, CODE=CODE)
         membership.webchatid = openId
         membership.save()
         usedTemplate = get_template('webchat/membershipinfo.html')

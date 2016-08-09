@@ -27,9 +27,11 @@ from Health.Admin import dbmainten
 from Health.Webchat import membershipmanage
 from Health.Webchat import introduce
 from Health.Admin import payment
+from Health.Webchat import myweixin
 
 urlpatterns = [
     url(r'^hello/$', helloworld.hello),
+    url(r'^webchat/goredirect/$', myweixin.goUrl),
     url(r'^webchat/introduce/$', introduce.introduce),
     url(r'^webchat/booking_form/$', booking.booking_form),
     url(r'^webchat/booking/$', booking.booking),
