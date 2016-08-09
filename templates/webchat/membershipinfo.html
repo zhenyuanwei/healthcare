@@ -4,12 +4,13 @@
     <title>Booking</title>
 </head>
 <body>
-	<p><br>您的会员信息如下:</br>
-			<br>姓名 : {{ membership.vipname }}</br>
-	        <br>电话 : {{ membership.phonenumber }}</br>
-	        <br>会员号 : {{ membership.vipno }}</br>
-	        <br>会员折扣 : {{ membership.discountrate }}</br>
-	        <br>余额 : {{ membership.amount }}</br>
+	<p>
+	<div class="ui-field-contain"><label>您的会员信息如下:</label></div>
+	<div class="ui-field-contain"><label>姓名 : {{ membership.vipname }}</label></div>
+	<div class="ui-field-contain"><label>电话 : {{ membership.phonenumber }}</label></div>
+	<div class="ui-field-contain"><label>会员号 : {{ membership.vipno }}</label></div>
+	<div class="ui-field-contain"><label>会员折扣 : {{ membership.discountrate }}</label></div>
+	<div class="ui-field-contain"><label>余额 : {{ membership.amount }}</label></div>
 	</p>
 </body>
 </html>

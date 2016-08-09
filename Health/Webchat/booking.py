@@ -187,8 +187,8 @@ def mybooking(request):
         print '------------this user is not binded-----------'
     #get webchat user
     
-    membership = getMembership(openId=openId)
-    if membership :
+    try :
+        membership = getMembership(openId=openId)
         vipno = membership.vipno
         bookingInfo = BookingInfo.objects.filter(membercard=vipno, status=1)
         outputDic = {}
@@ -209,7 +209,7 @@ def mybooking(request):
         usedTemplate = get_template('webchat/booking.html')
         html = usedTemplate.render(outputDic)
         return HttpResponse(html)
-    else :
+    except :
         usedTemplate = get_template('webchat/message.html')
         html = usedTemplate.render()
         return HttpResponse(html)
