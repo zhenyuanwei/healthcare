@@ -26,6 +26,7 @@ def booking_form(request):
     except :
         openId = '000'
         print '------------this user is not binded-----------'
+        
     #get webchat user
     
     doctorInfoList = DoctorInfo.objects.all()

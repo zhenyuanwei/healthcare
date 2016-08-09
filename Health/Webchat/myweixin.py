@@ -34,4 +34,5 @@ def getOpenID(code, page=''):
     weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
     res = weChatOAuth.fetch_access_token(code=code)
     openId = res['openid']
+    print '------------open id =' + openId +'----------------'
     return openId
