@@ -231,7 +231,7 @@ def doMembership(request):
     
 
 def addMembership(request):
-    vipno = request.GET['phonenumber']
+    vipno = request.GET['vipno']
     vipname = request.GET['vipname']
     vipnameid = request.GET['vipnameid']
     phonenumber = request.GET['phonenumber']
@@ -258,6 +258,7 @@ def addMembership(request):
         membership.amount = amount
         membership.lastamount = lastamount
         membership.discountrate = discountrate
+        membership.discountrate2 = discountrate
         membership.discounttype = discounttype
         membership.webchatid = webchatid
         membership.save()
@@ -267,13 +268,15 @@ def updateMembership(request):
     vipid = request.GET['vipid']
     vipname = request.GET['vipname']
     phonenumber = request.GET['phonenumber']
+    vipno = request.GET['vipno']
     discountrate = request.GET['discountrate']
     
     membership = Membership.objects.get(id = vipid)
     membership.vipname = vipname
-    membership.vipno = phonenumber
+    membership.vipno = vipno
     membership.phonenumber = phonenumber
     membership.discountrate = discountrate
+    membership.discountrate2 = discountrate
     membership.save()
 
 def updateMembershipAmount(request):

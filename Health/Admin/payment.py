@@ -43,7 +43,7 @@ def doPrePayment(request):
     outDic['hightlight'] = '5'
     
     paymenttype = request.GET['paymenttype']
-    vipno = request.GET['vipno']
+    phonenumber = request.GET['phonenumber']
     doctor = request.GET['doctor']
     servicetype = request.GET['servicetype']
     servicerate = request.GET['servicerate']
@@ -56,15 +56,20 @@ def doPrePayment(request):
         service = ServiceType.objects.get(id=servicetype)
         outDic['service'] = service
         if paymenttype == '02' :
-            membership = Membership.objects.get(vipno=vipno)
+            membership = Membership.objects.get(phonenumber=phonenumber)
             servicediscount = membership.discountrate
+            
+            now = datetime.now().strftime('%H')
+            if now < 13 :
+                servicediscount = membership.discountrate2
+                
             outDic['membership'] = membership
             
         servicerate = service.servicerate
         amount = servicerate * float(servicediscount)
-        #amount = int(amount)
+        
     except :
-        print '--------there is no membership : vipno = ' + vipno + '------------'
+        print '--------there is no membership : phonenumber = ' + phonenumber + '------------'
         outDic['isMessage'] = 'OK'
         doctorList = DoctorInfo.objects.all()
         servicetypeList = ServiceType.objects.all()
@@ -76,7 +81,7 @@ def doPrePayment(request):
     finally:
         outDic['amount'] = amount
         outDic['paymenttype'] = paymenttype
-        outDic['vipno'] = vipno
+        outDic['vipno'] = phonenumber
         outDic['doctor'] = doctor
         outDic['servicetype'] = servicetype
         outDic['servicerate'] = servicerate

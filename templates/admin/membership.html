@@ -12,7 +12,7 @@
 			    	<label for="vipno">会员号<b style="color:#FF0000">*</b> : </label>
 			    	<input type="hidden" name="vipid" id="vipid" value="{{ membership.id }}">
 			    	{{ membership.vipno }}
-			    	<input type="hidden" name="vipno" id="vipno" size="10" maxlength="10">
+			    	<input type="hidden" name="vipno" id="vipno" size="10" maxlength="10" value="{{ membership.vipno }}">
 			    	{% endif %}
 			    </div>
 			    <div class="ui-field-contain">
@@ -24,7 +24,7 @@
 			    	<input type="text" name="vipnameid" id="vipnameid" size="10" maxlength="18" value="{{ membership.vipnameid }}" {% if flag != 'A' %}disabled{% endif %}>
 			    </div>
 			    <div class="ui-field-contain">	
-			    	<label for="phonenumber">会员电话<b style="color:#FF0000">*</b> : </label>
+			    	<label for="phonenumber">手机号<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11" value="{{ membership.phonenumber }}" {% if flag == 'M' %}disabled{% endif %}>
 			    </div>
 			    <div class="ui-field-contain">	
