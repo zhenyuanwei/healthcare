@@ -30,9 +30,9 @@
 			    <div class="ui-field-contain">	
 			    	<label for="discountrate">会员折扣<b style="color:#FF0000">*</b> : </label>
 			    	<select name="discountrate" id="discountrate" {% if flag == 'M' %}disabled{% endif %}>
-			    		<option value="0.8" {% if membership.discountrate == 0.8 %}selected{% endif %}>银星</option>
-			    		<option value="0.7" {% if membership.discountrate == 0.7 %}selected{% endif %}>金星</option>
-						<option value="0.5" {% if membership.discountrate == 0.5 %}selected{% endif %}>钻石</option>
+			    	{% for servicerate in serviceRateList %}
+			    		<option value="{{ servicerate.rate }}" {% if membership.discountrate == servicerate.rate %}selected{% endif %}>{{ servicerate.ratename }}</option>
+			    	{% endfor %}
 					</select>
 				</div>
 				{% if flag != 'U' %}

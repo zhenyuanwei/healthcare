@@ -10,6 +10,7 @@ from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
+from HealthModel.models import ServiceRate
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
@@ -29,6 +30,8 @@ def goPrePayment(request):
     servicetypeList = ServiceType.objects.all()
     usedTemplate = get_template('admin/prepayment.html')
     outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '5'
     outDic['doctorList'] = doctorList
     outDic['servicetypeList'] = servicetypeList

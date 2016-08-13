@@ -56,7 +56,8 @@ def booking_form(request):
                'dayList' : dayList,
                'vipno' : vipno,
                'vipname' : vipname,
-               'phonenumber' : phonenumber}
+               'phonenumber' : phonenumber,
+               'openId' : openId}
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(ListDic)
     return HttpResponse(html)
@@ -75,6 +76,7 @@ def booking(request):
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
     bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
+    openId = request.GET['openId']
     
     checkFlag = True;
     if not required(name) :
@@ -90,7 +92,7 @@ def booking(request):
     
     #check booking
     checkDBFlag = False
-    tempBookingList = BookingInfo.objects.filter(phonenumber=phonenumber, status='1')
+    tempBookingList = BookingInfo.objects.filter(webchatid=openId, status='1')
     if tempBookingList :
         checkDBFlag = True
 
@@ -125,7 +127,7 @@ def booking(request):
             bookingInfo.bookeddoctor = bookeddoctor
             bookingInfo.bookeditem = bookeditem
             bookingInfo.bookedtime = bookedtime
-            bookingInfo.webchatid = ' '
+            bookingInfo.webchatid = openId
             bookingInfo.status = '1'
             bookingInfo.save()
             '''return to next page'''
@@ -188,9 +190,7 @@ def mybooking(request):
     #get webchat user
     
     try :
-        membership = getMembership(openId=openId)
-        vipno = membership.vipno
-        bookingInfo = BookingInfo.objects.filter(membercard=vipno, status=1)
+        bookingInfo = BookingInfo.objects.get(webchatid=openId, status=1)
         outputDic = {}
         outputDic['name'] = bookingInfo.name
         outputDic['phonenumber'] = bookingInfo.phonenumber

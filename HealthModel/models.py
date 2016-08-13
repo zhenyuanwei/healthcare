@@ -19,6 +19,7 @@ class Membership(models.Model):
     lastamount = models.FloatField()
     discounttype = models.CharField(max_length = 20)
     discountrate = models.FloatField()
+    discountrate2 = models.FloatField()
     webchatid = models.CharField(max_length = 50)
     
     
@@ -26,6 +27,8 @@ class DoctorInfo(models.Model):
     id = models.AutoField(primary_key=True)
     doctorname = models.CharField(max_length = 20)
     phonenumber = models.CharField(max_length = 11)
+    comments = models.CharField(max_length = 400)
+    service = models.CharField(max_length = 200)
     webchatid = models.CharField(max_length = 50)
     
 class ServiceType(models.Model):
@@ -33,11 +36,10 @@ class ServiceType(models.Model):
     servicename = models.CharField(max_length = 50)
     servicerate = models.IntegerField()
     
-class DoctorServiceType(models.Model):
+class ServiceRate(models.Model):
     id = models.AutoField(primary_key=True)
-    doctorid = models.IntegerField()
-    servicetypeid = models.IntegerField()
-    servicename = models.CharField(max_length = 50)
+    ratename = models.CharField(max_length = 50)
+    rate = models.FloatField()
     
 class BookingInfo(models.Model):
     id = models.AutoField(primary_key=True)

@@ -49,9 +49,9 @@
 	   	<label for="servicediscount">折扣 : </label>
 	   	<select name="servicediscount" id="servicediscount">
 	   		<option value="1.0">没有折扣</option>
-		    <option value="0.8">0.8</option>
-			<option value="0.7">0.7</option>
-			<option value="0.5">0.5</option>
+		    {% for servicerate in serviceRateList %}
+	    	<option value="{{ servicerate.rate }}">{{ servicerate.ratename }}</option>
+	    	{% endfor %}
 		</select>
 		</div>
 		

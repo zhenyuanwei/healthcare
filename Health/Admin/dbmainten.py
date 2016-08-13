@@ -6,10 +6,10 @@ Created on Jul 18, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import AdminUser
+from HealthModel.models import AdminUser, ServiceRate
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
-from HealthModel.models import DoctorServiceType
+from HealthModel.models import ServiceRate
 from HealthModel.models import Membership
 from django.template.context_processors import request
 from django.http import HttpResponseRedirect
@@ -24,6 +24,8 @@ def goDoctorInfo(request):
     usedTemplate = get_template('admin/doctor.html')
     outDic = {}
     outDic['hightlight'] = '2'
+    serviceList = ServiceType.objects.all()
+    outDic['serviceList'] = serviceList
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
@@ -40,7 +42,14 @@ def addDoctorInfo(request):
     doctorid = request.GET['doctorid'] 
     docotrName = request.GET['doctorname']
     phoneNumber = request.GET['phonenumber']
-    webchatId = request.GET['webchatid']
+    comments = request.GET['comments']
+    webchatId = ''
+    service = ''
+    for key in request.GET.keys() :
+        if key[0:7] == 'service' :
+            service = service + request.GET[key] + ','
+            
+    #print service
     
     try :
         if doctorid.strip() == '' :
@@ -50,7 +59,9 @@ def addDoctorInfo(request):
             
         doctor.doctorname = docotrName
         doctor.phonenumber = phoneNumber
+        doctor.comments = comments
         doctor.webchatid = webchatId
+        doctor.service = service
         doctor.save()
     except :
         print '-------there is no doctor id = ' + doctorid + '--------'
@@ -79,6 +90,8 @@ def goUpdateDoctorInfo(request):
         outDic = {}
         outDic['hightlight'] = '2'
         outDic['doctorinfo'] = doctor
+        serviceList = ServiceType.objects.all()
+        outDic['serviceList'] = serviceList
         html = usedTemplate.render(outDic)
         return HttpResponse(html)
 
@@ -141,7 +154,10 @@ def doServiceType(request):
 
 def goMembership(request):
     usedTemplate = get_template('admin/membership.html')
+    
     outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '4'
     outDic['flag'] = 'A'
     html = usedTemplate.render(outDic)
@@ -171,6 +187,8 @@ def goMembershipUpdate(request):
     membership = Membership.objects.get(id = temId)
     usedTemplate = get_template('admin/membership.html')
     outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
     outDic['membership'] = membership
     outDic['flag'] = 'U'
     outDic['hightlight'] = '4'
