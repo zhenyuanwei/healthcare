@@ -4,7 +4,7 @@
     <title>Booking</title>
 </head>
 <body>
-	<p>
+	<p><font size="18">
 		{% if isMessage|length == 2 %}
 			<br><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></br>
 		{% else %}
@@ -19,6 +19,6 @@
 		<form>
 		<hidden name="bookingid" id="bookingid" value="{{ bookingid }}">
 		</form>
-	</p>
+	</font></p>
 </body>
 </html>
