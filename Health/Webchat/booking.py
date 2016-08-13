@@ -192,6 +192,7 @@ def mybooking(request):
     try :
         bookingInfo = BookingInfo.objects.get(webchatid=openId, status=1)
         outputDic = {}
+        outputDic['bookingid'] = bookingInfo.id
         outputDic['name'] = bookingInfo.name
         outputDic['phonenumber'] = bookingInfo.phonenumber
         outputDic['membercard'] = bookingInfo.membercard
