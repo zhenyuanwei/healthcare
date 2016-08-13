@@ -10,7 +10,8 @@
 					<tr>
 						<th>No.</th>
 						<th>姓名</th>
-						<th>电话</th>
+						<!-- <th>电话</th> -->
+						<th>医生简介</th>
 						<th>信息更新</th>
 						<th>删除</th>
 					</tr>
@@ -19,7 +20,8 @@
 					<tr>
 						<td>{{ doctorinfo.id }}</td>
 						<td>{{ doctorinfo.doctorname }}</td>
-						<td>{{ doctorinfo.phonenumber }}</td>
+						<!-- <td>{{ doctorinfo.phonenumber }}</td> -->
+						<td>{{ doctorinfo.comments }}</td>
 					    <td><a href="../doctorupdate/?id={{ doctorinfo.id }}">信息更新</a></td>
 					    <td><a href="../dodoctordelete/?id={{ doctorinfo.id }}">删除</a></td>
 					</tr>
