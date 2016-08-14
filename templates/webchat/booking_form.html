@@ -12,7 +12,14 @@
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
-		
+		<script>
+		function submitForm(){
+			//获取form表单对象
+			var form = document.getElementById("bookingform");
+			form.action = "../refershdoctor/"
+			form.submit();//form表单提交
+			}
+		</script>
 	</head>
 	<body>
 		<div>
@@ -20,7 +27,7 @@
 				{% if messages|length == 2 %}
 					<p style="color:#FF0000">请正确输入必填项目后，重新提交。</p>
 				{% endif %}
-			    <div><form action="../booking/" method="get">
+			    <div><form id="bookingform" action="../booking/" method="get">
 				    <div class="ui-field-contain">
 				    	<label for="name">姓名 : <b style="color:#FF0000">*</b> : </label>
 				    	<input type="text" name="name" id="name" size="10" maxlength="10" value="{{ vipname }}">
@@ -39,10 +46,11 @@
 			        
 			        <div class="ui-field-contain">
 				    	<label for="bookeddoctor">预约医生 : </label>
+				    	<!-- <select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();"> -->
 				    	<select name="bookeddoctor" id="bookeddoctor">
 						    <option value="0"></option>
 							{% for doctorInfo in doctorInfoList %}
-								<option value="{{ doctorInfo.id }}">{{ doctorInfo.doctorname }}</option>
+								<option value="{{ doctorInfo.id }}" {%if doctorInfo.id == bookeddoctor %} selected {% endif %}>{{ doctorInfo.doctorname }}</option>
 							{% endfor %}
 						</select>
 					</div>

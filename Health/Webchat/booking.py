@@ -28,12 +28,18 @@ def booking_form(request):
         print '------------this user is not binded-----------'
         
     #get webchat user
+    listDic = initForm(openId=openId)
     
+    usedTemplate = get_template('webchat/booking_form.html')
+    html = usedTemplate.render(listDic)
+    return HttpResponse(html)
+
+def initForm(openId):
     doctorInfoList = DoctorInfo.objects.all()
     serviceTypeList = ServiceType.objects.all()
     today = datetime.datetime.now()
     dayList = []
-    for i in range(1, 8):
+    for i in range(0, 7):
         dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
 
     
@@ -51,25 +57,16 @@ def booking_form(request):
         vipname = ''
         phonenumber = ''
     
-    ListDic = {'doctorInfoList' : doctorInfoList, 
+    listDic = {'doctorInfoList' : doctorInfoList, 
                'serviceTypeList' : serviceTypeList, 
                'dayList' : dayList,
                'vipno' : vipno,
                'vipname' : vipname,
                'phonenumber' : phonenumber,
                'openId' : openId}
-    usedTemplate = get_template('webchat/booking_form.html')
-    html = usedTemplate.render(ListDic)
-    return HttpResponse(html)
-    """return render_to_response('webchat/booking_form.html')"""
-
+    return listDic
 
 def booking(request):
-    """valueDic = {'rlt' : request.GET('q')}
-    htmlContext = Context(valueDic)'''
-    content['rlt'] = request.GET['q']"""
-    '''save to db
-    '''
     name = request.GET['name']
     phonenumber = request.GET['phonenumber']
     membercard = request.GET['membercard']
@@ -150,10 +147,32 @@ def booking(request):
             html = usedTemplate.render(outputDic)
             return HttpResponse(html)
     else :
-        messageDic = {'messages' : 'OK'}
+        #messageDic = {'messages' : 'OK'}
+        listDic = initForm(openId=openId)
+        listDic['messages'] = 'OK'
         usedTemplate = get_template('webchat/booking_form.html')
-        html = usedTemplate.render(messageDic)
+        html = usedTemplate.render(listDic)
         return HttpResponse(html)
+    
+def refershDoctor(request):
+    vipname = request.GET['name']
+    phonenumber = request.GET['phonenumber']
+    vipno = request.GET['membercard']
+    bookeddoctor = request.GET['bookeddoctor']
+    #bookeditem = request.GET['bookeditem']
+    #bookeddate = request.GET['bookeddate']
+    #bookedtime = request.GET['bookedhour']
+    openId = request.GET['openId']
+    outDic = {}
+    outDic['vipname'] = vipname
+    outDic['openId'] = openId
+    outDic['phonenumber'] = phonenumber
+    outDic['vipno'] = vipno
+    outDic['bookeddoctor'] = bookeddoctor
+    
+    usedTemplate = get_template('webchat/booking_form.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
 
 def bookingCompleted(request):
     tempId = request.GET['id']
