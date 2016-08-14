@@ -28,6 +28,7 @@ from Health.Webchat import membershipmanage
 from Health.Webchat import introduce
 from Health.Admin import payment
 from Health.Webchat import myweixin
+from Health.Webchat import doctorManagement
 
 urlpatterns = [
     url(r'^hello/$', helloworld.hello),
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^webchat/bindMembershipCheck/$', membershipmanage.bindMembershipCheck),
     url(r'^webchat/bindMembership/$', membershipmanage.bindMembership),
     url(r'^webchat/mybooking/$', booking.mybooking),
+    url(r'^webchat/gobinddoctor/$', doctorManagement.gobindDoctor),
+    url(r'^webchat/dobinddoctor/$', doctorManagement.dobindDoctor),
     #Below is for administrator
     url(r'^admin/login/$', loginAction.login),
     url(r'^admin/doLogin/$', loginAction.doLogin),
