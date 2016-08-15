@@ -23,8 +23,14 @@ def gobindDoctor(request):
     outDic = {}
     outDic['openId'] = openId
     
-    usedTemplate = get_template('webchat/doctorbind.html')
-    html = usedTemplate.render(outDic)
+    try :
+        doctor = DoctorInfo.objects.get(webchatid=openId)
+        outDic['doctor'] = doctor
+        usedTemplate = get_template('webchat/doctorinfo.html')
+        html = usedTemplate.render(outDic)
+    except :
+        usedTemplate = get_template('webchat/doctorbind.html')
+        html = usedTemplate.render(outDic)
     return HttpResponse(html) 
 
 def dobindDoctor(request):
