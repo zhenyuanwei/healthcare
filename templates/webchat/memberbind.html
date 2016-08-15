@@ -15,8 +15,7 @@
 		
 	</head>
 	<body>
-		
-		{% if messages|length == 2 %}
+		{% if messages == 'OK' %}
 			<p style="color:#FF0000">会员卡号或者手机号码错误，请检查后，重新输入。</p>
 		{% endif %}
 	    <form action="../bindMembership/" method="get">

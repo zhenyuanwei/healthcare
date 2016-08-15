@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^webchat/mybooking/$', booking.mybooking),
     url(r'^webchat/gobinddoctor/$', doctorManagement.gobindDoctor),
     url(r'^webchat/dobinddoctor/$', doctorManagement.dobindDoctor),
+    url(r'^webchat/godoctorquery/$', doctorManagement.goDoctorQuery),
     #Below is for administrator
     url(r'^admin/login/$', loginAction.login),
     url(r'^admin/doLogin/$', loginAction.doLogin),

@@ -16,8 +16,10 @@
 	</head>
 	<body>
 		
-		{% if messages|length == 2 %}
+		{% if messages == 'OK' %}
 			<p style="color:#FF0000">请输入正确的绑定码，如果不记得请与前台联系，重新设定新的绑定码。</p>
+		{% elif messages == 'BIND' %}
+			<p style="color:#FF0000">请先绑定后再进行查询。</p>
 		{% endif %}
 	    <form action="../dobinddoctor/" method="get">
 	    <div><div class="ui-field-contain">
