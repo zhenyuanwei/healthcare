@@ -73,7 +73,6 @@ def goDoctorQuery(request):
         today = date.today().strftime('%Y-%m-%d')
         paymentList = getPaymentList(doctorId=doctorId, querydate=today)
         outDic['paymentList'] = paymentList
-        print paymentList
         usedTemplate = get_template('webchat/doctorpaymentlist.html')
         html = usedTemplate.render(outDic)
     except :
@@ -83,6 +82,33 @@ def goDoctorQuery(request):
     finally:
         return HttpResponse(html) 
 
-def doDoctorQuery(request):
-    return
+    
+def goDoctorMonthQuery(request):
+    #get webchat user
+    openId = '000'
+    try :
+        code = request.GET['code']
+        openId = getOpenID(code=code)
+    except :
+        openId = '000'
+        print '------------this is not from weixin-----------'
+    #get webchat user
+    outDic = {}
+    outDic['openId'] = openId
+    try :
+        doctor = DoctorInfo.objects.get(webchatid=openId)
+        doctorId = doctor.id
+        today = date.today()
+        year = today.strftime('%Y')
+        month = today.strftime('%m')
+        paymentList = getPaymentList(doctorId=doctorId, queryyear=year, querymonth=month)
+        outDic['paymentList'] = paymentList
+        usedTemplate = get_template('webchat/doctorpaymentlist.html')
+        html = usedTemplate.render(outDic)
+    except :
+        outDic['messages'] = 'BIND'
+        usedTemplate = get_template('webchat/doctorbind.html')
+        html = usedTemplate.render(outDic)
+    finally:
+        return HttpResponse(html) 
         
