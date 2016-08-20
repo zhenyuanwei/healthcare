@@ -188,6 +188,9 @@ def booking(request):
                 outputDic['bookeditem'] = ServiceType.objects.get(id=tempBooking.bookeditem.strip()).servicename
             
             outputDic['isMessage'] = 'OK'
+            #cancel link show checked    
+            cancelFlag = getCancelFlag(bookedtime=tempBooking.bookedtime)
+            outputDic['cancelFlag'] = cancelFlag
             usedTemplate = get_template('webchat/booking.html')
             html = usedTemplate.render(outputDic)
             return HttpResponse(html) 
@@ -211,16 +214,8 @@ def booking(request):
             outputDic['bookedtime'] = bookedtime
             outputDic['bookingId'] = bookingInfo.id
             
-            #cancel booking
-            now = datetime.datetime.now()
-            now = now + datetime.timedelta(hours=canceltime)
-            nowstr = now.strftime('%Y/%m/%d %H:%M')
-            print nowstr
-            print bookedtime
-            cancelFlag = ''
-            if nowstr < bookedtime :
-                cancelFlag = 'OK'
-            print cancelFlag
+            #cancel link show checked    
+            cancelFlag = getCancelFlag(bookedtime=bookedtime)
             outputDic['cancelFlag'] = cancelFlag
             
             if request.GET['bookeddoctor'].strip() == '0' :
@@ -363,12 +358,7 @@ def mybooking(request):
             outputDic['bookeditem'] = ServiceType.objects.get(id=bookingInfo.bookeditem.strip()).servicename
         
         #cancel link show checked    
-        now = datetime.datetime.now()
-        now = now + datetime.timedelta(hours=canceltime)
-        nowstr = now.strftime('%Y/%m/%d %H:%M')
-        cancelFlag = ''
-        if nowstr < bookedtime :
-            cancelFlag = 'OK'
+        cancelFlag = getCancelFlag(bookedtime=bookedtime)
         outputDic['cancelFlag'] = cancelFlag
         
         usedTemplate = get_template('webchat/booking.html')
@@ -378,3 +368,12 @@ def mybooking(request):
         usedTemplate = get_template('webchat/message.html')
         html = usedTemplate.render()
         return HttpResponse(html)
+    
+def getCancelFlag(bookedtime):
+    now = datetime.datetime.now()
+    now = now + datetime.timedelta(hours=canceltime)
+    nowstr = now.strftime('%Y/%m/%d %H:%M')
+    cancelFlag = ''
+    if nowstr < bookedtime :
+        cancelFlag = 'OK'
+    return cancelFlag
