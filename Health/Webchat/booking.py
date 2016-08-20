@@ -17,6 +17,10 @@ from membershipmanage import getMembership
 from HealthModel.models import Membership
 
 "@csrf_exempt"
+timeBJ = 8
+starttime = 8
+endtime = 21
+
 def booking_form(request):
     #get webchat user
     openId = '000'
@@ -34,13 +38,12 @@ def booking_form(request):
     html = usedTemplate.render(listDic)
     return HttpResponse(html)
 
-def initForm(openId):
+def initForm(openId, doctorservice = '', doctorId='', queryDate=''):
     doctorInfoList = DoctorInfo.objects.all()
-    serviceTypeList = ServiceType.objects.all()
-    today = datetime.datetime.now()
-    dayList = []
-    for i in range(0, 7):
-        dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
+    serviceTypeList = getServiceList(doctorservice=doctorservice)
+    
+    dayList = getDaysList()
+    timeList = getTimeList(doctorId=doctorId, queryDate=queryDate)
 
     
     vipno = ''
@@ -63,8 +66,71 @@ def initForm(openId):
                'vipno' : vipno,
                'vipname' : vipname,
                'phonenumber' : phonenumber,
-               'openId' : openId}
+               'openId' : openId,
+               'timeList' : timeList}
     return listDic
+
+def getDaysList():
+    dayList = []
+    today = datetime.datetime.now()
+    now = int(today.strftime('%H')) + timeBJ + 1
+    print now
+    if now >= endtime :
+        for i in range(1, 8):
+            dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
+    else :
+        for i in range(0, 7):
+            dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
+        
+    return dayList
+
+def getTimeList(doctorId = '', queryDate = ''):
+    #queryDate = '2016/07/30'
+    #doctorId = '1'
+    
+    timeList = []
+    
+    now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
+    if now < starttime :
+        now = starttime
+        
+    if now >= endtime :
+        now = starttime
+    
+    if doctorId == '' :
+        for i in range(now, endtime):
+            timeList.append(str(i) + ':00')
+            
+    elif queryDate <> '' :
+        bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
+        bookingList = bookingList.filter(status='1')
+        bookingList = bookingList.filter(bookedtime__startswith=queryDate)
+        for i in range(now, endtime):
+            time = str(i) + ':00'
+            addflag = True
+            for booking in bookingList :
+                bookedtime = booking.bookedtime.split(' ')[1]
+                if bookedtime == time :
+                    addflag = False
+            if addflag :
+                timeList.append(time)
+    
+    return timeList
+
+def getServiceList(doctorservice = ''):
+    if doctorservice == '' :
+        serviceTypeList = ServiceType.objects.all()
+    else :
+        serviceTypeList = []
+        services = doctorservice.split(',')
+        for serviceId in services :
+            try :
+                service = ServiceType.objects.get(id=serviceId)
+                serviceTypeList.append(service)
+            except :
+                print '----------------------there is no service =' + serviceId
+                
+    return serviceTypeList
 
 def booking(request):
     name = request.GET['name']
@@ -163,12 +229,50 @@ def refershDoctor(request):
     #bookeddate = request.GET['bookeddate']
     #bookedtime = request.GET['bookedhour']
     openId = request.GET['openId']
-    outDic = {}
+    try :
+        doctor = DoctorInfo.objects.get(id=bookeddoctor)
+        doctorservice = doctor.service
+    except :
+        doctorservice = ''
+        print '----------- there is no doctor selected -----------'
+        
+    outDic = initForm(openId=openId, doctorservice=doctorservice)
+    
     outDic['vipname'] = vipname
     outDic['openId'] = openId
     outDic['phonenumber'] = phonenumber
     outDic['vipno'] = vipno
-    outDic['bookeddoctor'] = bookeddoctor
+    outDic['bookeddoctor'] = int(bookeddoctor)
+    
+    usedTemplate = get_template('webchat/booking_form.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def refershDate(request):
+    vipname = request.GET['name']
+    phonenumber = request.GET['phonenumber']
+    vipno = request.GET['membercard']
+    bookeddoctor = request.GET['bookeddoctor']
+    bookeditem = request.GET['bookeditem']
+    bookeddate = request.GET['bookeddate']
+    #bookedhour = request.GET['bookedhour']
+    openId = request.GET['openId']
+    try :
+        doctor = DoctorInfo.objects.get(id=bookeddoctor)
+        doctorservice = doctor.service
+    except :
+        doctorservice = ''
+        print '----------- there is no doctor selected -----------'
+        
+    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate)
+    
+    outDic['vipname'] = vipname
+    outDic['openId'] = openId
+    outDic['phonenumber'] = phonenumber
+    outDic['vipno'] = vipno
+    outDic['bookeddoctor'] = int(bookeddoctor)
+    outDic['bookeditem'] = int(bookeditem)
+    outDic['bookeddate'] = bookeddate
     
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(outDic)

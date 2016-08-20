@@ -19,6 +19,12 @@
 			form.action = "../refershdoctor/"
 			form.submit();//form表单提交
 			}
+		function submitForm2(){
+			//获取form表单对象
+			var form = document.getElementById("bookingform");
+			form.action = "../refershdate/"
+			form.submit();//form表单提交
+			}
 		</script>
 	</head>
 	<body>
@@ -27,6 +33,11 @@
 				{% if messages|length == 2 %}
 					<p style="color:#FF0000">请正确输入必填项目后，重新提交。</p>
 				{% endif %}
+				
+				{% if timeList|length == 0 %}
+					<p style="color:#FF0000">所选医生，当天的预约已满，请重新选择其他医生或者预约其他日期。</p>
+				{% endif %}
+				
 			    <div><form id="bookingform" action="../booking/" method="get">
 				    <div class="ui-field-contain">
 				    	<label for="name">姓名 : <b style="color:#FF0000">*</b> : </label>
@@ -46,11 +57,11 @@
 			        
 			        <div class="ui-field-contain">
 				    	<label for="bookeddoctor">预约医生 : </label>
-				    	<!-- <select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();"> -->
-				    	<select name="bookeddoctor" id="bookeddoctor">
+				    	<select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();">
+				    	<!-- <select name="bookeddoctor" id="bookeddoctor"> -->
 						    <option value="0"></option>
 							{% for doctorInfo in doctorInfoList %}
-								<option value="{{ doctorInfo.id }}" {%if doctorInfo.id == bookeddoctor %} selected {% endif %}>{{ doctorInfo.doctorname }}</option>
+								<option value="{{ doctorInfo.id }}" {% if doctorInfo.id == bookeddoctor %} selected="selected" {% endif %}>{{ doctorInfo.doctorname }}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -60,33 +71,22 @@
 				        <select name="bookeditem" id="bookeditem">
 						    <option value="0"></option>
 							{% for serviceType in serviceTypeList %}
-								<option value="{{ serviceType.id }}">{{ serviceType.servicename }}</option>
+								<option value="{{ serviceType.id }}" {% if serviceType.id == bookeditem %} selected="selected" {% endif %}>{{ serviceType.servicename }}</option>
 							{% endfor %}
 						</select>
 					</div>
 
 					<div class="ui-field-contain">
 				    	<label for="bookedtime">预约时间<b style="color:#FF0000">*</b></label>
-						<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true">
+						<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true"  onchange="submitForm2();">
 						    {% for optionDay in dayList %}
-								<option value="{{ optionDay }}">{{ optionDay }}</option>
+								<option value="{{ optionDay }}" {% if optionDay == bookeddate %} selected="selected" {% endif %}>{{ optionDay }}</option>
 							{% endfor %}
 						</select>
 						<select name="bookedhour" id="bookedhour" data-mini="true" data-inline="true">
-						    <option value="07:00">07:00</option>
-							<option value="08:00">08:00</option>
-							<option value="09:00">09:00</option>
-							<option value="10:00">10:00</option>
-							<option value="11:00">11:00</option>
-							<option value="12:00">12:00</option>
-							<option value="13:00">13:00</option>
-							<option value="14:00">14:00</option>
-							<option value="15:00">15:00</option>
-							<option value="16:00">16:00</option>
-							<option value="17:00">17:00</option>
-							<option value="18:00">18:00</option>
-							<option value="19:00">19:00</option>
-							<option value="20:00">20:00</option>
+						    {% for optionTime in timeList %}
+								<option value="{{ optionTime }}">{{ optionTime }}</option>
+							{% endfor %}
 						</select>
 					</div>
 					
