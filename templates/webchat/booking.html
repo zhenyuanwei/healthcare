@@ -13,7 +13,7 @@
 	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 </head>
 <body>
-	<p><font size="18">
+	<p>
 		{% if isMessage|length == 2 %}
 			<br><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></br>
 		{% else %}
@@ -28,6 +28,6 @@
 		<form>
 		<hidden name="bookingid" id="bookingid" value="{{ bookingid }}">
 		</form>
-	</font></p>
+	</p>
 </body>
 </html>
