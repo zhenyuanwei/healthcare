@@ -267,7 +267,7 @@ def refershDoctor(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def refershDate(request):
+'''def refershDate(request):
     vipname = request.GET['name']
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['membercard']
@@ -295,7 +295,7 @@ def refershDate(request):
     
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(outDic)
-    return HttpResponse(html)
+    return HttpResponse(html)'''
 
 def bookingCompleted(request):
     tempId = request.GET['id']
