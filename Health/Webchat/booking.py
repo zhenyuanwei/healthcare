@@ -242,8 +242,8 @@ def refershDoctor(request):
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['membercard']
     bookeddoctor = request.GET['bookeddoctor']
-    #bookeditem = request.GET['bookeditem']
-    #bookeddate = request.GET['bookeddate']
+    bookeditem = request.GET['bookeditem']
+    bookeddate = request.GET['bookeddate']
     #bookedtime = request.GET['bookedhour']
     openId = request.GET['openId']
     try :
@@ -253,13 +253,15 @@ def refershDoctor(request):
         doctorservice = ''
         print '----------- there is no doctor selected -----------'
         
-    outDic = initForm(openId=openId, doctorservice=doctorservice)
+    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate)
     
     outDic['vipname'] = vipname
     outDic['openId'] = openId
     outDic['phonenumber'] = phonenumber
     outDic['vipno'] = vipno
     outDic['bookeddoctor'] = int(bookeddoctor)
+    outDic['bookeditem'] = int(bookeditem)
+    outDic['bookeddate'] = bookeddate
     
     usedTemplate = get_template('webchat/booking_form.html')
     html = usedTemplate.render(outDic)
