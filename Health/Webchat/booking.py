@@ -20,6 +20,7 @@ from HealthModel.models import Membership
 timeBJ = 8
 starttime = 8
 endtime = 21
+canceltime = timeBJ + 1
 
 def booking_form(request):
     #get webchat user
@@ -99,14 +100,14 @@ def getTimeList(doctorId = '', queryDate = ''):
     
     if doctorId == '' :
         for i in range(now, endtime):
-            timeList.append(str(i) + ':00')
+            timeList.append(getTime(value=i))
             
     elif queryDate <> '' :
         bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         bookingList = bookingList.filter(status='1')
         bookingList = bookingList.filter(bookedtime__startswith=queryDate)
         for i in range(now, endtime):
-            time = str(i) + ':00'
+            time = getTime(value=i)
             addflag = True
             for booking in bookingList :
                 bookedtime = booking.bookedtime.split(' ')[1]
@@ -117,6 +118,14 @@ def getTimeList(doctorId = '', queryDate = ''):
     
     return timeList
 
+def getTime(value):
+    time = ''
+    if value < 10 :
+        time = '0' + str(value) + ':00'
+    else :
+        time = str(value) + ':00'
+    return time
+    
 def getServiceList(doctorservice = ''):
     if doctorservice == '' :
         serviceTypeList = ServiceType.objects.all()
@@ -200,11 +209,24 @@ def booking(request):
             outputDic['phonenumber'] = phonenumber
             outputDic['membercard'] = membercard
             outputDic['bookedtime'] = bookedtime
+            outputDic['bookingId'] = bookingInfo.id
+            
+            #cancel booking
+            now = datetime.datetime.now()
+            now = now + datetime.timedelta(hours=canceltime)
+            nowstr = now.strftime('%Y/%m/%d %H:%M')
+            print nowstr
+            print bookedtime
+            cancelFlag = ''
+            if nowstr < bookedtime :
+                cancelFlag = 'OK'
+            print cancelFlag
+            outputDic['cancelFlag'] = cancelFlag
             
             if request.GET['bookeddoctor'].strip() == '0' :
                 outputDic['bookeddoctor'] = ''
             else :
-                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeditem).doctorname
+                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeddoctor).doctorname
                 
             if request.GET['bookeditem'].strip() == '0' :
                 outputDic['bookeditem'] = '' 
@@ -280,7 +302,7 @@ def refershDate(request):
 
 def bookingCompleted(request):
     tempId = request.GET['id']
-    updateBooking(tempId, '9')
+    updateBooking(tempId=tempId, tempStatus='9')
     usedTemplate = get_template('admin/bookinglist.html')
     bookingList = BookingInfo.objects.all().extra(where=["status in ('1')"])
     bookingListDic = {'bookingList' : bookingList}
@@ -294,11 +316,18 @@ def updateBooking(tempId, tempStatus):
     
 def bookingCancel(request):
     tempId = request.GET['id']
-    updateBooking(tempId, '0')
+    updateBooking(tempId=tempId, tempStatus='0')
     usedTemplate = get_template('admin/bookinglist.html')
     bookingList = BookingInfo.objects.all().extra(where=["status in ('1')"])
     bookingListDic = {'bookingList' : bookingList}
     html = usedTemplate.render(bookingListDic)
+    return HttpResponse(html)
+
+def cancelBooking(request):
+    tempId = request.GET['id']
+    updateBooking(tempId=tempId, tempStatus='0')
+    usedTemplate = get_template('webchat/cancelbooking.html')
+    html = usedTemplate.render()
     return HttpResponse(html)
 
 def mybooking(request):
@@ -319,7 +348,9 @@ def mybooking(request):
         outputDic['name'] = bookingInfo.name
         outputDic['phonenumber'] = bookingInfo.phonenumber
         outputDic['membercard'] = bookingInfo.membercard
-        outputDic['bookedtime'] = bookingInfo.bookedtime
+        bookedtime = bookingInfo.bookedtime
+        outputDic['bookedtime'] = bookedtime
+        outputDic['bookingId'] = bookingInfo.id
         
         if bookingInfo.bookeddoctor.strip() == '0' :
             outputDic['bookeddoctor'] = ''
@@ -330,6 +361,16 @@ def mybooking(request):
             outputDic['bookeditem'] = '' 
         else :
             outputDic['bookeditem'] = ServiceType.objects.get(id=bookingInfo.bookeditem.strip()).servicename
+        
+        #cancel link show checked    
+        now = datetime.datetime.now()
+        now = now + datetime.timedelta(hours=canceltime)
+        nowstr = now.strftime('%Y/%m/%d %H:%M')
+        cancelFlag = ''
+        if nowstr < bookedtime :
+            cancelFlag = 'OK'
+        outputDic['cancelFlag'] = cancelFlag
+        
         usedTemplate = get_template('webchat/booking.html')
         html = usedTemplate.render(outputDic)
         return HttpResponse(html)

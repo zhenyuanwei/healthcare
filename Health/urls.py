@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^webchat/refershdoctor/$', booking.refershDoctor),
     url(r'^webchat/refershdate/$', booking.refershDate),
     url(r'^webchat/booking/$', booking.booking),
+    url(r'^webchat/cancelbooking/$', booking.cancelBooking),
     url(r'^webchat/bindMembershipCheck/$', membershipmanage.bindMembershipCheck),
     url(r'^webchat/bindMembership/$', membershipmanage.bindMembership),
     url(r'^webchat/mybooking/$', booking.mybooking),

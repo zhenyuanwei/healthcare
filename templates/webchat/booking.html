@@ -13,21 +13,23 @@
 	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 </head>
 <body>
-	<p>
+	<div>
 		{% if isMessage|length == 2 %}
-			<br><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></br>
+			<div class="ui-field-contain"><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></div>
 		{% else %}
-			<br>您的预约内容如下，请准时到诊所就诊:</br>
+			<div class="ui-field-contain">您的预约内容如下，请准时到诊所就诊:</div>
 		{% endif %}
-		<br>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</br>
-		<br>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</br>
-		<br>会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</br>
-		<br>预约医生 : {{ bookeddoctor }}</br>
-		<br>预约项目 : {{ bookeditem }}</br>
-		<br>预约时间 : {{ bookedtime }}</br>
-		<form>
-		<hidden name="bookingid" id="bookingid" value="{{ bookingid }}">
-		</form>
-	</p>
+		<div class="ui-field-contain">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</div>
+		<div class="ui-field-contain">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</div>
+		<div class="ui-field-contain">会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</div>
+		<div class="ui-field-contain">预约医生 : {{ bookeddoctor }}</div>
+		<div class="ui-field-contain">预约项目 : {{ bookeditem }}</div>
+		<div class="ui-field-contain">预约时间 : {{ bookedtime }}</div>
+		{% if cancelFlag == 'OK' %}
+		<div class="ui-field-contain"><a href="../cancelbooking/?id={{ bookingId }}">取消预约</a></div>
+		{% else %}
+		<div class="ui-field-contain"><span style="color:#FF0000">预约时间临近，不能取消。</span></div>
+		{% endif %}
+	<div>
 </body>
 </html>
