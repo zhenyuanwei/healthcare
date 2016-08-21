@@ -90,19 +90,22 @@ def getTimeList(doctorId = '', queryDate = ''):
     #doctorId = '1'
     
     timeList = []
-    
+    today = datetime.datetime.now().strftime('%Y/%m%d')
     now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
     if now < starttime :
         now = starttime
         
     if now >= endtime :
         now = starttime
-    
+        
     if doctorId == '' :
         for i in range(now, endtime):
             timeList.append(getTime(value=i))
             
     elif queryDate <> '' :
+        if today < queryDate :
+            now = starttime
+            
         bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         bookingList = bookingList.filter(status='1')
         bookingList = bookingList.filter(bookedtime__startswith=queryDate)
