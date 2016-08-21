@@ -75,7 +75,6 @@ def getDaysList():
     dayList = []
     today = datetime.datetime.now()
     now = int(today.strftime('%H')) + timeBJ + 1
-    print now
     if now >= endtime :
         for i in range(1, 8):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
@@ -86,11 +85,8 @@ def getDaysList():
     return dayList
 
 def getTimeList(doctorId = '', queryDate = ''):
-    #queryDate = '2016/07/30'
-    #doctorId = '1'
-    
     timeList = []
-    today = datetime.datetime.now().strftime('%Y/%m%d')
+    today = datetime.datetime.now().strftime('%Y/%m/%d')
     now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
     if now < starttime :
         now = starttime
