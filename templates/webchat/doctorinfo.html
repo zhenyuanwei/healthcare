@@ -14,9 +14,13 @@
 </head>
 <body>
 	<div>
+	{% if messages == 'BINDED' %}
+	<div class="ui-field-contain">您所输入的绑定码，已经被绑定，如有问题请与前台联系。</div>
+	{% else %}
 	<div class="ui-field-contain">绑定成功，个人信息如下:</div>
 	<div class="ui-field-contain">姓名 : {{ doctor.doctorname }}</div>
 	<div class="ui-field-contain">简介 : {{ doctor.comments }}</div>
+	{% endif %}
 	</div>
 </body>
 </html>

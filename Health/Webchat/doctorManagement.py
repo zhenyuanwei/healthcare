@@ -43,9 +43,14 @@ def dobindDoctor(request):
     try :
         print '----------- bindno = ' + bindno
         doctor = DoctorInfo.objects.get(phonenumber=bindno)
+        webchatId = doctor.webchatid
+        if webchatId == '' :
+            doctor.webchatid = openId
+            doctor.save()
+        else :
+            outDic['messages'] = 'BINDED'
+            
         outDic['doctor'] = doctor
-        doctor.webchatid = openId
-        doctor.save()
         usedTemplate = get_template('webchat/doctorinfo.html')
         html = usedTemplate.render(outDic)
         return HttpResponse(html) 
