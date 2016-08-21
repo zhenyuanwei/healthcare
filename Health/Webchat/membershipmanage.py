@@ -43,12 +43,16 @@ def bindMembership(request):
     openId = request.GET['openId']
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['vipno']
+    membershipDic = {}
     try :
         membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
-        membership.webchatid = openId
-        membership.save()
+        if membership.webchatid == '' :
+            membership.webchatid = openId
+            membership.save()
+        else :
+            membershipDic['messages'] = 'BINDED'
         usedTemplate = get_template('webchat/membershipinfo.html')
-        membershipDic = {'membership' : membership}
+        membershipDic['membership'] = membership
         html = usedTemplate.render(membershipDic)
         return HttpResponse(html)
     except :
