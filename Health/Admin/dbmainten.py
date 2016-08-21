@@ -55,7 +55,9 @@ def addDoctorInfo(request):
         if doctorid.strip() == '' :
             doctor = DoctorInfo() # for add doctor
         else :
-            doctor = DoctorInfo.objects.get(id=doctorid) # for update doctor
+            # for update doctor
+            doctor = DoctorInfo.objects.get(id=doctorid)
+            webchatId = doctor.webchatid
             
         doctor.doctorname = docotrName
         doctor.phonenumber = phoneNumber
