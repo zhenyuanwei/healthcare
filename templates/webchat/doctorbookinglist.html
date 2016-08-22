@@ -1,0 +1,39 @@
+<html>
+<head>
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>预约查询</title>
+    <!-- 引入 jQuery Mobile 样式 -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<!-- 引入 jQuery Mobile 库 -->
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div>
+	<div>
+	{% if bookingList|length == 0 %}
+		<p>今天到目前为止，没有预约记录！</p>
+	{% else %}
+		<table data-role="table" class="ui-responsive">
+			</thead>
+				<tr>
+					<th>No.</th>
+					<th>预约者</th>
+					<th>项目</th>
+					<th>时间</th>
+				</tr>
+			</thead>
+			{% for booking in bookingList %}
+				<tr>
+					<td>{{ booking.id }}</td>
+					<td>{{ booking.name }}</td>
+					<td>{{ booking.bookeditem }}</td>
+					<td>{{ booking.bookedtime }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+	</div>
+</div>
+</body>
+</html>
