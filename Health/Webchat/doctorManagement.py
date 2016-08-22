@@ -9,6 +9,7 @@ from Health.Webchat.myweixin import getOpenID
 from HealthModel.models import DoctorInfo
 from Health.Admin.payment import getPaymentList
 from HealthModel.models import BookingInfo
+from HealthModel.models import ServiceType
 from datetime import datetime
 from datetime import timedelta
 
@@ -139,9 +140,17 @@ def doctorBooking(request):
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
         today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
-        bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
-        bookingList = bookingList.filter(status='1')
-        bookingList = bookingList.filter(bookedtime__startswith=today)
+        
+        bookingList = []
+        tmpList = BookingInfo.objects.filter(bookeddoctor=doctorId)
+        tmpList = tmpList.filter(status='1')
+        tmpList = tmpList.filter(bookedtime__startswith=today)
+        for booking in tmpList :
+            serviceId = booking.bookeditem
+            service = ServiceType.objects.get(id=serviceId)
+            booking.bookeditem = service.servicename
+            bookingList.append(booking)
+            
         outDic['bookingList'] = bookingList
         usedTemplate = get_template('webchat/doctorbookinglist.html')
         html = usedTemplate.render(outDic)
