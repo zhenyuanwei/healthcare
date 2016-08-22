@@ -148,6 +148,8 @@ def doctorBooking(request):
         for booking in tmpList :
             serviceId = booking.bookeditem
             service = ServiceType.objects.get(id=serviceId)
+            time = booking.bookedtime.split(' ')[1]
+            booking.bookedtime = time
             booking.bookeditem = service.servicename
             bookingList.append(booking)
             
