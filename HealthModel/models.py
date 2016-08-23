@@ -22,6 +22,12 @@ class Membership(models.Model):
     discountrate2 = models.FloatField()
     webchatid = models.CharField(max_length = 50)
     
+class MembershipAmountLog(models.Model):
+    id = models.AutoField(primary_key=True)
+    membershipId = models.CharField(max_length = 10)
+    addAmount = models.FloatField()
+    transactionDate = models.DateTimeField()
+    
     
 class DoctorInfo(models.Model):
     id = models.AutoField(primary_key=True)

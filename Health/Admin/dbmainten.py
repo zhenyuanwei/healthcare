@@ -11,9 +11,13 @@ from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
 from HealthModel.models import Membership
+from HealthModel.models import MembershipAmountLog
 from django.template.context_processors import request
 from django.http import HttpResponseRedirect
+from datetime import datetime
+from datetime import timedelta
 
+timeBJ = 8
 
 def addAdminUser(request):
     admin = AdminUser(username='test1', password = '123456')
@@ -292,3 +296,11 @@ def updateMembershipAmount(request):
     membership.lastamount = lastamount
     membership.amount = lastamount + amount
     membership.save()
+    
+    today = datetime.now() + timedelta(hours = timeBJ)
+    membershipAmountLog = MembershipAmountLog()
+    membershipAmountLog.membershipId = vipid
+    membershipAmountLog.addAmount = amount
+    membershipAmountLog.transactionDate = today
+    membershipAmountLog.save()
+    
