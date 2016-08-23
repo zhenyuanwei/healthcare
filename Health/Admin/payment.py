@@ -15,6 +15,8 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 
+timeBJ = 8
+
 class Payment :
     id = 0
     paymenttype = ''
@@ -103,8 +105,9 @@ def doPayment(request):
     servicetype = request.GET['servicetype']
     servicediscount = request.GET['servicediscount']
     amount = request.GET['amount']
-    today = date.today()
+    today = datetime.now() + timedelta(hours=timeBJ)
     isSave = True
+    
     try :
         if paymenttype == '02' :
             membership = Membership.objects.get(id=membershipid)
