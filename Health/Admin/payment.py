@@ -61,8 +61,8 @@ def doPrePayment(request):
             membership = Membership.objects.get(phonenumber=phonenumber)
             servicediscount = membership.discountrate
             
-            now = datetime.now().strftime('%H')
-            if now < 13 :
+            now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
+            if now < '13' :
                 servicediscount = membership.discountrate2
                 
             outDic['membership'] = membership
@@ -88,6 +88,17 @@ def doPrePayment(request):
         outDic['servicetype'] = servicetype
         outDic['servicerate'] = servicerate
         outDic['servicediscount'] = servicediscount
+        today = datetime.now() + timedelta(hours=timeBJ)
+        transaction = Transaction()
+        transaction.membershipId = membership.id
+        transaction.doctorId = doctor
+        transaction.servicetypeId = servicetype
+        transaction.amount = amount
+        transaction.paymentType = paymenttype
+        transaction.successFlag = '0'
+        transaction.transactionDate = today
+        transaction.save()
+        outDic['transactionId'] = transaction.id
     #calculate the amount end
     
     usedTemplate = get_template('admin/prepaymentresult.html')
@@ -105,7 +116,7 @@ def doPayment(request):
     servicetype = request.GET['servicetype']
     servicediscount = request.GET['servicediscount']
     amount = request.GET['amount']
-    today = datetime.now() + timedelta(hours=timeBJ)
+    transactionId = request.GET['transactionId']
     isSave = True
     
     try :
@@ -124,13 +135,8 @@ def doPayment(request):
                 print '---------there is no enough money in vip card----------'
         
         if isSave :
-            transaction = Transaction()
-            transaction.membershipId = membershipid
-            transaction.doctorId = doctor
-            transaction.servicetypeId = servicetype
-            transaction.amount = amount
-            transaction.paymentType = paymenttype
-            transaction.transactionDate = today
+            transaction = Transaction.objects.get(id=transactionId)
+            transaction.successFlag = '1'
             transaction.save()
             
             doctorinfo = DoctorInfo.objects.get(id=doctor)

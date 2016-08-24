@@ -65,6 +65,7 @@ class Transaction(models.Model):
     servicetypeId = models.CharField(max_length = 10)
     paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card
     amount = models.FloatField()
+    successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed
     transactionDate = models.DateField()
     
     

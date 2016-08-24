@@ -5,7 +5,8 @@
 	<div><form action="../dopayment/" method="get">
 		<div class="ui-field-contain">
 	   	<label for="paymenttype">结账方式 : </label><label>{% if paymenttype == '01'%}现金结账{% else %}会员卡结账{% endif %}</label>
-	   	<input type="hidden" name="paymenttype" id="paymenttype" size="10" value="{{ paymenttype }}">
+	   	<input type="hidden" name="paymenttype" id="paymenttype" value="{{ paymenttype }}">
+	   	<input type="hidden" name="paymenttype" id="transactionId" value="{{ transactionId }}">
 	   	</div>
 	
 		{% if membership %}

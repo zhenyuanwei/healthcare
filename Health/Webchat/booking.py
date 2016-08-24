@@ -212,6 +212,7 @@ def booking(request):
             outputDic['membercard'] = membercard
             outputDic['bookedtime'] = bookedtime
             outputDic['bookingId'] = bookingInfo.id
+            outputDic['openId'] = openId
             
             #cancel link show checked    
             cancelFlag = getCancelFlag(bookedtime=bookedtime)
@@ -347,6 +348,8 @@ def mybooking(request):
         bookedtime = bookingInfo.bookedtime
         outputDic['bookedtime'] = bookedtime
         outputDic['bookingId'] = bookingInfo.id
+        outputDic['openId'] = openId
+        outputDic['paymentFlag'] = "OK"
         
         if bookingInfo.bookeddoctor.strip() == '0' :
             outputDic['bookeddoctor'] = ''
@@ -378,3 +381,42 @@ def getCancelFlag(bookedtime):
     if nowstr < bookedtime :
         cancelFlag = 'OK'
     return cancelFlag
+
+def prePay(request):
+    openId = request['openId']
+    outputDic = {}
+        
+    try :
+        mybookingInfo = BookingInfo.objects.get(webchatid=openId, status=1)
+        outputDic['bookingid'] = mybookingInfo.id
+        outputDic['name'] = mybookingInfo.name
+        outputDic['phonenumber'] = mybookingInfo.phonenumber
+        outputDic['membercard'] = mybookingInfo.membercard
+        
+        membership = Membership.objects.get(vipno=mybookingInfo.membercard)
+        servicediscount = membership.discountrate
+        now = (datetime.timedelta(hours=timeBJ) + datetime.datetime.now()).strftime('%H')
+        if now < '13' :
+            servicediscount = membership.discountrate2
+        outputDic['servicediscount'] = servicediscount
+        outputDic['membershipId'] = membership.id
+        
+        bookeddoctorId = mybookingInfo.bookeddoctor
+        doctor = DoctorInfo.objects.get(id=bookeddoctorId)
+        outputDic['doctorname'] = doctor.doctorname
+        
+        bookedserviceId = mybookingInfo.bookeditem
+        service = ServiceType.objects.get(id=bookedserviceId)
+        outputDic['servicename'] = service.servicename
+        outputDic['servicerate'] = service.servicerate * servicediscount
+        
+        usedTemplate = get_template('webchat/prepay.html')
+        html = usedTemplate.render(outputDic)
+        
+    except :
+        print '-------------------can not do payment for openId = ' + openId
+        usedTemplate = get_template('webchat/prepayerror.html')
+        html = usedTemplate.render(outputDic)
+        
+    finally:
+        return HttpResponse(html)
