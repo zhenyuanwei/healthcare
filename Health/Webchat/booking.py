@@ -449,21 +449,31 @@ def doPayment(request):
         transaction.successFlag = '1'
         bookingId = transaction.bookingId
         membershipId = transaction.membershipId
-        transaction.save()
+        
+        amount = 0
         if membershipId <> '' :
             membership = Membership.objects.get(id=membershipId)
             lastAmount = membership.amount
             membership.lastamount = lastAmount
             amount = lastAmount - transaction.amount
             membership.amount = amount
-            membership.save()
+            
         
         bookingInfo = BookingInfo.objects.get(id=bookingId)
         bookingInfo.status = 9
-        bookingInfo.save()
         
-        usedTemplate = get_template('webchat/paymentresult.html')
-        html = usedTemplate.render()
+        
+        if amount >= 0 :
+            transaction.save()
+            bookingInfo.save()
+            if membershipId <> '' :
+                membership.save()
+        
+            usedTemplate = get_template('webchat/paymentresult.html')
+            html = usedTemplate.render()
+        else :
+            usedTemplate = get_template('webchat/paymenterror2.html')
+            html = usedTemplate.render()
     except :
         usedTemplate = get_template('webchat/paymenterror.html')
         html = usedTemplate.render()
