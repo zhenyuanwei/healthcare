@@ -422,7 +422,7 @@ def prePay(request):
         
     except :
         print '-------------------can not do payment for openId = ' + openId
-        usedTemplate = get_template('webchat/prepayerror.html')
+        usedTemplate = get_template('webchat/paymenterror.html')
         html = usedTemplate.render(outputDic)
         
     finally:
