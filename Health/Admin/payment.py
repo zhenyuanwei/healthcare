@@ -50,6 +50,7 @@ def doPrePayment(request):
     servicetype = request.GET['servicetype']
     servicerate = request.GET['servicerate']
     servicediscount = request.GET['servicediscount']
+    membershipId = ''
     amount = 0
     #calculate the amount start
     try :
@@ -60,6 +61,7 @@ def doPrePayment(request):
         if paymenttype == '02' :
             membership = Membership.objects.get(phonenumber=phonenumber)
             servicediscount = membership.discountrate
+            membershipId = membership.id
             
             now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
             if now < '13' :
@@ -90,7 +92,7 @@ def doPrePayment(request):
         outDic['servicediscount'] = servicediscount
         today = datetime.now() + timedelta(hours=timeBJ)
         transaction = Transaction()
-        transaction.membershipId = membership.id
+        transaction.membershipId = membershipId
         transaction.bookingId = ''
         transaction.doctorId = doctor
         transaction.servicetypeId = servicetype
