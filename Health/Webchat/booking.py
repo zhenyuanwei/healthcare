@@ -15,6 +15,7 @@ import datetime
 from Health.Webchat.myweixin import getOpenID
 from membershipmanage import getMembership
 from HealthModel.models import Membership
+from HealthModel.models import Transaction
 
 "@csrf_exempt"
 timeBJ = 8
@@ -41,9 +42,15 @@ def booking_form(request):
 
 def initForm(openId, doctorservice = '', doctorId='', queryDate=''):
     doctorInfoList = DoctorInfo.objects.all()
+    if doctorId == '' and doctorservice == '' :
+        doctor = doctorInfoList[0]
+        doctorId = doctor.id
+        doctorservice = doctor.service
     serviceTypeList = getServiceList(doctorservice=doctorservice)
     
     dayList = getDaysList()
+    if queryDate == '' :
+        queryDate = dayList[0]
     timeList = getTimeList(doctorId=doctorId, queryDate=queryDate)
 
     
@@ -190,6 +197,7 @@ def booking(request):
             #cancel link show checked    
             cancelFlag = getCancelFlag(bookedtime=tempBooking.bookedtime)
             outputDic['cancelFlag'] = cancelFlag
+            print '-------------------------------' + cancelFlag
             usedTemplate = get_template('webchat/booking.html')
             html = usedTemplate.render(outputDic)
             return HttpResponse(html) 
@@ -267,36 +275,6 @@ def refershDoctor(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-'''def refershDate(request):
-    vipname = request.GET['name']
-    phonenumber = request.GET['phonenumber']
-    vipno = request.GET['membercard']
-    bookeddoctor = request.GET['bookeddoctor']
-    bookeditem = request.GET['bookeditem']
-    bookeddate = request.GET['bookeddate']
-    #bookedhour = request.GET['bookedhour']
-    openId = request.GET['openId']
-    try :
-        doctor = DoctorInfo.objects.get(id=bookeddoctor)
-        doctorservice = doctor.service
-    except :
-        doctorservice = ''
-        print '----------- there is no doctor selected -----------'
-        
-    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate)
-    
-    outDic['vipname'] = vipname
-    outDic['openId'] = openId
-    outDic['phonenumber'] = phonenumber
-    outDic['vipno'] = vipno
-    outDic['bookeddoctor'] = int(bookeddoctor)
-    outDic['bookeditem'] = int(bookeditem)
-    outDic['bookeddate'] = bookeddate
-    
-    usedTemplate = get_template('webchat/booking_form.html')
-    html = usedTemplate.render(outDic)
-    return HttpResponse(html)'''
-
 def bookingCompleted(request):
     tempId = request.GET['id']
     updateBooking(tempId=tempId, tempStatus='9')
@@ -349,7 +327,7 @@ def mybooking(request):
         outputDic['bookedtime'] = bookedtime
         outputDic['bookingId'] = bookingInfo.id
         outputDic['openId'] = openId
-        outputDic['paymentFlag'] = "OK"
+        outputDic['paymentFlag'] = getPaymentFlag(memberCard=bookingInfo.membercard)
         
         if bookingInfo.bookeddoctor.strip() == '0' :
             outputDic['bookeddoctor'] = ''
@@ -373,6 +351,15 @@ def mybooking(request):
         html = usedTemplate.render()
         return HttpResponse(html)
     
+def getPaymentFlag(memberCard):
+    try :
+        Membership.objects.get(vipno=memberCard)
+        returnValue = 'OK'
+    except :
+        returnValue = ''
+    finally:
+        return returnValue
+    
 def getCancelFlag(bookedtime):
     now = datetime.datetime.now()
     now = now + datetime.timedelta(hours=canceltime)
@@ -383,12 +370,13 @@ def getCancelFlag(bookedtime):
     return cancelFlag
 
 def prePay(request):
-    openId = request['openId']
+    openId = request.GET['openId']
     outputDic = {}
         
     try :
         mybookingInfo = BookingInfo.objects.get(webchatid=openId, status=1)
-        outputDic['bookingid'] = mybookingInfo.id
+        bookingId = mybookingInfo.id
+        outputDic['bookingid'] = bookingId
         outputDic['name'] = mybookingInfo.name
         outputDic['phonenumber'] = mybookingInfo.phonenumber
         outputDic['membercard'] = mybookingInfo.membercard
@@ -408,7 +396,26 @@ def prePay(request):
         bookedserviceId = mybookingInfo.bookeditem
         service = ServiceType.objects.get(id=bookedserviceId)
         outputDic['servicename'] = service.servicename
-        outputDic['servicerate'] = service.servicerate * servicediscount
+        outputDic['servicerate'] = service.servicerate
+        outputDic['servicediscount'] = servicediscount
+        amount = service.servicerate * servicediscount
+        outputDic['amount'] = amount
+        try :
+            transaction = Transaction.objects.get(bookingId=bookingId, successFlag='0')
+        except :
+            today = datetime.datetime.now() + datetime.timedelta(hours=timeBJ)
+            transaction = Transaction()
+            transaction.membershipId = membership.id
+            transaction.bookingId = mybookingInfo.id
+            transaction.doctorId = doctor.id
+            transaction.servicetypeId = bookedserviceId
+            transaction.amount = amount
+            transaction.paymentType = '00' #not decied
+            transaction.successFlag = '0'
+            transaction.transactionDate = today
+            transaction.save()
+        finally:
+            outputDic['transactionId'] = transaction.id
         
         usedTemplate = get_template('webchat/prepay.html')
         html = usedTemplate.render(outputDic)
@@ -418,5 +425,47 @@ def prePay(request):
         usedTemplate = get_template('webchat/prepayerror.html')
         html = usedTemplate.render(outputDic)
         
+    finally:
+        return HttpResponse(html)
+
+def goPaymentType(request):
+    transactionId = request.GET['transactionId']
+    amount = request.GET['amount']
+    
+    outputDic = {}
+    outputDic['transactionId'] = transactionId
+    outputDic['amount'] = amount
+    
+    usedTemplate = get_template('webchat/paymenttype.html')
+    html = usedTemplate.render(outputDic)
+    return HttpResponse(html)
+
+def doPayment(request):
+    transactionId = request.GET['transactionId']
+    paymenttype = request.GET['paymenttype']
+    try :
+        transaction = Transaction.objects.get(id=transactionId)
+        transaction.paymentType = paymenttype
+        transaction.successFlag = '1'
+        bookingId = transaction.bookingId
+        membershipId = transaction.membershipId
+        transaction.save()
+        if membershipId <> '' :
+            membership = Membership.objects.get(id=membershipId)
+            lastAmount = membership.amount
+            membership.lastamount = lastAmount
+            amount = lastAmount - transaction.amount
+            membership.amount = amount
+            membership.save()
+        
+        bookingInfo = BookingInfo.objects.get(id=bookingId)
+        bookingInfo.status = 9
+        bookingInfo.save()
+        
+        usedTemplate = get_template('webchat/paymentresult.html')
+        html = usedTemplate.render()
+    except :
+        usedTemplate = get_template('webchat/paymenterror.html')
+        html = usedTemplate.render()
     finally:
         return HttpResponse(html)

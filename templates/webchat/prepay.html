@@ -1,0 +1,53 @@
+<html>
+<head>
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>支付信息</title>
+    <!-- 引入 jQuery Mobile 样式 -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<!-- 引入 jQuery 库 -->
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- 引入 jQuery Mobile 库 -->
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+<body>
+	<div><form action="../paymenttype/" method="get">
+		<div class="ui-field-contain">
+	   	<label>姓名 : </label><label>{{ name }}</label>
+		</div>
+		
+	   	<div class="ui-field-contain">
+	   	<label >手机号 : </label><label>{{ phonenumber }}</label>
+	   	</div>
+	      
+	    <div class="ui-field-contain">
+	   	<label >服务医生 : </label><label>{{ doctorname }}</label>
+		</div>
+	
+		<div class="ui-field-contain">
+	   	<label >服务项目 : </label><label>{{ servicename }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicerate">单价 : </label><label>{{ servicerate }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label for="servicediscount">折扣 : </label><label>{{ servicediscount }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<label>应收金额 : </label><label>{{ amount }}</label>
+	   	<input type="hidden" name="amount" id="amount"  value="{{ amount }}">
+	   	<input type="hidden" name="transactionId" id="transactionId"  value="{{ transactionId }}">
+		</div>
+		
+		<center>
+	     	<button type="submit" class="ui-btn ui-btn-inline">结账</button>
+	     	<button type="button" class="ui-btn ui-btn-inline" onclick="javascript:history.go(-1)">返回</button>
+	     </center></form>
+	</div>
+</body>
+</html>

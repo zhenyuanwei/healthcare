@@ -30,8 +30,8 @@
 		{% else %}
 		<div class="ui-field-contain"><span style="color:#FF0000">预约时间临近，不能取消。如有问题请致电0411-54555316咨询。</span></div>
 		{% endif %}
-		{% paymentFlag == 'OK' %}
-		<!-- <div class="ui-field-contain"><a href="../＃/?openId={{ openId }}">自助结账</a></div> -->
+		{% if paymentFlag == 'OK' %}
+		<div class="ui-field-contain"><a href="../prepayment/?openId={{ openId }}">自助结账</a></div>
 		{% endif %}
 	<div>
 </body>

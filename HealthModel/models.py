@@ -64,7 +64,7 @@ class Transaction(models.Model):
     doctorId = models.CharField(max_length = 10)
     bookingId = models.CharField(max_length = 10)
     servicetypeId = models.CharField(max_length = 10)
-    paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card
+    paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card, 03 weixin 00, not decied
     amount = models.FloatField()
     successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed
     transactionDate = models.DateField()

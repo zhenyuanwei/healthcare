@@ -1,0 +1,38 @@
+<html>
+<head>
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>支付类型选择</title>
+    <!-- 引入 jQuery Mobile 样式 -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<!-- 引入 jQuery 库 -->
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- 引入 jQuery Mobile 库 -->
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+<body>
+	<div><form action="../dopayment/" method="get">
+	
+		<div class="ui-field-contain">
+        <label for="radio-membercard">需要支付的金额：{{ amount }}</label>
+		</div>
+		
+		<div class="ui-field-contain">
+	   	<input type="radio" name="paymenttype" id="paymenttype" value="02" checked="checked">会员卡支付
+        <label for="radio-membercard"></label>
+		</div>
+		
+		<!-- <div class="ui-field-contain">
+	   	<input type="radio" name="paymenttype" id="paymenttype" value="03">微信支付
+		</div> -->
+		
+		<input type="hidden" name="transactionId" id="transactionId"  value="{{ transactionId }}">
+		<center>
+	     	<button type="submit" class="ui-btn ui-btn-inline">确定支付</button>
+	     	<button type="button" class="ui-btn ui-btn-inline" onclick="javascript:history.go(-1)">返回</button>
+	     </center></form>
+	</div>
+</body>
+</html>
