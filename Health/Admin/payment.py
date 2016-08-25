@@ -91,6 +91,7 @@ def doPrePayment(request):
         today = datetime.now() + timedelta(hours=timeBJ)
         transaction = Transaction()
         transaction.membershipId = membership.id
+        transaction.bookingId = ''
         transaction.doctorId = doctor
         transaction.servicetypeId = servicetype
         transaction.amount = amount
@@ -215,7 +216,8 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
     
     if doctorId != '' :
         transactionList = transactionList.filter(doctorId=doctorId)
-    
+        
+    transactionList = transactionList.filter(successFlag='1')
     
     paymentList = []
     totalamount = 0
