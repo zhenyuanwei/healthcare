@@ -43,7 +43,7 @@ def booking_form(request):
     html = usedTemplate.render(listDic)
     return HttpResponse(html)
 
-def initForm(openId, doctorservice = '', doctorId='', queryDate=''):
+def initForm(openId, doctorservice = '', doctorId='', queryDate='', selectedServiceId=''):
     
     
     try :
@@ -53,11 +53,17 @@ def initForm(openId, doctorservice = '', doctorId='', queryDate=''):
             doctorId = doctor.id
             doctorservice = doctor.service
         serviceTypeList = getServiceList(doctorservice=doctorservice)
+        if selectedServiceId == '' :
+            selectedServiceId = serviceTypeList[0].id
+        
+        selectedService = ServiceType.objects.get(id=selectedServiceId)
+        # delete how many bookingscale
+        backCount = int((selectedService.serviceperiod -1) / bookingscale)
         
         dayList = getDaysList()
         if queryDate == '' :
             queryDate = dayList[0]
-        timeList = getTimeList(doctorId=doctorId, queryDate=queryDate)
+        timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount)
     
         
         vipno = ''
@@ -96,7 +102,7 @@ def getDaysList():
         
     return dayList
 
-def getTimeList(doctorId = '', queryDate = ''):
+def getTimeList(doctorId = '', queryDate = '', backCount = 0):
     timeList = []
     today = datetime.datetime.now().strftime('%Y/%m/%d')
     now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
@@ -117,7 +123,7 @@ def getTimeList(doctorId = '', queryDate = ''):
         bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         bookingList = bookingList.filter(status='1')
         bookingList = bookingList.filter(bookedtime__startswith=queryDate)
-        #for i in range(now, endtime):
+
         i = 0
         while (i < (endtime - now) * multiscale):
             time = getTime(value=i, now=now)
@@ -135,6 +141,15 @@ def getTimeList(doctorId = '', queryDate = ''):
                     
                 if bookedtime == time :
                     addflag = False
+                    
+                    # delete the time scale for enough time to do selected service
+                    count = len(timeList)
+                    if count < backCount :
+                        backCount = count
+                    for j in range(0, backCount) :
+                        del timeList[count - j -1]
+                    # delete the time scale for enough time to do selected service
+                        
                     breakcount = int((serviceperiod - 1) / bookingscale)
                     break
                 
@@ -290,7 +305,7 @@ def refershDoctor(request):
         doctorservice = ''
         print '----------- there is no doctor selected -----------'
         
-    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate)
+    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate, selectedServiceId=bookeditem)
     
     outDic['vipname'] = vipname
     outDic['openId'] = openId

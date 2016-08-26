@@ -60,7 +60,7 @@
 			        
 					<div class="ui-field-contain">
 				    	<label for="bookeditem">预约项目 : </label>
-				        <select name="bookeditem" id="bookeditem">
+				        <select name="bookeditem" id="bookeditem" onchange="submitForm();">
 							{% for serviceType in serviceTypeList %}
 								<option value="{{ serviceType.id }}" {% if serviceType.id == bookeditem %} selected="selected" {% endif %}>{{ serviceType.servicename }}</option>
 							{% endfor %}
