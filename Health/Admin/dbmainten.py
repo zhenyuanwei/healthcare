@@ -6,7 +6,7 @@ Created on Jul 18, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import AdminUser, ServiceRate
+from HealthModel.models import AdminUser
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
@@ -145,6 +145,7 @@ def doServiceType(request):
     serviceid = request.GET['serviceid']
     servicename = request.GET['servicename']
     servicerate = request.GET['servicerate']
+    serviceperiod = request.GET['serviceperiod']
     try :
         if serviceid.strip() == '' :
             serviceType = ServiceType()
@@ -152,6 +153,7 @@ def doServiceType(request):
             serviceType = ServiceType.objects.get(id=serviceid)
         serviceType.servicename = servicename
         serviceType.servicerate = servicerate
+        serviceType.serviceperiod = serviceperiod
         serviceType.save()
     except :
         print '------there is no service type id=' + serviceid + '--------'

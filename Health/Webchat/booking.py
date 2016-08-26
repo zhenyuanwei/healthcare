@@ -22,6 +22,9 @@ timeBJ = 8
 starttime = 8
 endtime = 21
 canceltime = timeBJ + 1
+#booking time scale
+bookingscale = 15
+multiscale = 60 / bookingscale
 
 def booking_form(request):
     #get webchat user
@@ -41,24 +44,26 @@ def booking_form(request):
     return HttpResponse(html)
 
 def initForm(openId, doctorservice = '', doctorId='', queryDate=''):
-    doctorInfoList = DoctorInfo.objects.all()
-    if doctorId == '' and doctorservice == '' :
-        doctor = doctorInfoList[0]
-        doctorId = doctor.id
-        doctorservice = doctor.service
-    serviceTypeList = getServiceList(doctorservice=doctorservice)
     
-    dayList = getDaysList()
-    if queryDate == '' :
-        queryDate = dayList[0]
-    timeList = getTimeList(doctorId=doctorId, queryDate=queryDate)
-
-    
-    vipno = ''
-    vipname = ''
-    phonenumber = ''
     
     try :
+        doctorInfoList = DoctorInfo.objects.all()
+        if doctorId == '' and doctorservice == '' :
+            doctor = doctorInfoList[0]
+            doctorId = doctor.id
+            doctorservice = doctor.service
+        serviceTypeList = getServiceList(doctorservice=doctorservice)
+        
+        dayList = getDaysList()
+        if queryDate == '' :
+            queryDate = dayList[0]
+        timeList = getTimeList(doctorId=doctorId, queryDate=queryDate)
+    
+        
+        vipno = ''
+        vipname = ''
+        phonenumber = ''
+        
         membership = getMembership(openId=openId)
         vipno = membership.vipno
         vipname = membership.vipname
@@ -112,24 +117,48 @@ def getTimeList(doctorId = '', queryDate = ''):
         bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         bookingList = bookingList.filter(status='1')
         bookingList = bookingList.filter(bookedtime__startswith=queryDate)
-        for i in range(now, endtime):
-            time = getTime(value=i)
+        #for i in range(now, endtime):
+        i = 0
+        while (i < (endtime - now) * multiscale):
+            time = getTime(value=i, now=now)
             addflag = True
+            breakcount = 0
             for booking in bookingList :
                 bookedtime = booking.bookedtime.split(' ')[1]
+                serviceId = booking.bookeditem
+                serviceperiod = 0
+                try :
+                    service = ServiceType.objects.get(id=serviceId)
+                    serviceperiod = service.serviceperiod
+                except :
+                    serviceperiod = 0
+                    
                 if bookedtime == time :
                     addflag = False
+                    breakcount = int((serviceperiod - 1) / bookingscale)
+                    break
+                
             if addflag :
                 timeList.append(time)
+
+            i = i + 1 + breakcount
     
     return timeList
 
-def getTime(value):
+def getTime(value, now):
     time = ''
-    if value < 10 :
-        time = '0' + str(value) + ':00'
+    hours = now + int(value / multiscale)
+    minutes = (value % multiscale) * bookingscale
+    minutes_str = ''
+    if minutes == 0 :
+        minutes_str = '00'
     else :
-        time = str(value) + ':00'
+        minutes_str = str(minutes)
+        
+    if hours < 10 :
+        time = '0' + str(hours) + ':' + minutes_str
+    else :
+        time = str(hours) + ':' + minutes_str
     return time
     
 def getServiceList(doctorservice = ''):

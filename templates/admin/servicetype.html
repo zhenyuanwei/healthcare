@@ -13,8 +13,13 @@
 				    	<label for="servicerate">单价<b style="color:#FF0000">*</b> : </label>
 				    	<input type="text" name="servicerate" id="servicerate" size="10" minlength="11" maxlength="10" value="{{ service.servicerate }}">
 					</div>
+					
+					<div class="ui-field-contain">
+				    	<label for="serviceperiod">持续时长（分钟）<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="serviceperiod" id="serviceperiod" size="10" maxlength="10" value="{{ service.serviceperiod }}">
+					</div>
 
-			        <input type="submit" value="OK">
+			        <input type="submit" value="确定">
 			    </form></div>
 		    </p>
 {% endblock %}

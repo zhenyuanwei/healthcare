@@ -10,6 +10,7 @@
 						<th>No.</th>
 						<th>服务项目</th>
 						<th>价格</th>
+						<th>持续时长</th>
 						<th>信息更新</th>
 						<th>删除</th>
 					</tr>
@@ -19,6 +20,7 @@
 						<td>{{ service.id }}</td>
 						<td>{{ service.servicename }}</td>
 						<td>{{ service.servicerate }}</td>
+						<td>{{ service.serviceperiod }}</td>
 					    <td><a href="../servicetypeupdate/?id={{ service.id }}">信息更新</a></td>
 					    <td><a href="../servicetypedelete/?id={{ service.id }}">删除</a></td>
 					</tr>

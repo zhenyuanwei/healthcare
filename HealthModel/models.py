@@ -41,6 +41,7 @@ class ServiceType(models.Model):
     id = models.AutoField(primary_key=True)
     servicename = models.CharField(max_length = 50)
     servicerate = models.IntegerField()
+    serviceperiod = models.IntegerField()
     
 class ServiceRate(models.Model):
     id = models.AutoField(primary_key=True)
