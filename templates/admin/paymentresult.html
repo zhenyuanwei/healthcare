@@ -9,7 +9,12 @@
 	<b style="color:#FF0000">结账完成，详细信息如下：</b>
 	<div>
 		<div class="ui-field-contain">
-	   	<label for="paymenttype">结账方式 : </label><label>{% if paymenttype == '01'%}现金结账{% else %}会员卡结账{% endif %}</label>
+	   	<label for="paymenttype">结账方式 : </label>
+	   	{% if paymenttype == '01'%}<label>现金支付</label>{% endif %}
+	   	{% if paymenttype == '02'%}<label>会员卡支付</label>{% endif %}
+	   	{% if paymenttype == '03'%}<label>微信支付</label>{% endif %}
+	   	{% if paymenttype == '04'%}<label>刷卡支付</label>{% endif %}
+	   	{% if paymenttype == '05'%}<label>支付宝支付</label>{% endif %}
 	   	</div>
 	
 		{% if membership %}

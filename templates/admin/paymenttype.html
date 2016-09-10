@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}产品登记{% endblock %}
+{% block content %}
+			<p>
+			    <div><form action="../dopaymenttype/" method="post">
+				    <div class="ui-field-contain">
+				    	<input type="hidden" name="productid" id="productid" size="10"value="{{ product.id }}">
+				    	<label for="paymenttype">支付编号<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="paymenttype" id="paymenttype" size="10"value="{{ product.productname }}">
+					</div>
+			        
+			        <div class="ui-field-contain">
+				    	<label for="paymenttypename">支付方式<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="paymenttypename" id="paymenttypename" size="10" value="{{ product.productprice }}">
+					</div>
+					
+			        <input type="submit" value="确定">
+			    </form></div>
+		    </p>
+{% endblock %}

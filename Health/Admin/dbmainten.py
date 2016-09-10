@@ -6,7 +6,7 @@ Created on Jul 18, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import AdminUser
+from HealthModel.models import AdminUser, PaymentType
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
@@ -440,4 +440,34 @@ def deleteProduct(request):
     outDic['productList'] = productList
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
+
+def goPaymentTypeList(request):
+    usedTemplate = get_template('admin/paymenttypelist.html')
+    outDic = {}
+    paymentTypeList = PaymentType.objects.all()
+    outDic['paymentTypeList'] = paymentTypeList
+    outDic['hightlight'] = '9'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goPaymentType(request):
+    usedTemplate = get_template('admin/paymenttype.html')
+    outDic = {}
+    outDic['hightlight'] = '9'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+@csrf_exempt
+def doPaymentType(request):
+    paymentType = PaymentType()
+    paymentType.paymenttype = request.POST['paymenttype']
+    paymentType.paymenttypename = request.POST['paymenttypename']
+    paymentType.save()
+    usedTemplate = get_template('admin/paymenttypelist.html')
+    outDic = {}
+    outDic['hightlight'] = '9'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+    
+    
     

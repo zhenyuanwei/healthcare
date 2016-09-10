@@ -44,13 +44,11 @@
 			{% for payment in paymentList %}
 				<tr>
 					<td>{{ payment.id }}</td>
-					{% if payment.paymenttype == '01' %}
-					<td>现金结账</td>
-					{% elif payment.paymenttype == '02' %}
-					<td>会员卡结账</td>
-					{% else %}
-					<td></td>
-					{% endif %}
+					{% if payment.paymenttype == '01'%}<td>现金支付</td>{% endif %}
+				   	{% if payment.paymenttype == '02'%}<td>会员卡支付</td>{% endif %}
+				   	{% if payment.paymenttype == '03'%}<td>微信支付</td>{% endif %}
+				   	{% if payment.paymenttype == '04'%}<td>刷卡支付</td>{% endif %}
+				   	{% if payment.paymenttype == '05'%}<td>支付宝支付</td>{% endif %}
 					<td>{{ payment.vipname }}</td>
 					<td>{{ payment.vipno }}</td>
 					<td>{{ payment.doctorname }}</td>

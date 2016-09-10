@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% block title %}产品一览{% endblock %}
+{% block content %}
+		{% if paymentTypeList|length == 0 %}
+			<p>现在没有定义服务项目。</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>支付编号</th>
+						<th>支付方式</th>
+						<!-- <th>更新</th>
+						<th>删除</th> -->
+					</tr>
+				</thead>
+				{% for paymentType in paymentTypeList %}
+					<tr>
+						<td>{{ paymentType.id }}</td>
+						<td>{{ paymentType.paymenttype }}</td>
+						<td>{{ paymentType.paymenttypename }}</td>
+					    <!-- <td><a href="../＃/?id={{ product }}">更新</a></td>
+					    <td><a href="../deleteproduct/?id={{ paymentType.id }}">删除</a></td> -->
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

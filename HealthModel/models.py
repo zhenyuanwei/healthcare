@@ -11,8 +11,8 @@ class AdminUser(models.Model):
     
 class PaymentType(models.Model):
     id = models.AutoField(primary_key=True)
-    paymenttypeid = models.CharField(max_length = 2)
-    paymenttype = models.CharField(max_length = 20)
+    paymenttype = models.CharField(max_length = 2)
+    paymenttypename = models.CharField(max_length = 20)
 
 class Membership(models.Model):
     id = models.AutoField(primary_key=True)
