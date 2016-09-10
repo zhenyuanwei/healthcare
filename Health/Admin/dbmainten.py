@@ -12,6 +12,7 @@ from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
 from HealthModel.models import Membership
 from HealthModel.models import MembershipAmountLog
+from HealthModel.models import Product
 from django.template.context_processors import request
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
@@ -347,16 +348,19 @@ def goDiscountRate(request):
 @csrf_exempt
 def doDiscountRate(request):
     usedTemplate = get_template('admin/discountlist.html')
-    discountname = request.POST['discountname']
-    discountrate = request.POST['discountrate']
-    morningdiscout = request.POST['morningdiscout']
-    comments = request.POST['comments']
-    discount = ServiceRate()
-    discount.ratename = discountname
-    discount.rate = discountrate
-    discount.morningdiscount = morningdiscout
-    discount.commnets = comments
-    discount.save()
+    try : 
+        discountname = request.POST['discountname']
+        discountrate = request.POST['discountrate']
+        morningdiscout = request.POST['morningdiscout']
+        comments = request.POST['comments']
+        discount = ServiceRate()
+        discount.ratename = discountname
+        discount.rate = discountrate
+        discount.morningdiscount = morningdiscout
+        discount.commnets = comments
+        discount.save()
+    except :
+        print '-----------worry--------------'
     outDic = {}
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
@@ -373,6 +377,58 @@ def deleteDiscountRate(request):
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goProductList(request):
+    usedTemplate = get_template('admin/productlist.html')
+    productList = Product.objects.all()
+    outDic = {}
+    outDic['hightlight'] = '8'
+    outDic['productList'] = productList
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goProduct(request):
+    usedTemplate = get_template('admin/product.html')
+    outDic = {}
+    outDic['hightlight'] = '8'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+@csrf_exempt
+def doProduct(request):
+    usedTemplate = get_template('admin/productlist.html')
+    try :
+        productName = request.POST['productname']
+        productPrice = request.POST['productprice']
+        product = Product()
+        product.productname = productName
+        product.productprice = productPrice
+        product.save()
+    except :
+        print '-----------worry--------------'
+    
+    outDic = {}
+    outDic['hightlight'] = '8'
+    productList = Product.objects.all()
+    outDic['productList'] = productList
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def deleteProduct(request):
+    usedTemplate = get_template('admin/productlist.html')
+    productId = request.GET['id']
+    try :
+        product = Product.objects.get(id=productId)
+        product.delete()
+    except :
+        print '------------There is no product to delete'
+    
+    outDic = {}
+    outDic['hightlight'] = '8'
+    productList = Product.objects.all()
+    outDic['productList'] = productList
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
     

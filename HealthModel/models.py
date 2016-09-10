@@ -42,6 +42,11 @@ class ServiceType(models.Model):
     servicename = models.CharField(max_length = 50)
     servicerate = models.IntegerField()
     serviceperiod = models.IntegerField()
+
+class Product(models.Model):
+    id = models.AutoField(primary_key=True)
+    productname = models.CharField(max_length = 50)
+    productprice = models.IntegerField()
     
 class ServiceRate(models.Model):
     id = models.AutoField(primary_key=True)

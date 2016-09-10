@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}产品登记{% endblock %}
+{% block content %}
+			<p>
+			    <div><form action="../doproduct/" method="post">
+				    <div class="ui-field-contain">
+				    	<input type="hidden" name="productid" id="productid" size="10"value="{{ product.id }}">
+				    	<label for="productname">产品名称<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="productname" id="productname" size="10"value="{{ product.productname }}">
+					</div>
+			        
+			        <div class="ui-field-contain">
+				    	<label for="productprice">单价<b style="color:#FF0000">*</b> : </label>
+				    	<input type="text" name="productprice" id="productprice" size="10" value="{{ product.productprice }}">
+					</div>
+					
+			        <input type="submit" value="确定">
+			    </form></div>
+		    </p>
+{% endblock %}
