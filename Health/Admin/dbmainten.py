@@ -14,6 +14,7 @@ from HealthModel.models import Membership
 from HealthModel.models import MembershipAmountLog
 from django.template.context_processors import request
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from datetime import timedelta
 
@@ -241,7 +242,8 @@ def doMembership(request):
 def addMembership(request):
     vipno = request.GET['vipno']
     vipname = request.GET['vipname']
-    vipnameid = request.GET['vipnameid']
+    #vipnameid = request.GET['vipnameid']
+    vipnameid = ''
     phonenumber = request.GET['phonenumber']
     password = '000000'
     amount = 0
@@ -249,7 +251,18 @@ def addMembership(request):
         amount = float(request.GET['amount'])
     lastamount = 0
     discounttype = ''
-    discountrate = request.GET['discountrate']
+    
+    discountrateId = request.GET['discountrate']
+    discountrate = 0
+    discountrate2 = 0
+    try :
+        discount = ServiceRate.objects.get(id = discountrateId)
+        discountrate = discount.rate
+        discountrate2 = discount.morningdiscount
+    except :
+        discountrate = 1
+        discountrate2 = 1
+        
     webchatid = ''
     
     isMember = False
@@ -266,7 +279,7 @@ def addMembership(request):
         membership.amount = amount
         membership.lastamount = lastamount
         membership.discountrate = discountrate
-        membership.discountrate2 = discountrate
+        membership.discountrate2 = discountrate2
         membership.discounttype = discounttype
         membership.webchatid = webchatid
         membership.save()
@@ -277,14 +290,23 @@ def updateMembership(request):
     vipname = request.GET['vipname']
     phonenumber = request.GET['phonenumber']
     vipno = request.GET['vipno']
-    discountrate = request.GET['discountrate']
+    discountrateId = request.GET['discountrate']
+    discountrate = 0
+    discountrate2 = 0
+    try :
+        discount = ServiceRate.objects.get(id = discountrateId)
+        discountrate = discount.rate
+        discountrate2 = discount.morningdiscount
+    except :
+        discountrate = 1
+        discountrate2 = 1
     
     membership = Membership.objects.get(id = vipid)
     membership.vipname = vipname
     membership.vipno = vipno
     membership.phonenumber = phonenumber
     membership.discountrate = discountrate
-    membership.discountrate2 = discountrate
+    membership.discountrate2 = discountrate2
     membership.save()
 
 def updateMembershipAmount(request):
@@ -305,4 +327,52 @@ def updateMembershipAmount(request):
     membershipAmountLog.addAmount = amount
     membershipAmountLog.transactionDate = today
     membershipAmountLog.save()
+    
+def goDiscountRateList(request):
+    usedTemplate = get_template('admin/discountlist.html')
+    outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
+    outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goDiscountRate(request):
+    usedTemplate = get_template('admin/discount.html')
+    outDic = {}
+    outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+@csrf_exempt
+def doDiscountRate(request):
+    usedTemplate = get_template('admin/discountlist.html')
+    discountname = request.POST['discountname']
+    discountrate = request.POST['discountrate']
+    morningdiscout = request.POST['morningdiscout']
+    comments = request.POST['comments']
+    discount = ServiceRate()
+    discount.ratename = discountname
+    discount.rate = discountrate
+    discount.morningdiscount = morningdiscout
+    discount.commnets = comments
+    discount.save()
+    outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
+    outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def deleteDiscountRate(request):
+    usedTemplate = get_template('admin/discountlist.html')
+    discountId = request.GET['id']
+    discout = ServiceRate.objects.get(id=discountId)
+    discout.delete()
+    outDic = {}
+    serviceRateList = ServiceRate.objects.all()
+    outDic['serviceRateList'] = serviceRateList
+    outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
     

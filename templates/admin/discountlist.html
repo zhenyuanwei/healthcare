@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block title %}打折比例一览{% endblock %}
+{% block content %}
+		{% if serviceRateList|length == 0 %}
+			<p>现在没打折设置</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				</thead>
+					<tr>
+						<th>No.</th>
+						<th>折扣名称</th>
+						<th>折扣比例</th>
+						<th>上午折扣比例</th>
+						<th>说明</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				{% for discount in serviceRateList %}
+					<tr>
+						<td>{{ discount.id }}</td>
+						<td>{{ discount.ratename }}</td>
+						<td>{{ discount.rate }}</td>
+						<td>{{ discount.morningdiscount }}</td>
+						<td>{{ discount.commnets }}</td>
+					    <td><a href="../deletediscount/?id={{ discount.id }}">删除</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

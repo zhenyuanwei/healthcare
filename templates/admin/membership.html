@@ -8,21 +8,23 @@
 		    <form action="../domembership/" method="get">
 			    <div class="ui-field-contain">
 			    	<input type="hidden" name="operation" id="operation" value="{{ flag }}">
-			    	{% if flag == 'U' or flag == 'M' %}
 			    	<label for="vipno">会员号<b style="color:#FF0000">*</b> : </label>
+			    	{% if flag == 'U' or flag == 'M' %}
 			    	<input type="hidden" name="vipid" id="vipid" value="{{ membership.id }}">
 			    	{{ membership.vipno }}
 			    	<input type="hidden" name="vipno" id="vipno" size="10" maxlength="10" value="{{ membership.vipno }}">
+			    	{% else %}
+			    	<input type="text" name="vipno" id="vipno" size="10" maxlength="10">
 			    	{% endif %}
 			    </div>
 			    <div class="ui-field-contain">
 			    	<label for="vipname">会员姓名<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="vipname" id="vipname" size="10" maxlength="10" value="{{ membership.vipname }}" {% if flag == 'M' %}disabled{% endif %}>
 			    </div>
-			    <div class="ui-field-contain">
+			    <!-- <div class="ui-field-contain">
 			    	<label for="vipnameid">身份证<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="vipnameid" id="vipnameid" size="10" maxlength="18" value="{{ membership.vipnameid }}" {% if flag != 'A' %}disabled{% endif %}>
-			    </div>
+			    </div> -->
 			    <div class="ui-field-contain">	
 			    	<label for="phonenumber">手机号<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11" value="{{ membership.phonenumber }}" {% if flag == 'M' %}disabled{% endif %}>
@@ -31,7 +33,7 @@
 			    	<label for="discountrate">会员折扣<b style="color:#FF0000">*</b> : </label>
 			    	<select name="discountrate" id="discountrate" {% if flag == 'M' %}disabled{% endif %}>
 			    	{% for servicerate in serviceRateList %}
-			    		<option value="{{ servicerate.rate }}" {% if membership.discountrate == servicerate.rate %}selected{% endif %}>{{ servicerate.ratename }}</option>
+			    		<option value="{{ servicerate.id }}" {% if membership.discountrate == servicerate.rate %}selected{% endif %}>{{ servicerate.ratename }}</option>
 			    	{% endfor %}
 					</select>
 				</div>

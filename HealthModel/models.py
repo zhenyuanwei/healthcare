@@ -46,7 +46,9 @@ class ServiceType(models.Model):
 class ServiceRate(models.Model):
     id = models.AutoField(primary_key=True)
     ratename = models.CharField(max_length = 50)
-    rate = models.FloatField()
+    rate = models.FloatField()  #discount
+    morningdiscount = models.FloatField()
+    commnets = models.CharField(max_length = 50)
     
 class BookingInfo(models.Model):
     id = models.AutoField(primary_key=True)

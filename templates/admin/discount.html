@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% block title %}会员管理{% endblock %}
+{% block content %}
+		    <div>
+		    <form action="../dodiscount/" method="post">
+			    <div class="ui-field-contain">
+			    	<label for="discountname">折扣名称<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="discountname" id="discountname" size="10">
+			    </div>
+			    <div class="ui-field-contain">
+			    	<label for="discountrate">折扣比例<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="discountrate" id="discountrate" size="10">
+			    </div>
+			    <div class="ui-field-contain">	
+			    	<label for="morningdiscout">上午折扣比例<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="morningdiscout" id="morningdiscout" size="10">
+			    </div>
+				<div class="ui-field-contain">	
+			    	<label for="comments">说明<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="comments" id="comments" size="10" maxlength="10">
+				</div>
+		        <input type="submit" value="OK">
+		    </form>
+		    </div>
+{% endblock %}
