@@ -54,16 +54,19 @@ def bookingList(request):
     return HttpResponse(html)
     
 def doLogin(request):
+    username = request.GET['username']
+    password = request.GET['password']
     
-    username1 = request.GET['username']
-    password1 = request.GET['password']
-    adminUser = AdminUser.objects.filter(username = username1, password = password1)
-    if adminUser :
+    try :
+        adminUser = AdminUser.objects.get(username = username, password = password)
+        request.session['username'] = username
+        request.session['role'] = adminUser.role
         return HttpResponseRedirect("../bookinglist/")
-    else :
+    except :
         usedTemplate = get_template('admin/login.html')
         messageDic = {'messages' : 'OK'}
         html = usedTemplate.render(messageDic)
         return HttpResponse(html)
+        
         
     

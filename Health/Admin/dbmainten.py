@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from datetime import timedelta
+from Health.Admin.common import checkSession
 
 timeBJ = 8
 
@@ -206,6 +207,14 @@ def goMembershipUpdate(request):
     return HttpResponse(html)
 
 def goMembershipAmountUpdate(request):
+    #check session
+    if not checkSession(request) :
+        usedTemplate = get_template('admin/login.html')
+        messageDic = {'messages' : 'TIMEOUT'}
+        html = usedTemplate.render(messageDic)
+        return HttpResponse(html)
+    #check session
+    
     temId = request.GET['id']
     membership = Membership.objects.get(id = temId)
     usedTemplate = get_template('admin/membership.html')

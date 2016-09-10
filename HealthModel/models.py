@@ -7,6 +7,12 @@ class AdminUser(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length = 10)
     password = models.CharField(max_length = 20)
+    role = models.CharField(max_length = 1) # 1 super user, 2 admin
+    
+class PaymentType(models.Model):
+    id = models.AutoField(primary_key=True)
+    paymenttypeid = models.CharField(max_length = 2)
+    paymenttype = models.CharField(max_length = 20)
 
 class Membership(models.Model):
     id = models.AutoField(primary_key=True)
@@ -27,7 +33,6 @@ class MembershipAmountLog(models.Model):
     membershipId = models.CharField(max_length = 10)
     addAmount = models.FloatField()
     transactionDate = models.DateTimeField()
-    
     
 class DoctorInfo(models.Model):
     id = models.AutoField(primary_key=True)
