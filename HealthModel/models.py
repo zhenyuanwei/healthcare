@@ -18,7 +18,7 @@ class Membership(models.Model):
     id = models.AutoField(primary_key=True)
     vipno = models.CharField(max_length = 11)
     vipname = models.CharField(max_length = 10)
-    vipnameid = models.CharField(max_length = 18)
+    vipnameid = models.CharField(max_length = 18) #Person ID
     phonenumber = models.CharField(max_length = 11)
     password = models.CharField(max_length = 10)
     amount = models.FloatField()
@@ -77,9 +77,13 @@ class Transaction(models.Model):
     doctorId = models.CharField(max_length = 10)
     bookingId = models.CharField(max_length = 10)
     servicetypeId = models.CharField(max_length = 10)
-    paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card, 03 weixin 00, not decied
-    amount = models.FloatField()
-    successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed
+    productIds = models.CharField(default = '', max_length = 50)
+    paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card, 03 weixin,04 pos, 05 alipay, 00 not decied
+    serviceamount = models.FloatField(default = 0)
+    productamount = models.FloatField(default = 0)
+    amount = models.FloatField(default = 0)
+    discount = models.FloatField(default = 1)
+    successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount
     transactionDate = models.DateField()
     
     

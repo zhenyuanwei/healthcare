@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+<div>
+	<div><form action="../dopayment/" method="post">
+	{% if messages == 'ERROR' %}
+		<p style="color:#FF0000">会员卡余额不足，请充值后，重新支付。</p>
+	{% endif %}
+	{% if messages == 'FAILT' %}
+		<p style="color:#FF0000">支付失败，请检查后重新支付。</p>
+	{% endif %}
+		<div class="ui-field-contain">
+	   	<label for="serviceamount">支付方式 : </label>
+	   	<label for="serviceamount">{{ paymenttypename }}</label>
+	   	</div>
+	   	
+		<div class="ui-field-contain">
+	   	<label for="serviceamount">服务项目金额 : </label>
+	   	<label for="serviceamount">{{ serviceAmount }}</label>
+	   	</div>
+	   	<div class="ui-field-contain">
+	   	<label for="serviceamount">产品金额 : </label>
+	   	<label for="serviceamount">{{ prodctAmount }}</label>
+	   	</div>
+	   	<div class="ui-field-contain">
+	   	<label for="serviceamount">总金额 : </label>
+	   	<label for="serviceamount">{{ amount }}</label>
+	   	</div>
+	   	
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			</thead>
+				<tr>
+					<th>订单编号</th>
+					<th>会员姓名</th>
+					<th>会员号</th>
+					<th>医生</th>
+					<th>服务项目</th>
+					<th>产品</th>
+					<th>金额</th>
+					<th>日期</th>
+				</tr>
+			</thead>
+			{% for payment in paymentList %}
+				<tr>
+					<td>{{ payment.id }}</td>
+					<td>{{ payment.vipname }}</td>
+					<td>{{ payment.vipno }}</td>
+					<td>{{ payment.doctorname }}</td>
+					<td>{{ payment.servicename }}</td>
+					<td>{{ payment.productname }}</td>
+					<td>{{ payment.amount }}</td>
+					<td>{{ payment.paymentdate }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</form>
+	</div>
+</div>
+{% endblock %}

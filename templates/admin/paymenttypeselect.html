@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block title %}产品一览{% endblock %}
+{% block content %}
+		{% if messages == 'ERROR' %}
+			<p style="color:#FF0000">请重新选择要支付的订单。</p>
+		{% elif messages == 'NOPAYMENTTYPE' %}
+			<p style="color:#FF0000">请选择支付方式</p>
+		{% endif %}
+		<form action="../dopaymenttypeselect/" method="post">
+			<div class="ui-field-contain">
+			<label><b>选择支付方式</b></label>
+			<fieldset data-role="controlgroup">
+			{% for paymentType in paymentTypeList %}
+			<label>
+			<input type="radio" name="paymenttype" id="paymenttype" value="{{paymentType.paymenttype}}">{{paymentType.paymenttypename}}</input>
+			</label>
+			{% endfor %}
+			</fieldset>
+			</div>
+			<input type="hidden" name="transactionIds" id="transactionIds" value="{{ transactionIds }}"/>
+			<input type="submit" value="支付">
+		</form>
+{% endblock %}

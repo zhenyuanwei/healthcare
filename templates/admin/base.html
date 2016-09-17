@@ -21,7 +21,7 @@
 					<li><a href="../goproductlist/" {% if hightlight == '8' %}class="ui-btn-active"{% endif %}>产品维护</a></li>
 					<li><a href="../doctorlist/" {% if hightlight == '2' %}class="ui-btn-active"{% endif %}>医生信息维护</a></li>
 					<li><a href="../membershiplist/" {% if hightlight == '4' %}class="ui-btn-active"{% endif %}>会员管理</a></li>
-					<li><a href="../goprepayment/" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>结账</a></li>
+					<li><a href="../gounpayedlist/" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>结账</a></li>
 					<li><a href="../gopaymentlist/" {% if hightlight == '6' %}class="ui-btn-active"{% endif %}>收入统计</a></li>
 					<li><a href="../godiscountlist/" {% if hightlight == '7' %}class="ui-btn-active"{% endif %}>折扣信息</a></li>
 					<!-- <li><a href="../gopaymenttypelist/" {% if hightlight == '9' %}class="ui-btn-active"{% endif %}>支付方式</a></li> -->
@@ -42,8 +42,14 @@
 			<ul><li><a href="../membership/">会员注册</a></li></ul>
 			</div>
 			{% endif %}
+			{% if hightlight == '5' %}
+			<div><hr>
+			<ul><li><a href="../goprepayment/">订单作成</a></li></ul>
+			</div>
+			{% endif %}
 			{% if hightlight == '6' %}
 			<div><hr>
+			<ul><li><a href="../goaccounting/">当日对账</a></li></ul>
 			<ul><li><a href="../summaryquery/">统计查询</a></li></ul>
 			</div>
 			{% endif %}

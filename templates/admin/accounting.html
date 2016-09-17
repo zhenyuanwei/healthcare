@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}产品登记{% endblock %}
+{% block content %}
+<p>
+    <div>
+    	{% for payment in paymentList %}
+	    <div class="ui-field-contain">
+	    	<label><b style="color:#FF0000">{{ payment.paymenttypename }} : </b></label>
+	    	<label>{{ payment.amount }}</label>
+		</div>
+		{% endfor %}
+        
+    </div>
+   </p>
+{% endblock %}

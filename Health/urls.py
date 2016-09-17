@@ -85,11 +85,15 @@ urlpatterns = [
     url(r'^admin/dopaymenttype/$', dbmainten.doPaymentType),
     url(r'^admin/goprepayment/$', payment.goPrePayment),
     url(r'^admin/doprepayment/$', payment.doPrePayment),
+    url(r'^admin/gopaymenttypeselect/$', payment.goPaymentTypeSelect),
+    url(r'^admin/gounpayedlist/$', payment.goUnpayedList),
+    url(r'^admin/dopaymenttypeselect/$', payment.doPaymentTypeSelect),
     url(r'^admin/dopayment/$', payment.doPayment),
     url(r'^admin/gopaymentlist/$', payment.goPaymentList),
     url(r'^admin/querypaymentlist/$', payment.searchPaymentList),
     url(r'^admin/summaryquery/$', payment.goPaymentSummaryList),
     url(r'^admin/querysummaryquery/$', payment.searchPaymentSummaryList),
+    url(r'^admin/goaccounting/$', payment.goAccounting),
 ] 
 
 

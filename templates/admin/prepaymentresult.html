@@ -2,8 +2,12 @@
 {% block title %}结账{% endblock %}
 {% block content %}
 <p>
-	<div><form action="../dopayment/" method="get">
+	<div><form action="../gopaymenttypeselect/" method="get">
+		<input type="hidden" name="transactionId" id="transactionId" value="{{ transactionId }}">
 		<div class="ui-field-contain">
+	   	<label>订单编号 : </label><label>{{ transactionId }}</label>
+		</div>
+		<!-- <div class="ui-field-contain">
 	   	<label for="paymenttype">结账方式 : </label>
 	   	{% if paymenttype == '01'%}<label>现金支付</label>{% endif %}
 	   	{% if paymenttype == '02'%}<label>会员卡支付</label>{% endif %}
@@ -11,50 +15,67 @@
 	   	{% if paymenttype == '04'%}<label>刷卡支付</label>{% endif %}
 	   	{% if paymenttype == '05'%}<label>支付宝支付</label>{% endif %}
 	   	<input type="hidden" name="paymenttype" id="paymenttype" value="{{ paymenttype }}">
-	   	<input type="hidden" name="transactionId" id="transactionId" value="{{ transactionId }}">
 	   	</div>
+	   	-->
 	
 		{% if membership %}
 		<div class="ui-field-contain">
 	   	<label>会员姓名 : </label><label>{{ membership.vipname }}</label>
 		</div>
-		{% endif %}
 		
-	   	{% if paymenttype == '02'%}
 	   	<div class="ui-field-contain">
-	   	<label for="vipno">手机号 : </label><label>{{ vipno }}</label>
+	   	<label for="vipno">会员号 : </label><label>{{ membership.vipno }}</label>
 	   	</div>
 	   	{% endif %}
-	   	<input type="hidden" name="membershipid" id="membershipid" size="10" value="{{ membership.id }}">
 	   	
-	      
+	    <div class="ui-field-contain">
+	   	<label for="phonenumber">手机号 : </label><label>{{ phonenumber }}</label>
+	   	</div>
+	   	 
 	    <div class="ui-field-contain">
 	   	<label for="doctor">服务医生 : </label><label>{{ doctorInfo.doctorname }}</label>
-	   	<input type="hidden" name="doctor" id="doctor" size="10" value="{{ doctor }}">
 		</div>
 	
 		<div class="ui-field-contain">
 	   	<label for="servicetype">服务项目 : </label><label>{{ service.servicename }}</label>
-	   	<input type="hidden" name="servicetype" id="servicetype" size="10" value="{{ servicetype }}">
 		</div>
 		
 		<div class="ui-field-contain">
-	   	<label for="servicerate">单价 : </label><label>{{ servicerate }}</label>
-	   	<input type="hidden" name="servicerate" id="servicerate" size="10" value="{{ servicerate }}">
+	   	<label for="servicerate">服务价格 : </label><label>{{ serviceamount }}</label>
 		</div>
 		
 		<div class="ui-field-contain">
 	   	<label for="servicediscount">折扣 : </label><label>{{ servicediscount }}</label>
-	   	<input type="hidden" name="servicediscount" id="servicediscount" size="10" value="{{ servicediscount }}">
 		</div>
+		
+		{% if productList|length != 0 %}
+		<div class="ui-field-contain">
+	   	<label for="products">购买产品<b style="color:#FF0000">*</b> : </label>
+	   	<table>
+	   	<tr>
+	   	<td>产品</td>
+	   	<td>单价</td>
+	   	</tr>
+	   	{% for product in productList %}
+	   	<tr>
+    	<td>{{ product.productname }}</td>
+    	<td>{{ product.productprice }}</td>
+    	</tr>
+    	{% endfor %}
+    	</table>
+		</div>
+		<div class="ui-field-contain">
+	   	<label for="amount">产品金额<b style="color:#FF0000">*</b> : </label>
+	   	<label>{{ productamount }}</label>
+		</div>
+		{% endif %}
 		
 		<div class="ui-field-contain">
-	   	<label for="amount">应收金额<b style="color:#FF0000">*</b> : </label>
-	   	<input type="text" name="amount" id="amount" size="10" maxlength="11" value="{{ amount }}">
+	   	<label for="amount">消费金额<b style="color:#FF0000">*</b> : </label>
+	   	<label>{{ amount }}</label>
 		</div>
-		
 		<center>
-	     	<button type="submit" class="ui-btn ui-btn-inline">结账</button>
+	     	<button type="submit" class="ui-btn ui-btn-inline">支付</button>
 	     	<button type="button" class="ui-btn ui-btn-inline" onclick="javascript:history.go(-1)">返回</button>
 	     </center>
      </form></div>

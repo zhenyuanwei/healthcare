@@ -6,7 +6,7 @@ Created on Jul 18, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import AdminUser, PaymentType
+from HealthModel.models import AdminUser, PaymentType, Transaction
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
@@ -217,9 +217,11 @@ def goMembershipAmountUpdate(request):
     
     temId = request.GET['id']
     membership = Membership.objects.get(id = temId)
+    paymentTypeList = PaymentType.objects.exclude(paymenttype = '02')
     usedTemplate = get_template('admin/membership.html')
     outDic = {}
     outDic['membership'] = membership
+    outDic['paymentTypeList'] = paymentTypeList
     outDic['flag'] = 'M'
     outDic['hightlight'] = '4'
     html = usedTemplate.render(outDic)
@@ -337,6 +339,20 @@ def updateMembershipAmount(request):
     membershipAmountLog.addAmount = amount
     membershipAmountLog.transactionDate = today
     membershipAmountLog.save()
+    transaction = Transaction()
+    transaction.membershipId = membership.id
+    transaction.doctorId = ''
+    transaction.bookingId = ''
+    transaction.servicetypeId = ''
+    transaction.productIds = ''
+    transaction.paymentType = request.GET['paymenttype']
+    transaction.serviceamount = 0
+    transaction.productamount = amount
+    transaction.amount = amount
+    transaction.discount = 1
+    transaction.successFlag = '9'
+    transaction.transactionDate = today
+    transaction.save()
     
 def goDiscountRateList(request):
     usedTemplate = get_template('admin/discountlist.html')

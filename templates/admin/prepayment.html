@@ -1,13 +1,13 @@
 {% extends "admin/base.html" %}
-{% block title %}结账{% endblock %}
+{% block title %}订单作成{% endblock %}
 {% block content %}
 <p>
 	{% if isMessage|length == 2 %}
 		<p style="color:#FF0000">会员卡号不存在，请确认后重新输入。</p>
 	{% endif %}
 		
-	<div><form action="../doprepayment/" method="get">
-		<div class="ui-field-contain">
+	<div><form action="../doprepayment/" method="post">
+		<!-- <div class="ui-field-contain">
 	   	<label for="paymenttype">结账方式<b style="color:#FF0000">*</b> : </label>
 	   	<select name="paymenttype" id="paymenttype">
 		    <option value="01">现金支付</option>
@@ -16,12 +16,13 @@
 			<option value="04">刷卡支付</option>
 			<option value="05">支付宝支付</option>
 		</select>
-	   	</div>
+	   	</div> -->
 	
 		<div class="ui-field-contain">
-	   	<label for="phonenumber">手机号 : </label>
+	   	<label for="phonenumber">手机号／会员号 : </label>
 	   	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11">
 	   	</div>
+	   	
 	      
 	    <div class="ui-field-contain">
 	   	<label for="doctor">服务医生<b style="color:#FF0000">*</b> : </label>
@@ -43,10 +44,10 @@
 		</select>
 		</div>
 		
-		<div class="ui-field-contain">
+		<!-- <div class="ui-field-contain">
 	   	<label for="servicerate">单价 : </label>
 	   	<input type="text" name="servicerate" id="servicerate" size="10" maxlength="50">
-		</div>
+		</div> -->
 		
 		<div class="ui-field-contain">
 	   	<label for="servicediscount">折扣 : </label>
@@ -58,7 +59,16 @@
 		</select>
 		</div>
 		
-	     <input type="submit" value="计算">
+		<div class="ui-field-contain">
+		<label for="controlgroup">产品选择 : </label>
+		<fieldset data-role="controlgroup">
+		{% for product in productList %}
+		    <label><input type="checkbox" name="product{{product.id}}" id="product{{product.id}}" value="{{product.id}}">{{product.productname}}</label>
+		{% endfor %}
+		</fieldset>
+		</div>
+		
+	     <input type="submit" value="订单作成">
      </form></div>
 </p>
 {% endblock %}

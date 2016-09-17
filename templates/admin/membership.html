@@ -37,6 +37,16 @@
 			    	{% endfor %}
 					</select>
 				</div>
+				{% if flag == 'M' %}
+				<div class="ui-field-contain">	
+			    	<label for="paymenttype">支付方式<b style="color:#FF0000">*</b> : </label>
+			    	<select name="paymenttype" id="paymenttype">
+			    		{% for paymentType in paymentTypeList %}
+					    <option value="{{ paymentType.paymenttype }}">{{ paymentType.paymenttypename }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				{% endif %}
 				{% if flag != 'U' %}
 				<div class="ui-field-contain">	
 			    	<label for="amount">充值金额<b style="color:#FF0000">*</b> : </label>

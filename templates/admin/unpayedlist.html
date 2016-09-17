@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+<div>
+	<div><form action="../gopaymenttypeselect/" method="get">
+	{% if paymentList|length == 0 %}
+		<p style="color:#FF0000">今天到目前为止，没有未结账的消费记录！</p>
+	{% else %}
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			</thead>
+				<tr>
+					<th></th>
+					<th>订单编号</th>
+					<th>会员姓名</th>
+					<th>会员号</th>
+					<th>医生</th>
+					<th>服务项目</th>
+					<th>产品项目</th>
+					<th>金额</th>
+					<th>日期</th>
+					<th>支付</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			{% for payment in paymentList %}
+				<tr>
+					<td>
+					<input type="checkbox" name="transactionId{{ payment.id }}" id="transactionId{{ payment.id }}" value="{{ payment.id }}">
+					</td>
+					<td>{{ payment.id }}</td>
+					<td>{{ payment.vipname }}</td>
+					<td>{{ payment.vipno }}</td>
+					<td>{{ payment.doctorname }}</td>
+					<td>{{ payment.servicename }}</td>
+					<td>{{ payment.productname }}</td>
+					<td>{{ payment.amount }}</td>
+					<td>{{ payment.paymentdate }}</td>
+					<td><a href="../gopaymenttypeselect/?transactionId={{ payment.id }}">支付</a></td>
+					<td><a href="../#/?transactionId={{ payment.id }}">删除</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+		<input type="submit" value="合并支付"/>
+		</form>
+	{% endif %}
+	</div>
+</div>
+{% endblock %}
