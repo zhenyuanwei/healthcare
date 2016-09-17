@@ -24,7 +24,7 @@
 					<li><a href="../gounpayedlist/" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>结账</a></li>
 					<li><a href="../gopaymentlist/" {% if hightlight == '6' %}class="ui-btn-active"{% endif %}>收入统计</a></li>
 					<li><a href="../godiscountlist/" {% if hightlight == '7' %}class="ui-btn-active"{% endif %}>折扣信息</a></li>
-					<!-- <li><a href="../gopaymenttypelist/" {% if hightlight == '9' %}class="ui-btn-active"{% endif %}>支付方式</a></li> -->
+					<li><a href="../gopaymenttypelist/" {% if hightlight == '9' %}class="ui-btn-active"{% endif %}>支付方式</a></li>
 				</ul>
 			</div><!-- /navbar -->
 			{% if hightlight == '2' %}
@@ -63,11 +63,11 @@
 			<ul><li><a href="../goproduct/">产品登记</a></li></ul>
 			</div>
 			{% endif %}
-			<!-- {% if hightlight == '9' %}
+			{% if hightlight == '9' %}
 			<div><hr>
 			<ul><li><a href="../gopaymenttype/">支付方式登记</a></li></ul>
 			</div>
-			{% endif %} -->
+			{% endif %}
 			
 			<div id="content">
 	        {% block content %}{% endblock %}
