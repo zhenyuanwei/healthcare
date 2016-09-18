@@ -259,8 +259,8 @@ def addMembership(request):
     phonenumber = request.GET['phonenumber']
     password = '000000'
     amount = 0
-    if request.GET['amount'].strip() :
-        amount = float(request.GET['amount'])
+    '''if request.GET['amount'].strip() :
+        amount = float(request.GET['amount'])'''
     lastamount = 0
     discounttype = ''
     
