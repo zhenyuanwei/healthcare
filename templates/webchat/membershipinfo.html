@@ -2,7 +2,7 @@
 <head>
 	<meta charset="utf-8" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Membership</title>
+    <title>会员信息</title>
     <!-- 引入 jQuery Mobile 样式 -->
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 	<!-- 引入 jQuery 库 -->
@@ -23,6 +23,26 @@
 	<div class="ui-field-contain">会员号 : {{ membership.vipno }}</div>
 	<div class="ui-field-contain">会员折扣 : {{ membership.discountrate }}</div>
 	<div class="ui-field-contain">余额 : {{ membership.amount }}</div>
+	<div>
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>服务项目</th>
+					<th>消费时间</th>
+					<th>消费金额</th>
+				</tr>
+			</thead>
+			{% for payment in paymentList %}
+				<tr>
+					<td>{{ payment.id }}</td>
+					<td>{{ payment.servicename }}</td>
+					<td>{{ payment.paymentdate }}</td>
+					<td>{{ payment.amount }}</td>
+				</tr>
+			{% endfor %}
+		</table>	
+	</div>
 	{% endif %}
 	</div>
 </body>
