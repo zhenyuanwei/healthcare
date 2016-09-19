@@ -351,7 +351,7 @@ def createPayment(transaction):
                 productNames = productNames + product.productname + ' & '
         productNames = productNames[0:len(productNames) - 3]
         if transaction.successFlag == '9' :
-            productNames = 'Membership Add Amount'
+            productNames = 'Recharge'
         payment.productname = productNames
     except :
         payment.servicename = ''
