@@ -11,6 +11,14 @@
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+		<script>
+		function submitForm(){
+			//获取form表单对象
+			var form = document.getElementById("bookingform");
+			form.action = "../refershdoctor/"
+			form.submit();//form表单提交
+			}
+		</script>
 		<title>{% block title %}My amazing site{% endblock %}</title>
 	</head>
 	<body>
@@ -28,6 +36,11 @@
 					<!-- <li><a href="../gopaymenttypelist/" {% if hightlight == '9' %}class="ui-btn-active"{% endif %}>支付方式</a></li> -->
 				</ul>
 			</div><!-- /navbar -->
+			{% if hightlight == '1' %}
+			<div><hr>
+			<ul><li><a href="../booking/">预约</a></li></ul>
+			</div>
+			{% endif %}
 			{% if hightlight == '2' %}
 			<div><hr>
 			<ul><li><a href="../doctor/">医生登记</a></li></ul>

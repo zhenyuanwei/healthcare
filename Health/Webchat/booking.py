@@ -26,6 +26,36 @@ canceltime = timeBJ + 1
 bookingscale = 15
 multiscale = 60 / bookingscale
 
+def getBookingList():
+    tmpList = BookingInfo.objects.all().extra(where=["status in ('1')"])
+    bookingList = []
+    for bookinginfo in tmpList:
+        if bookinginfo.bookeddoctor.strip() != '0' :
+            tmpStr = ''
+            try :
+                tmpStr = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
+            except :
+                print '-------there is no doctor' + bookinginfo.bookeddoctor + '----------'
+            finally:
+                bookinginfo.bookeddoctor = tmpStr
+        else :
+            bookinginfo.bookeddoctor = ''
+        
+        if bookinginfo.bookeditem.strip() != '0' :
+            tmpStr = ''
+            try :
+                tmpStr = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+            except :
+                print '-------there is no service type' + bookinginfo.bookeditem + '----------'
+            finally:
+                bookinginfo.bookeditem = tmpStr
+        else :
+            bookinginfo.bookeditem = ''
+        
+        bookingList.append(bookinginfo)
+    
+    return bookingList
+
 def booking_form(request):
     #get webchat user
     openId = '000'
@@ -43,7 +73,7 @@ def booking_form(request):
     html = usedTemplate.render(listDic)
     return HttpResponse(html)
 
-def initForm(openId, doctorservice = '', doctorId='', queryDate='', selectedServiceId=''):
+def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedServiceId=''):
     
     
     try :
@@ -289,6 +319,36 @@ def booking(request):
         html = usedTemplate.render(listDic)
         return HttpResponse(html)
     
+def adminRefershDoctor(request):
+    vipname = request.GET['name']
+    phonenumber = request.GET['phonenumber']
+    vipno = request.GET['membercard']
+    bookeddoctor = request.GET['bookeddoctor']
+    bookeditem = request.GET['bookeditem']
+    bookeddate = request.GET['bookeddate']
+    #bookedtime = request.GET['bookedhour']
+    openId = request.GET['openId']
+    try :
+        doctor = DoctorInfo.objects.get(id=bookeddoctor)
+        doctorservice = doctor.service
+    except :
+        doctorservice = ''
+        print '----------- there is no doctor selected -----------'
+        
+    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate, selectedServiceId=bookeditem)
+    
+    outDic['vipname'] = vipname
+    outDic['openId'] = openId
+    outDic['phonenumber'] = phonenumber
+    outDic['vipno'] = vipno
+    outDic['bookeddoctor'] = int(bookeddoctor)
+    outDic['bookeditem'] = int(bookeditem)
+    outDic['bookeddate'] = bookeddate
+    
+    usedTemplate = get_template('admin/booking_form.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
 def refershDoctor(request):
     vipname = request.GET['name']
     phonenumber = request.GET['phonenumber']
@@ -347,6 +407,43 @@ def cancelBooking(request):
     updateBooking(tempId=tempId, tempStatus='0')
     usedTemplate = get_template('webchat/cancelbooking.html')
     html = usedTemplate.render()
+    return HttpResponse(html)
+
+def goAdminBooking(request):
+    outDic = initForm()
+    outDic['hightlight'] = '1'
+    
+    usedTemplate = get_template('admin/booking_form.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def doAdminBooking(request):
+    outDic = initForm()
+    outDic['hightlight'] = '1'
+    
+    name = request.GET['name']
+    phonenumber = request.GET['phonenumber']
+    membercard = request.GET['membercard']
+    bookeddoctor = request.GET['bookeddoctor']
+    bookeditem = request.GET['bookeditem']
+    bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
+    openId = ''
+    
+    bookingInfo = BookingInfo()
+    bookingInfo.name = name
+    bookingInfo.phonenumber = phonenumber
+    bookingInfo.membercard = membercard
+    bookingInfo.bookeddoctor = bookeddoctor
+    bookingInfo.bookeditem = bookeditem
+    bookingInfo.bookedtime = bookedtime
+    bookingInfo.webchatid = openId
+    bookingInfo.status = '1'
+    bookingInfo.save()
+    
+    bookingList = getBookingList()
+    usedTemplate = get_template('admin/bookinglist.html')
+    outDic['bookingList'] = bookingList
+    html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def mybooking(request):

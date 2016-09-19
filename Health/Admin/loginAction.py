@@ -13,40 +13,17 @@ from HealthModel.models import AdminUser
 from HealthModel.models import BookingInfo
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
+from Health.Webchat.booking import getBookingList
 
 "@csrf_exempt"
 def login(request):
     usedTemplate = get_template('admin/login.html')
     html = usedTemplate.render()
     return HttpResponse(html)
+
 def bookingList(request):
     usedTemplate = get_template('admin/bookinglist.html')
-    tmpList = BookingInfo.objects.all().extra(where=["status in ('1')"])
-    bookingList = []
-    for bookinginfo in tmpList:
-        if bookinginfo.bookeddoctor.strip() != '0' :
-            tmpStr = ''
-            try :
-                tmpStr = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
-            except :
-                print '-------there is no doctor' + bookinginfo.bookeddoctor + '----------'
-            finally:
-                bookinginfo.bookeddoctor = tmpStr
-        else :
-            bookinginfo.bookeddoctor = ''
-        
-        if bookinginfo.bookeditem.strip() != '0' :
-            tmpStr = ''
-            try :
-                tmpStr = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
-            except :
-                print '-------there is no service type' + bookinginfo.bookeditem + '----------'
-            finally:
-                bookinginfo.bookeditem = tmpStr
-        else :
-            bookinginfo.bookeditem = ''
-        
-        bookingList.append(bookinginfo)
+    bookingList = getBookingList()
     outDic = {}
     outDic['bookingList'] = bookingList
     outDic['hightlight'] = '1'

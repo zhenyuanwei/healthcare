@@ -53,6 +53,9 @@ urlpatterns = [
     #Below is for administrator
     url(r'^admin/login/$', loginAction.login),
     url(r'^admin/doLogin/$', loginAction.doLogin),
+    url(r'^admin/booking/$', booking.goAdminBooking),
+    url(r'^admin/refershdoctor/$', booking.adminRefershDoctor),
+    url(r'^admin/dobooking/$', booking.doAdminBooking),
     url(r'^admin/complatedBooking/$', booking.bookingCompleted),
     url(r'^admin/cancelBooking/$', booking.bookingCancel),
     url(r'^admin/bookinglist/$', loginAction.bookingList),
@@ -87,6 +90,7 @@ urlpatterns = [
     url(r'^admin/doprepayment/$', payment.doPrePayment),
     url(r'^admin/gopaymenttypeselect/$', payment.goPaymentTypeSelect),
     url(r'^admin/gounpayedlist/$', payment.goUnpayedList),
+    url(r'^admin/dodeleteunpayed/$', payment.doDeleteUnpayed),
     url(r'^admin/dopaymenttypeselect/$', payment.doPaymentTypeSelect),
     url(r'^admin/dopayment/$', payment.doPayment),
     url(r'^admin/gopaymentlist/$', payment.goPaymentList),

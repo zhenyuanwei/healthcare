@@ -20,28 +20,45 @@
 	
 		<div class="ui-field-contain">
 	   	<label for="phonenumber">手机号／会员号 : </label>
+	   	{% if bookingInfo %}
+	   	<input type="hidden" name="bookingId" id="bookingId" value="{{ bookingInfo.id }}">
+	   	<input type="hidden" name="phonenumber" id="phonenumber" value="{{ bookingInfo.membercard }}">
+	   	{{ bookingInfo.membercard }}
+	   	{% else %}
 	   	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11">
+	   	<input type="hidden" name="bookingId" id="bookingId" value="">
+	   	{% endif %}
 	   	</div>
 	   	
 	      
 	    <div class="ui-field-contain">
 	   	<label for="doctor">服务医生<b style="color:#FF0000">*</b> : </label>
+	   	{% if bookingInfo %}
+	   	<input type="hidden" name="doctor" id="doctor" value="{{ bookingInfo.bookeddoctor }}">
+	   	{{ doctorname }}
+	   	{% else %}
 	   	<select name="doctor" id="doctor">
 		    <!-- <option value="0"></option> -->
 			{% for doctor in doctorList %}
 				<option value="{{ doctor.id }}">{{ doctor.doctorname }}</option>
 			{% endfor %}
 		</select>
+		{% endif %}
 		</div>
 	
 		<div class="ui-field-contain">
 	   	<label for="servicetype">服务项目<b style="color:#FF0000">*</b> : </label>
+	   	{% if bookingInfo %}
+	   	<input type="hidden" name="servicetype" id="servicetype" value="{{ bookingInfo.bookeditem }}">
+	   	{{ servicename }}
+	   	{% else %}
 	   	<select name="servicetype" id="servicetype">
 		    <!-- <option value="0"></option> -->
 			{% for servicetype in servicetypeList %}
 				<option value="{{ servicetype.id }}">{{ servicetype.servicename }}</option>
 			{% endfor %}
 		</select>
+		{% endif %}
 		</div>
 		
 		<!-- <div class="ui-field-contain">
@@ -49,7 +66,7 @@
 	   	<input type="text" name="servicerate" id="servicerate" size="10" maxlength="50">
 		</div> -->
 		
-		<div class="ui-field-contain">
+		<!-- <div class="ui-field-contain">
 	   	<label for="servicediscount">折扣 : </label>
 	   	<select name="servicediscount" id="servicediscount">
 	   		<option value="1.0">没有折扣</option>
@@ -57,7 +74,7 @@
 	    	<option value="{{ servicerate.rate }}">{{ servicerate.ratename }}</option>
 	    	{% endfor %}
 		</select>
-		</div>
+		</div> -->
 		
 		<div class="ui-field-contain">
 		<label for="controlgroup">产品选择 : </label>

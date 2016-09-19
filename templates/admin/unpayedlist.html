@@ -9,10 +9,11 @@
 		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 			</thead>
 				<tr>
-					<th></th>
+					<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<th>订单编号</th>
 					<th>会员姓名</th>
 					<th>会员号</th>
+					<th>预约编号</th>
 					<th>医生</th>
 					<th>服务项目</th>
 					<th>产品项目</th>
@@ -30,13 +31,14 @@
 					<td>{{ payment.id }}</td>
 					<td>{{ payment.vipname }}</td>
 					<td>{{ payment.vipno }}</td>
+					<td>{{ payment.bookingId }}</td>
 					<td>{{ payment.doctorname }}</td>
 					<td>{{ payment.servicename }}</td>
 					<td>{{ payment.productname }}</td>
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
 					<td><a href="../gopaymenttypeselect/?transactionId={{ payment.id }}">支付</a></td>
-					<td><a href="../#/?transactionId={{ payment.id }}">删除</a></td>
+					<td><a href="../dodeleteunpayed/?transactionId={{ payment.id }}">删除</a></td>
 				</tr>
 			{% endfor %}
 		</table>

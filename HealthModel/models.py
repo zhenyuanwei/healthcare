@@ -69,7 +69,7 @@ class BookingInfo(models.Model):
     bookeditem = models.CharField(max_length = 50)
     bookedtime = models.CharField(max_length = 20)
     webchatid = models.CharField(max_length = 50)
-    status = models.CharField(max_length = 1)
+    status = models.CharField(max_length = 1) # 0 cancel, 1 new booking, 9 completed
     
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)

@@ -6,7 +6,7 @@ Created on Aug 6, 2016
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.http import HttpResponseRedirect
-from HealthModel.models import DoctorInfo, Product, PaymentType
+from HealthModel.models import DoctorInfo, Product, PaymentType, BookingInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
@@ -29,19 +29,32 @@ class Payment :
     servicename = ''
     productname = ''
     paymentdate = date.today()
+    bookingId = ''
 
 def goPrePayment(request):
-    doctorList = DoctorInfo.objects.all()
-    servicetypeList = ServiceType.objects.all()
-    productList = Product.objects.all()
-    usedTemplate = get_template('admin/prepayment.html')
     outDic = {}
-    serviceRateList = ServiceRate.objects.all()
-    outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '5'
+    doctorList = DoctorInfo.objects.all()
     outDic['doctorList'] = doctorList
+    servicetypeList = ServiceType.objects.all()
     outDic['servicetypeList'] = servicetypeList
+    productList = Product.objects.all()
     outDic['productList'] = productList
+    #serviceRateList = ServiceRate.objects.all()
+    #outDic['serviceRateList'] = serviceRateList
+    
+    try :
+        bookingId = request.GET['id']
+        bookingInfo = BookingInfo.objects.get(id = bookingId)
+        outDic['bookingInfo'] = bookingInfo
+        doctor = DoctorInfo.objects.get(id = bookingInfo.bookeddoctor)
+        outDic['doctorname'] = doctor.doctorname
+        service = ServiceType.objects.get(id = bookingInfo.bookeditem)
+        outDic['servicename'] = service.servicename
+    except :
+        print '--------there is no booking pay '
+    
+    usedTemplate = get_template('admin/prepayment.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
@@ -56,7 +69,8 @@ def doPrePayment(request):
         doctor = request.POST['doctor']
         servicetype = request.POST['servicetype']
         #servicerate = request.POST['servicerate']
-        servicediscount = request.POST['servicediscount']
+        #servicediscount = request.POST['servicediscount']
+        servicediscount = 1
         membershipId = ''
         amount = 0
         serviceamount = 0
@@ -113,21 +127,31 @@ def doPrePayment(request):
         today = datetime.now() + timedelta(hours=timeBJ)
         
         #save to transaction
-        transaction = Transaction()
-        transaction.membershipId = membershipId
-        transaction.bookingId = ''
-        transaction.doctorId = doctor
-        transaction.servicetypeId = servicetype
-        transaction.amount = amount
-        transaction.productamount = productamount
-        transaction.serviceamount = serviceamount
-        transaction.productIds = productIds
-        transaction.discount = float(servicediscount)
-        transaction.paymentType = paymenttype
-        transaction.successFlag = '0'
-        transaction.transactionDate = today
-        transaction.save()
-        outDic['transactionId'] = transaction.id
+        bookingId = ''
+        try : 
+            bookingId = request.POST['bookingId']
+        except :
+            bookingId = ''
+        
+        try :
+            transaction = Transaction.objects.get(bookingId = bookingId)
+            outDic['transactionId'] = transaction.id
+        except :
+            transaction = Transaction()
+            transaction.membershipId = membershipId
+            transaction.bookingId = bookingId
+            transaction.doctorId = doctor
+            transaction.servicetypeId = servicetype
+            transaction.amount = amount
+            transaction.productamount = productamount
+            transaction.serviceamount = serviceamount
+            transaction.productIds = productIds
+            transaction.discount = float(servicediscount)
+            transaction.paymentType = paymenttype
+            transaction.successFlag = '0'
+            transaction.transactionDate = today
+            transaction.save()
+            outDic['transactionId'] = transaction.id
         
     except :
         print '--------there is no membership : phonenumber = ' + phonenumber + '------------'
@@ -228,20 +252,18 @@ def doPayment(request):
         prodctAmount = 0
         amount = 0
         membershipId = ''
+        isSave = True
+        #Calculate the total amount
         for transactionId in transactionIds :
             if transactionId != '' :
                 transaction = Transaction.objects.get(id = transactionId)
-                transaction.paymentType = paymentType
-                transaction.successFlag = '1'
-                transaction.save()  
                 membershipId = transaction.membershipId
  
                 serviceAmount = serviceAmount + transaction.serviceamount * transaction.discount
                 prodctAmount = prodctAmount + transaction.productamount
                 amount = amount + transaction.amount
-                payment = createPayment(transaction = transaction)
-                paymentList.append(payment)
-                
+        
+        #check the member card amount        
         if paymentType == '02' :
             membership = Membership.objects.get(id = membershipId)
             lastamount = membership.amount
@@ -251,7 +273,31 @@ def doPayment(request):
                 membership.amount = membershipAmount
                 membership.save()
             else :
+                isSave = False
                 outDic['messages'] = 'ERROR'
+        
+        #do payment        
+        if isSave :
+            for transactionId in transactionIds :
+                if transactionId != '' :
+                    transaction = Transaction.objects.get(id = transactionId)
+                    transaction.paymentType = paymentType
+                    transaction.successFlag = '1'
+                    transaction.save()  
+                    
+                    payment = createPayment(transaction = transaction)
+                    paymentList.append(payment)
+                    
+                    #complete the booking
+                    bookingId = transaction.bookingId
+                    if bookingId != '' :
+                        try :
+                            bookingInfo = BookingInfo.objects.get(id = bookingId)
+                            bookingInfo.status = '9'
+                            bookingInfo.save()
+                        except :
+                            print '--------the booking info is not exist. Id = ' + bookingId
+                            
         outDic['paymentList'] = paymentList
         outDic['serviceAmount'] = serviceAmount
         outDic['prodctAmount'] = prodctAmount
@@ -269,6 +315,7 @@ def createPayment(transaction):
     payment.paymenttype = transaction.paymentType
     payment.amount = transaction.amount
     payment.paymentdate = transaction.transactionDate
+    payment.bookingId = transaction.bookingId
     
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
@@ -314,6 +361,28 @@ def createPayment(transaction):
 def goUnpayedList(request):
     outDic = {}
     outDic['hightlight'] = '5'
+    
+    transactionList = Transaction.objects.filter(successFlag = '0')
+    paymentList = []
+    for transaction in transactionList :
+        payment = createPayment(transaction = transaction)
+        paymentList.append(payment)
+    outDic['paymentList'] = paymentList
+    
+    usedTemplate = get_template('admin/unpayedlist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def doDeleteUnpayed(request):
+    outDic = {}
+    outDic['hightlight'] = '5'
+    
+    transactionId = request.GET['transactionId']
+    try :
+        transaction = Transaction.objects.get(id = transactionId)
+        transaction.delete()
+    except :
+        print '----------------the transaction that you want to delete is not exist. Tansaction ID : ' + transactionId
     
     transactionList = Transaction.objects.filter(successFlag = '0')
     paymentList = []

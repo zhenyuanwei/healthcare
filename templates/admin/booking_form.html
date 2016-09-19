@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+{% block title %}预约{% endblock %}
+{% block content %}
+<div>
+<p>
+	{% if messages|length == 2 %}
+		<p style="color:#FF0000">请正确输入必填项目后，重新提交。</p>
+	{% endif %}
+	
+	{% if timeList|length == 0 %}
+		<p style="color:#FF0000">所选医生，当天的预约已满，请重新选择其他医生或者预约其他日期。</p>
+	{% endif %}
+	
+    <div><form id="bookingform" action="../dobooking/" method="get">
+	    <div class="ui-field-contain">
+	    	<label for="name">姓名 : <b style="color:#FF0000">*</b> : </label>
+	    	<input type="text" name="name" id="name" size="10" maxlength="10" value="{{ vipname }}">
+	    	<input type="hidden" name="openId" id="openId" size="10" maxlength="10" value="{{ openId }}">
+		</div>
+        
+        <div class="ui-field-contain">
+	    	<label for="phonenumber">电话 : <b style="color:#FF0000">*</b> : </label>
+	    	<input type="text" name="phonenumber" id="phonenumber" size="10" maxlength="11" value="{{ phonenumber }}">
+		</div>
+		
+		<div class="ui-field-contain">
+	    	<label for="membercard">会员号 : </label>
+	    	<input type="text" name="membercard" id="membercard" size="10" maxlength="11" value="{{ vipno }}">
+		</div>
+        
+        <div class="ui-field-contain">
+	    	<label for="bookeddoctor">预约医生 : </label>
+	    	<select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();">
+				{% for doctorInfo in doctorInfoList %}
+					<option value="{{ doctorInfo.id }}" {% if doctorInfo.id == bookeddoctor %} selected="selected" {% endif %}>{{ doctorInfo.doctorname }}</option>
+				{% endfor %}
+			</select>
+		</div>
+        
+		<div class="ui-field-contain">
+	    	<label for="bookeditem">预约项目 : </label>
+	        <select name="bookeditem" id="bookeditem" onchange="submitForm();">
+				{% for serviceType in serviceTypeList %}
+					<option value="{{ serviceType.id }}" {% if serviceType.id == bookeditem %} selected="selected" {% endif %}>{{ serviceType.servicename }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="ui-field-contain">
+	    	<label for="bookedtime">预约时间<b style="color:#FF0000">*</b></label>
+			<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true"  onchange="submitForm();">
+			    {% for optionDay in dayList %}
+					<option value="{{ optionDay }}" {% if optionDay == bookeddate %} selected="selected" {% endif %}>{{ optionDay }}</option>
+				{% endfor %}
+			</select>
+			<select name="bookedhour" id="bookedhour" data-mini="true" data-inline="true">
+			    {% for optionTime in timeList %}
+					<option value="{{ optionTime }}">{{ optionTime }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		
+        <button type="submit">提交</button>
+    </form></div>
+   </p>
+  </div>
+{% endblock %}
+			
