@@ -86,5 +86,13 @@ class Transaction(models.Model):
     successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount
     transactionDate = models.DateField()
     
+class Vacation(models.Model):
+    id = models.AutoField(primary_key=True) 
+    doctorId = models.CharField(max_length = 10)
+    vacationDate = models.DateField()
+    starttime = models.CharField(max_length = 8)
+    endtime = models.CharField(max_length = 8)
+    flag = models.CharField(max_length = 1)
+    comments = models.CharField(max_length = 50)
     
     
