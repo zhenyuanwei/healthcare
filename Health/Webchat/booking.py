@@ -6,7 +6,7 @@ Created on May 22, 2016
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import BookingInfo
+from HealthModel.models import BookingInfo, Vacation
 from Health.formatValidation import phoneNumberCheck
 from Health.formatValidation import required
 from HealthModel.models import DoctorInfo
@@ -150,15 +150,20 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
         if today < queryDate :
             now = starttime
             
-        bookingList = BookingInfo.objects.filter(bookeddoctor=doctorId)
-        bookingList = bookingList.filter(status='1')
-        bookingList = bookingList.filter(bookedtime__startswith=queryDate)
+        bookingList = BookingInfo.objects.filter(bookeddoctor = doctorId)
+        bookingList = bookingList.filter(status = '1')
+        bookingList = bookingList.filter(bookedtime__startswith = queryDate)
+        
+        vacationList = Vacation.objects.filter(doctorId = doctorId)
+        vacationList = vacationList.filter(flag = '1')
+        vacationList = vacationList.filter(vacationDate = queryDate)
 
         i = 0
         while (i < (endtime - now) * multiscale):
             time = getTime(value=i, now=now)
             addflag = True
             breakcount = 0
+            #check booking for avoiding double booking
             for booking in bookingList :
                 bookedtime = booking.bookedtime.split(' ')[1]
                 serviceId = booking.bookeditem
@@ -172,17 +177,34 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 if bookedtime == time :
                     addflag = False
                     
-                    # delete the time scale for enough time to do selected service
+                    # delete the time scale for enough time to do selected service before the next booking
                     count = len(timeList)
                     if count < backCount :
                         backCount = count
                     for j in range(0, backCount) :
                         del timeList[count - j -1]
-                    # delete the time scale for enough time to do selected service
+                    # delete the time scale for enough time to do selected service before the next booking
                         
                     breakcount = int((serviceperiod - 1) / bookingscale)
                     break
-                
+            #check booking for avoiding double booking
+            
+            #check doctor vacation to avoid booking in vacation period 
+            for vacation in vacationList :
+                vacationStartTime = vacation.starttime
+                vacationEndTime = vacation.endtime
+                if time == vacationStartTime :
+                    count = len(timeList)
+                    if count < backCount :
+                        backCount = count
+                    for j in range(0, backCount) :
+                        del timeList[count - j -1]
+                        
+                if time >= vacationStartTime and time <= vacationEndTime :
+                    addflag = False
+                    break
+            #check doctor vacation to avoid booking in vacation period
+            
             if addflag :
                 timeList.append(time)
 

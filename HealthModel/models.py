@@ -93,7 +93,7 @@ class Vacation(models.Model):
     vacationDate = models.CharField(max_length = 10)
     starttime = models.CharField(max_length = 8)
     endtime = models.CharField(max_length = 8)
-    flag = models.CharField(max_length = 1)
+    flag = models.CharField(max_length = 1) #flag=1 vacation, flag=0 cancelled
     comments = models.CharField(max_length = 50)
     
     

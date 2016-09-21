@@ -192,7 +192,7 @@ def goVacationApply(request):
         outDic['dayList'] = dayList
         
         today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
-        vacationList = Vacation.objects.filter(flag='1')
+        vacationList = Vacation.objects.filter(flag='1', doctorId = doctorId)
         vacationList = vacationList.filter(vacationDate__gte = today)
         outDic['vacationList'] = vacationList
         
