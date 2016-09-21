@@ -100,6 +100,8 @@ urlpatterns = [
     url(r'^admin/summaryquery/$', payment.goPaymentSummaryList),
     url(r'^admin/querysummaryquery/$', payment.searchPaymentSummaryList),
     url(r'^admin/goaccounting/$', payment.goAccounting),
+    url(r'^admin/govacationlist/$', dbmainten.goVacatinList),
+    url(r'^admin/cancelvacation/$', dbmainten.doCancelVacation),
 ] 
 
 

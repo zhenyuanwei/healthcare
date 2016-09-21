@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+	{% if messages == 'ERROR' %}
+	<div style="color:#FF0000">休假取消失败，请重新检查后，再取消。</div>
+	{% endif %}
+	{% if vacationList|length == 0 %}
+	<div>暂时没有休假预定!</div>
+	{% else %}
+	<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>姓名</th>
+				<th>休假日期</th>
+				<th>开始时间</th>
+				<th>结束时间</th>
+				<th>取消</th>
+			</tr>
+		</thead>
+		{% for vacation in vacationList %}
+			<tr>
+				<td>{{ vacation.id }}</td>
+				<td>{{ vacation.doctorName }}</td>
+				<td>{{ vacation.vacationDate }}</td>
+				<td>{{ vacation.starttime }}</td>
+				<td>{{ vacation.endtime }}</td>
+			    <td><a href="../cancelvacation/?id={{ vacation.id }}">取消</a></td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+{% endblock %}

@@ -6,7 +6,7 @@ Created on Jul 18, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template.loader import get_template
-from HealthModel.models import AdminUser, PaymentType, Transaction
+from HealthModel.models import AdminUser, PaymentType, Transaction, Vacation
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import ServiceRate
@@ -484,6 +484,36 @@ def doPaymentType(request):
     outDic['hightlight'] = '9'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
+
+def goVacatinList(request):
+    outDic = {}
+    outDic['hightlight'] = '10'
+    
+    today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
+    vacationList = Vacation.objects.filter(flag='1')
+    vacationList = vacationList.filter(vacationDate__gte = today)
+    outDic['vacationList'] = vacationList
+    
+    usedTemplate = get_template('admin/vacationlist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def doCancelVacation(request):
+    outDic = {}
+    outDic['hightlight'] = '10'
+    
+    id = request.GET['id']
+    try :
+        vacation = Vacation.objects.get(id = id)
+        vacation.flag = '0'
+        vacation.save()
+        
+    except :
+        outDic['messages'] = 'ERROR'
+        print '------------------------cancel the vacation is fail : id = ' + id
+        
+    finally:
+        return HttpResponseRedirect('../govacationlist/')
     
     
     
