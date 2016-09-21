@@ -119,15 +119,15 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
                'timeList' : timeList}
     return listDic
 
-def getDaysList():
+def getDaysList(length = 7):
     dayList = []
     today = datetime.datetime.now()
     now = int(today.strftime('%H')) + timeBJ + 1
     if now >= endtime :
-        for i in range(1, 8):
+        for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
     else :
-        for i in range(0, 7):
+        for i in range(0, length):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
         
     return dayList

@@ -10,8 +10,13 @@ from HealthModel.models import DoctorInfo
 from Health.Admin.payment import getPaymentList
 from HealthModel.models import BookingInfo
 from HealthModel.models import ServiceType
+from HealthModel.models import Vacation
 from datetime import datetime
 from datetime import timedelta
+from datetime import time
+from Health.Webchat.booking import getDaysList
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
 
 timeBJ = 8
 
@@ -123,6 +128,7 @@ def goDoctorMonthQuery(request):
     finally:
         return HttpResponse(html) 
 
+# doctor query the booking
 def doctorBooking(request):
     #get webchat user
     openId = '000'
@@ -162,4 +168,69 @@ def doctorBooking(request):
         html = usedTemplate.render(outDic)
     finally:
         return HttpResponse(html) 
+
+def goVacationApply(request):
+    #get webchat user
+    openId = '000'
+    try :
+        code = request.GET['code']
+        openId = getOpenID(code=code)
+    except :
+        openId = '000'
+        print '------------this is not from weixin-----------'
+    #get webchat user
+    
+    outDic = {}
+    outDic['openId'] = openId
+    try :
+        doctor = DoctorInfo.objects.get(webchatid=openId)
+        doctorId = doctor.id
+        doctorName = doctor.doctorname
+        dayList = getDaysList(14)
+        outDic['doctorId'] = doctorId
+        outDic['doctorName'] = doctorName
+        outDic['dayList'] = dayList
         
+        today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
+        vacationList = Vacation.objects.filter(flag='1')
+        vacationList = vacationList.filter(vacationDate__gte = today)
+        outDic['vacationList'] = vacationList
+        
+        usedTemplate = get_template('webchat/vacationapplication.html')
+        html = usedTemplate.render(outDic)
+    except :
+        outDic['messages'] = 'BIND'
+        usedTemplate = get_template('webchat/doctorbind.html')
+        html = usedTemplate.render(outDic)
+    finally:
+        return HttpResponse(html) 
+    
+@csrf_exempt    
+def doVacationApply(request):
+    
+    outDic = {}
+    
+    try :
+        doctorId = request.POST['doctorId']
+        vacationDate  = request.POST['vacationDate']
+        starttime = request.POST['starttime']
+        endtime = request.POST['endtime']
+        flag = '1'
+        comments = ''
+        
+        vacation = Vacation()
+        vacation.doctorId = doctorId
+        vacation.vacationDate = vacationDate
+        vacation.starttime = starttime
+        vacation.endtime = endtime
+        vacation.flag = flag
+        vacation.comments = comments
+        vacation.save()
+        
+        return HttpResponseRedirect('../govacationapplication/')
+    
+    except :
+        outDic['messages'] = 'ERROR'
+        usedTemplate = get_template('webchat/vacation.html')
+        html = usedTemplate.render(outDic)
+        return HttpResponse(html)         

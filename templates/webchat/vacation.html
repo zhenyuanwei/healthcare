@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8" /> 
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
-	    <title> 会员绑定 </title>
+	    <title> 请假申请 </title>
 	    
 		<!-- 引入 jQuery Mobile 样式 -->
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -12,20 +12,20 @@
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
-		
+		<script>
+		function submitForm(){
+			//获取form表单对象
+			var form = document.getElementById("bookingform");
+			form.action = "../refershdoctor/"
+			form.submit();//form表单提交
+			}
+		</script>
 	</head>
 	<body>
-		{% if messages == 'OK' %}
-			<p style="color:#FF0000">会员卡号或者手机号码错误，请检查后，重新输入。</p>
-		{% endif %}
-	    <form action="../bindMembership/" method="get">
-	        会员卡号 : <input type="text" name="vipno" size="10" maxlength="11">
-	        手机号码 : <input type="text" name="phonenumber" size="10" maxlength="11">
-	        <input type="hidden" name="openId" size="10" maxlength="10" value="{{ openId }}">
-	        <center>
-		        <button class="ui-btn ui-btn-inline" type="submit">绑定</button>
-		        <button class="ui-btn ui-btn-inline" type="reset">取消</button>
-	        </center>
-	    </form>
+		<div>
+		    {% if messages == 'ERROR' %}
+			<div class="ui-field-contain" style="color:#FF0000">您的请假申请没有成功，请重新申请。</div>
+			{% endif %}
+	    </div>
 	</body>
 </html>

@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	    <title> 请假申请 </title>
+	    
+		<!-- 引入 jQuery Mobile 样式 -->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<!-- 引入 jQuery 库 -->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- 引入 jQuery Mobile 库 -->
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+		<script>
+		function submitForm(){
+			//获取form表单对象
+			var form = document.getElementById("bookingform");
+			form.action = "../refershdoctor/"
+			form.submit();//form表单提交
+			}
+		</script>
+	</head>
+	<body>
+		<div>
+		    <div><form  action="../dovacationapplication/" method="post">
+			    <div class="ui-field-contain">
+			    	<label for="name">姓名 : <b style="color:#FF0000">*</b> : </label>
+			    	<label for="name">{{ doctorName }}</label>
+			    	<input type="hidden" name="openId" id="openId" value="{{ openId }}">
+			    	<input type="hidden" name="doctorId" id="doctorId" value="{{ doctorId }}">
+				</div>
+		        
+		        <div class="ui-field-contain">
+			    	<label for="vacationDate">日期 : <b style="color:#FF0000">*</b> : </label>
+			    	<select name="vacationDate" id="vacationDate">
+						{% for day in dayList %}
+							<option value="{{ day }}">{{ day }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				
+				<div class="ui-field-contain">
+			    	<label for="starttime">开始时间 : <b style="color:#FF0000">*</b> : </label>
+			    	<select name="starttime" id="starttime">
+						<option value="07:00">07:00</option>
+						<option value="08:00">08:00</option>
+						<option value="09:00">09:00</option>
+						<option value="10:00">10:00</option>
+						<option value="11:00">11:00</option>
+						<option value="12:00">12:00</option>
+						<option value="13:00">13:00</option>
+						<option value="14:00">14:00</option>
+						<option value="15:00">15:00</option>
+						<option value="16:00">16:00</option>
+						<option value="17:00">17:00</option>
+						<option value="18:00">18:00</option>
+						<option value="19:00">19:00</option>
+						<option value="20:00">20:00</option>
+						<option value="21:00">21:00</option>
+					</select>
+				</div>
+				
+				<div class="ui-field-contain">
+			    	<label for="endtime">开始时间 : <b style="color:#FF0000">*</b> : </label>
+			    	<select name="endtime" id="endtime">
+						<option value="08:00">08:00</option>
+						<option value="09:00">09:00</option>
+						<option value="10:00">10:00</option>
+						<option value="11:00">11:00</option>
+						<option value="12:00">12:00</option>
+						<option value="13:00">13:00</option>
+						<option value="14:00">14:00</option>
+						<option value="15:00">15:00</option>
+						<option value="16:00">16:00</option>
+						<option value="17:00">17:00</option>
+						<option value="18:00">18:00</option>
+						<option value="19:00">19:00</option>
+						<option value="20:00">20:00</option>
+						<option value="21:00">21:00</option>
+						<option value="22:00">22:00</option>
+					</select>
+				</div>
+				
+		        <button type="submit">提交</button>
+		    </form></div>
+		    <div>
+		    {% if vacationList|length > 0 %}
+		    <div class="ui-field-contain">您的请假记录如下：</div>
+		    <table data-role="table" class="ui-responsive">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>休假日期</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
+					</tr>
+				</thead>
+				{% for vacation in vacationList %}
+					<tr>
+						<td>{{ vacation.id }}</td>
+						<td>{{ vacation.vacationDate }}</td>
+						<td>{{ vacation.starttime }}</td>
+						<td>{{ vacation.endtime }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		    {% endif %}
+		    </div>
+	    </div>
+	</body>
+</html>
