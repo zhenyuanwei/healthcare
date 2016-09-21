@@ -215,11 +215,13 @@ def doVacationApply(request):
         vacationDate  = request.POST['vacationDate']
         starttime = request.POST['starttime']
         endtime = request.POST['endtime']
+        doctorName = request.POST['doctorName']
         flag = '1'
         comments = ''
         
         vacation = Vacation()
         vacation.doctorId = doctorId
+        vacation.doctorName = doctorName
         vacation.vacationDate = vacationDate
         vacation.starttime = starttime
         vacation.endtime = endtime

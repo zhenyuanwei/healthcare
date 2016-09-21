@@ -12,14 +12,6 @@
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
-		<script>
-		function submitForm(){
-			//获取form表单对象
-			var form = document.getElementById("bookingform");
-			form.action = "../refershdoctor/"
-			form.submit();//form表单提交
-			}
-		</script>
 	</head>
 	<body>
 		<div>
@@ -29,6 +21,7 @@
 			    	<label for="name">{{ doctorName }}</label>
 			    	<input type="hidden" name="openId" id="openId" value="{{ openId }}">
 			    	<input type="hidden" name="doctorId" id="doctorId" value="{{ doctorId }}">
+			    	<input type="hidden" name="doctorName" id="doctorName" value="{{ doctorName }}">
 				</div>
 		        
 		        <div class="ui-field-contain">
