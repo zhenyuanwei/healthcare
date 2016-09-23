@@ -33,7 +33,7 @@
 			    	<label for="discountrate">会员折扣<b style="color:#FF0000">*</b> : </label>
 			    	<select name="discountrate" id="discountrate" {% if flag == 'M' %}disabled{% endif %}>
 			    	{% for servicerate in serviceRateList %}
-			    		<option value="{{ servicerate.id }}" {% if membership.discountrate == servicerate.rate %}selected{% endif %}>{{ servicerate.ratename }}</option>
+			    		<option value="{{ servicerate.id }}" {% if membership.discounttype == servicerate.id %}selected{% endif %}>{{ servicerate.ratename }}</option>
 			    	{% endfor %}
 					</select>
 				</div>
