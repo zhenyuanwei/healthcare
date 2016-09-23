@@ -262,9 +262,9 @@ def addMembership(request):
     '''if request.GET['amount'].strip() :
         amount = float(request.GET['amount'])'''
     lastamount = 0
-    discounttype = ''
     
     discountrateId = request.GET['discountrate']
+    discounttype = discountrateId
     discountrate = 0
     discountrate2 = 0
     try :
@@ -316,6 +316,7 @@ def updateMembership(request):
     membership = Membership.objects.get(id = vipid)
     membership.vipname = vipname
     membership.vipno = vipno
+    membership.discounttype = discountrateId
     membership.phonenumber = phonenumber
     membership.discountrate = discountrate
     membership.discountrate2 = discountrate2
