@@ -196,11 +196,13 @@ def goMembershipDelete(request):
 def goMembershipUpdate(request):
     temId = request.GET['id']
     membership = Membership.objects.get(id = temId)
+    discounttype = int(membership.discounttype)
     usedTemplate = get_template('admin/membership.html')
     outDic = {}
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['membership'] = membership
+    outDic['discounttype'] = discounttype
     outDic['flag'] = 'U'
     outDic['hightlight'] = '4'
     html = usedTemplate.render(outDic)
