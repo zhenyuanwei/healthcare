@@ -27,22 +27,26 @@ def bookingList(request):
     outDic = {}
     outDic['bookingList'] = bookingList
     outDic['hightlight'] = '1'
+    outDic['explorer'] = request.session['explorer']
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
     
 def doLogin(request):
     username = request.GET['username']
     password = request.GET['password']
+    explorer = request.GET['explorer']
     
     try :
         adminUser = AdminUser.objects.get(username = username, password = password)
         request.session['username'] = username
         request.session['role'] = adminUser.role
+        request.session['explorer'] = explorer
         return HttpResponseRedirect("../bookinglist/")
     except :
         usedTemplate = get_template('admin/login.html')
-        messageDic = {'messages' : 'OK'}
-        html = usedTemplate.render(messageDic)
+        outDic = {}
+        outDic['messages'] = 'OK'
+        html = usedTemplate.render(outDic)
         return HttpResponse(html)
         
         
