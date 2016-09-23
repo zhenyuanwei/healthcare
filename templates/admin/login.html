@@ -17,14 +17,15 @@
 			 var explorer = window.navigator.userAgent;
 			 //alert(explorer)
 			 //ie 
-			 if (explorer.indexOf("msie") >= 0) {
+			 //if (explorer.indexOf("msie") >= 0) {
 			    //var ver=explorer.match(/msie ([\d.]+)/)[1];
-			    alert("type : IE")
-			 }
+			 //   alert("type : IE")
+			 //}
 			 //Safari
-			 else if(explorer.indexOf("Safari") >= 0){
+			 if(explorer.indexOf("Safari") >= 0){
 			 //var ver=explorer.match(/version\/([\d.]+)/)[1];
-			 alert("type : Safari")
+			 //alert("type : Safari")
+				 document.getElementById("explorer").value = "Safari"
 			 }
 		}
 		
@@ -40,6 +41,7 @@
 			<p style="color:#FF0000">登录时间过长，请重新登录。</p>
 		{% endif %}
 	    <form action="../doLogin/" method="get">
+	    	<input type="hidden" name="explorer" id="explorer" value="">
 	        用户名 : <input type="text" name="username" size="10" maxlength="10" required>
 	        密 码 : <input type="password" name="password" size="10" maxlength="10" required>
 	        <center>
