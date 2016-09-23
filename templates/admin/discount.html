@@ -1,24 +1,34 @@
 {% extends "admin/base.html" %}
-{% block title %}会员管理{% endblock %}
+{% block title %}打折信息{% endblock %}
 {% block content %}
 		    <div>
 		    <form action="../dodiscount/" method="post">
 			    <div class="ui-field-contain">
 			    	<label for="discountname">折扣名称<b style="color:#FF0000">*</b> : </label>
-			    	<input type="text" name="discountname" id="discountname" size="10">
+			    	<input type="text" name="discountname" id="discountname" size="10" value="{{ serviceRate.ratename }}">
 			    </div>
 			    <div class="ui-field-contain">
 			    	<label for="discountrate">折扣比例<b style="color:#FF0000">*</b> : </label>
-			    	<input type="text" name="discountrate" id="discountrate" size="10">
+			    	<input type="text" name="discountrate" id="discountrate" size="10" value="{{ serviceRate.rate }}">
 			    </div>
 			    <div class="ui-field-contain">	
 			    	<label for="morningdiscout">上午折扣比例<b style="color:#FF0000">*</b> : </label>
-			    	<input type="text" name="morningdiscout" id="morningdiscout" size="10">
+			    	<input type="text" name="morningdiscout" id="morningdiscout" size="10" value="{{ serviceRate.morningdiscount }}">
 			    </div>
 				<div class="ui-field-contain">	
 			    	<label for="comments">说明<b style="color:#FF0000">*</b> : </label>
-			    	<input type="text" name="comments" id="comments" size="10" maxlength="10">
+			    	<input type="text" name="comments" id="comments" size="10" maxlength="10" value="{{ serviceRate.commnets }}">
 				</div>
+				<div class="ui-field-contain">
+			    	<label for="discountrate">下一个会员卡号<b style="color:#FF0000">*</b> : </label>
+			    	<input type="text" name="nextCardNo" id="nextCardNo" size="10" value="{{ serviceRate.nextCardNo }}">
+			    	{% if serviceRate %}
+			    	<input type="hidden" name="actionType" id="actionType" size="10" value="U">
+			    	<input type="hidden" name="serviceRateId" id="serviceRateId" size="10" value="{{ serviceRate.id }}">
+			    	{% else %}
+			    	<input type="hidden" name="actionType" id="actionType" size="10" value="A">
+			    	{% endif %}
+			    </div>
 		        <input type="submit" value="OK">
 		    </form>
 		    </div>

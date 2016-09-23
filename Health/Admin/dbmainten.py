@@ -378,12 +378,25 @@ def doDiscountRate(request):
         discountrate = request.POST['discountrate']
         morningdiscout = request.POST['morningdiscout']
         comments = request.POST['comments']
-        discount = ServiceRate()
-        discount.ratename = discountname
-        discount.rate = discountrate
-        discount.morningdiscount = morningdiscout
-        discount.commnets = comments
-        discount.save()
+        nextCardNo = request.POST['nextCardNo']
+        actionType = request.POST['actionType']
+        if actionType == 'A' :
+            discount = ServiceRate()
+            discount.ratename = discountname
+            discount.rate = discountrate
+            discount.morningdiscount = morningdiscout
+            discount.commnets = comments
+            discount.nextCardNo = nextCardNo
+            discount.save()
+        elif actionType == 'U' :
+            serviceRateId = request.POST['serviceRateId']
+            discount = ServiceRate.objects.get(id=serviceRateId)
+            discount.ratename = discountname
+            discount.rate = discountrate
+            discount.morningdiscount = morningdiscout
+            discount.commnets = comments
+            discount.nextCardNo = nextCardNo
+            discount.save()
     except :
         print '-----------worry--------------'
     outDic = {}
@@ -401,6 +414,16 @@ def deleteDiscountRate(request):
     outDic = {}
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
+    outDic['hightlight'] = '7'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goUpdateDiscountRate(request):
+    usedTemplate = get_template('admin/discount.html')
+    discountId = request.GET['id']
+    discout = ServiceRate.objects.get(id=discountId)
+    outDic = {}
+    outDic['serviceRate'] = discout
     outDic['hightlight'] = '7'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)

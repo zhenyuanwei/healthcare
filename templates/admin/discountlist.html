@@ -9,9 +9,11 @@
 					<tr>
 						<th>No.</th>
 						<th>折扣名称</th>
+						<th>下一个会员卡号</th>
 						<th>折扣比例</th>
 						<th>上午折扣比例</th>
 						<th>说明</th>
+						<th>更新</th>
 						<th>删除</th>
 					</tr>
 				</thead>
@@ -19,9 +21,11 @@
 					<tr>
 						<td>{{ discount.id }}</td>
 						<td>{{ discount.ratename }}</td>
+						<td>{{ discount.nextCardNo }}</td>
 						<td>{{ discount.rate }}</td>
 						<td>{{ discount.morningdiscount }}</td>
 						<td>{{ discount.commnets }}</td>
+						<td><a href="../goupdatediscount/?id={{ discount.id }}">更新</a></td>
 					    <td><a href="../deletediscount/?id={{ discount.id }}">删除</a></td>
 					</tr>
 				{% endfor %}

@@ -80,6 +80,7 @@ urlpatterns = [
     url(r'^admin/godiscountlist/$', dbmainten.goDiscountRateList),
     url(r'^admin/godiscount/$', dbmainten.goDiscountRate),
     url(r'^admin/dodiscount/$', dbmainten.doDiscountRate),
+    url(r'^admin/goupdatediscount/$', dbmainten.goUpdateDiscountRate),
     url(r'^admin/deletediscount/$', dbmainten.deleteDiscountRate),
     url(r'^admin/goproductlist/$', dbmainten.goProductList),
     url(r'^admin/goproduct/$', dbmainten.goProduct),

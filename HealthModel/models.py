@@ -59,6 +59,7 @@ class ServiceRate(models.Model):
     rate = models.FloatField()  #discount
     morningdiscount = models.FloatField()
     commnets = models.CharField(max_length = 50)
+    nextCardNo = models.IntegerField(default = 100000)
     
 class BookingInfo(models.Model):
     id = models.AutoField(primary_key=True)
