@@ -295,6 +295,10 @@ def addMembership(request):
         membership.discounttype = discounttype
         membership.webchatid = webchatid
         membership.save()
+        
+        #update the next membership id
+        discount.nextCardNo = int(vipno) + 1
+        discount.save()
     return isMember
     
 def updateMembership(request):
