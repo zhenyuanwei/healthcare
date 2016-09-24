@@ -175,11 +175,17 @@ def goMembership(request):
     return HttpResponse(html)
 
 def goMembershipList(request):
-    membershiplist = Membership.objects.all()
-    usedTemplate = get_template('admin/membershiplist.html')
     outDic = {}
+    
+    membershiplist = Membership.objects.all()
     outDic['membershipList'] = membershiplist
+    
+    for membership in membershiplist :
+        discoutType = ServiceRate.objects.get(id = membership.discounttype)
+        membership.discounttype = discoutType.ratename
+    
     outDic['hightlight'] = '4'
+    usedTemplate = get_template('admin/membershiplist.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 

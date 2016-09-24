@@ -9,10 +9,11 @@
 					<tr>
 						<th>No.</th>
 						<th>姓名</th>
-						<!-- <th>身份证</th> -->
 						<th>电话</th>
 						<th>会员号</th>
-						<th>会员折扣</th>
+						<th>卡种</th>
+						<th>上午折扣</th>
+						<th>下午折扣</th>
 						<th>账户余额</th>
 						<th>会员充值</th>
 						<th>会员信息更新</th>
@@ -23,9 +24,10 @@
 					<tr>
 						<td>{{ membership.id }}</td>
 						<td>{{ membership.vipname }}</td>
-						<!-- <td>{{ membership.vipnameid }}</td> -->
 						<td>{{ membership.phonenumber }}</td>
 						<td>{{ membership.vipno }}</td>
+						<td>{{ membership.discounttype }}</td>
+						<td>{{ membership.discountrate2 }}</td>
 						<td>{{ membership.discountrate }}</td>
 						<td>{{ membership.amount }}</td>
 						<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
