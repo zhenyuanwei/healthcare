@@ -30,15 +30,19 @@
 			<div data-role="navbar">
 			    <ul>
 					<li><a href="../bookinglist/" {% if hightlight == '1' %}class="ui-btn-active"{% endif %}>预定一览</a></li>
+					{% if role == '2' %}
 					<li><a href="../servicetypelist/" {% if hightlight == '3' %}class="ui-btn-active"{% endif %}>服务项目维护</a></li>
 					<li><a href="../goproductlist/" {% if hightlight == '8' %}class="ui-btn-active"{% endif %}>产品维护</a></li>
 					<li><a href="../doctorlist/" {% if hightlight == '2' %}class="ui-btn-active"{% endif %}>医生信息维护</a></li>
+					{% endif %}
 					<li><a href="../membershiplist/" {% if hightlight == '4' %}class="ui-btn-active"{% endif %}>会员管理</a></li>
 					<li><a href="../gounpayedlist/" {% if hightlight == '5' %}class="ui-btn-active"{% endif %}>结账</a></li>
+					{% if role == '2' %}
 					<li><a href="../gopaymentlist/" {% if hightlight == '6' %}class="ui-btn-active"{% endif %}>收入统计</a></li>
 					<li><a href="../govacationlist/" {% if hightlight == '10' %}class="ui-btn-active"{% endif %}>休假管理</a></li>
 					<li><a href="../godiscountlist/" {% if hightlight == '7' %}class="ui-btn-active"{% endif %}>折扣信息</a></li>
 					<li><a href="../gopaymenttypelist/" {% if hightlight == '9' %}class="ui-btn-active"{% endif %}>支付方式</a></li>
+					{% endif %}
 				</ul>
 			</div><!-- /navbar -->
 			{% if hightlight == '1' %}
@@ -46,12 +50,12 @@
 			<ul><li><a href="../booking/">预约</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '2' %}
+			{% if hightlight == '2' and role == '2' %}
 			<div><hr>
 			<ul><li><a href="../doctor/">医生登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '3' %}
+			{% if hightlight == '3' and role == '2' %}
 			<div><hr>
 			<ul><li><a href="../servicetype/">服务项目登记</a></li></ul>
 			</div>
@@ -72,17 +76,17 @@
 			<ul><li><a href="../summaryquery/">统计查询</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '7' %}
+			{% if hightlight == '7' and role == '2' %}
 			<div><hr>
 			<ul><li><a href="../godiscount/">打折类型登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '8' %}
+			{% if hightlight == '8' and role == '2' %}
 			<div><hr>
 			<ul><li><a href="../goproduct/">产品登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '9' %}
+			{% if hightlight == '9' and role == '2' %}
 			<div><hr>
 			<ul><li><a href="../gopaymenttype/">支付方式登记</a></li></ul>
 			</div>

@@ -16,8 +16,10 @@
 						<th>下午折扣</th>
 						<th>账户余额</th>
 						<th>会员充值</th>
+						{% if role == '2' %}
 						<th>会员信息更新</th>
 						<th>会员删除</th>
+						{% endif %}
 					</tr>
 				</thead>
 				{% for membership in membershipList %}
@@ -31,8 +33,10 @@
 						<td>{{ membership.discountrate }}</td>
 						<td>{{ membership.amount }}</td>
 						<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
+						{% if role == '2' %}
 					    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
 					    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
+					    {% endif %}
 					</tr>
 				{% endfor %}
 			</table>
