@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from datetime import timedelta
 from Health.Admin.common import checkSession
+from Health.Admin.common import createResponseDic
 
 timeBJ = 8
 
@@ -29,7 +30,7 @@ def addAdminUser(request):
 
 def goDoctorInfo(request):
     usedTemplate = get_template('admin/doctor.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '2'
     serviceList = ServiceType.objects.all()
     outDic['serviceList'] = serviceList
@@ -39,7 +40,7 @@ def goDoctorInfo(request):
 def goDoctorInfoList(request):
     usedTemplate = get_template('admin/doctorlist.html')
     doctorlist = DoctorInfo.objects.all()
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '2'
     outDic['doctorList'] = doctorlist
     html = usedTemplate.render(outDic)
@@ -96,7 +97,7 @@ def goUpdateDoctorInfo(request):
         print '------there is no doctor id = ' + doctorid + '----------'
     finally:
         usedTemplate = get_template('admin/doctor.html')
-        outDic = {}
+        outDic = createResponseDic(request=request)
         outDic['hightlight'] = '2'
         outDic['doctorinfo'] = doctor
         serviceList = ServiceType.objects.all()
@@ -105,7 +106,7 @@ def goUpdateDoctorInfo(request):
         return HttpResponse(html)
 
 def goServiceType(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '3'
     usedTemplate = get_template('admin/servicetype.html')
     html = usedTemplate.render(outDic)
@@ -113,7 +114,7 @@ def goServiceType(request):
 
 def goServiceTypeUpdate(request):
     serviceid = request.GET['id']
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '3'
     try :
         service = ServiceType.objects.get(id=serviceid)
@@ -138,7 +139,7 @@ def deleteServiceType(request):
 def goServiceTypeList(request):
     usedTemplate = get_template('admin/servicetypelist.html')
     serviceList = ServiceType.objects.all()
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '3'
     outDic['serviceList'] = serviceList
     html = usedTemplate.render(outDic)
@@ -166,7 +167,7 @@ def doServiceType(request):
 def goMembership(request):
     usedTemplate = get_template('admin/membership.html')
     
-    outDic = {}
+    outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '4'
@@ -175,7 +176,7 @@ def goMembership(request):
     return HttpResponse(html)
 
 def goMembershipList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     
     membershiplist = Membership.objects.all()
     outDic['membershipList'] = membershiplist
@@ -204,7 +205,7 @@ def goMembershipUpdate(request):
     membership = Membership.objects.get(id = temId)
     discounttype = int(membership.discounttype)
     usedTemplate = get_template('admin/membership.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['membership'] = membership
@@ -215,19 +216,12 @@ def goMembershipUpdate(request):
     return HttpResponse(html)
 
 def goMembershipAmountUpdate(request):
-    #check session
-    if not checkSession(request) :
-        usedTemplate = get_template('admin/login.html')
-        messageDic = {'messages' : 'TIMEOUT'}
-        html = usedTemplate.render(messageDic)
-        return HttpResponse(html)
-    #check session
-    
+
     temId = request.GET['id']
     membership = Membership.objects.get(id = temId)
     paymentTypeList = PaymentType.objects.exclude(paymenttype = '02')
     usedTemplate = get_template('admin/membership.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['membership'] = membership
     outDic['paymentTypeList'] = paymentTypeList
     outDic['flag'] = 'M'
@@ -239,7 +233,7 @@ def doMembership(request):
     flag = request.GET['operation']
     if flag == 'A' :
         if addMembership(request=request) :
-            outDic = {}
+            outDic = createResponseDic(request=request)
             outDic['hightlight'] = '4'
             outDic['isMessages'] = 'OK'
             usedTemplate = get_template('admin/membership.html')
@@ -251,7 +245,7 @@ def doMembership(request):
         updateMembershipAmount(request=request)
     else :
         addMembership(request=request)
-    '''outDic = {}
+    '''outDic = createResponseDic(request=request)
     outDic['hightlight'] = '4'
     usedTemplate = get_template('admin/success.html')
     html = usedTemplate.render(outDic)
@@ -369,7 +363,7 @@ def updateMembershipAmount(request):
     
 def goDiscountRateList(request):
     usedTemplate = get_template('admin/discountlist.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '7'
@@ -378,7 +372,7 @@ def goDiscountRateList(request):
 
 def goDiscountRate(request):
     usedTemplate = get_template('admin/discount.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '7'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
@@ -412,7 +406,7 @@ def doDiscountRate(request):
             discount.save()
     except :
         print '-----------worry--------------'
-    outDic = {}
+    outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '7'
@@ -424,7 +418,7 @@ def deleteDiscountRate(request):
     discountId = request.GET['id']
     discout = ServiceRate.objects.get(id=discountId)
     discout.delete()
-    outDic = {}
+    outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
     outDic['serviceRateList'] = serviceRateList
     outDic['hightlight'] = '7'
@@ -435,7 +429,7 @@ def goUpdateDiscountRate(request):
     usedTemplate = get_template('admin/discount.html')
     discountId = request.GET['id']
     discout = ServiceRate.objects.get(id=discountId)
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['serviceRate'] = discout
     outDic['hightlight'] = '7'
     html = usedTemplate.render(outDic)
@@ -444,7 +438,7 @@ def goUpdateDiscountRate(request):
 def goProductList(request):
     usedTemplate = get_template('admin/productlist.html')
     productList = Product.objects.all()
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
     outDic['productList'] = productList
     html = usedTemplate.render(outDic)
@@ -452,7 +446,7 @@ def goProductList(request):
 
 def goProduct(request):
     usedTemplate = get_template('admin/product.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
@@ -470,7 +464,7 @@ def doProduct(request):
     except :
         print '-----------worry--------------'
     
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
     productList = Product.objects.all()
     outDic['productList'] = productList
@@ -486,7 +480,7 @@ def deleteProduct(request):
     except :
         print '------------There is no product to delete'
     
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
     productList = Product.objects.all()
     outDic['productList'] = productList
@@ -495,7 +489,7 @@ def deleteProduct(request):
 
 def goPaymentTypeList(request):
     usedTemplate = get_template('admin/paymenttypelist.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     paymentTypeList = PaymentType.objects.all()
     outDic['paymentTypeList'] = paymentTypeList
     outDic['hightlight'] = '9'
@@ -504,7 +498,7 @@ def goPaymentTypeList(request):
 
 def goPaymentType(request):
     usedTemplate = get_template('admin/paymenttype.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '9'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
@@ -516,13 +510,13 @@ def doPaymentType(request):
     paymentType.paymenttypename = request.POST['paymenttypename']
     paymentType.save()
     usedTemplate = get_template('admin/paymenttypelist.html')
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '9'
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def goVacatinList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
     today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
@@ -535,7 +529,7 @@ def goVacatinList(request):
     return HttpResponse(html)
 
 def doCancelVacation(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
     id = request.GET['id']

@@ -14,6 +14,7 @@ from HealthModel.models import BookingInfo
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 from Health.Webchat.booking import getBookingList
+from Health.Admin.common import createResponseDic
 
 "@csrf_exempt"
 def login(request):
@@ -24,10 +25,9 @@ def login(request):
 def bookingList(request):
     usedTemplate = get_template('admin/bookinglist.html')
     bookingList = getBookingList()
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['bookingList'] = bookingList
     outDic['hightlight'] = '1'
-    outDic['explorer'] = request.session['explorer']
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
     

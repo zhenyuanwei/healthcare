@@ -7,7 +7,7 @@ Created on May 22, 2016
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from HealthModel.models import AdminUser
-
+from Health.Admin.common import createResponseDic
 
 def addAdminUser(request):
     admin = AdminUser(username='test1', password = '123456')

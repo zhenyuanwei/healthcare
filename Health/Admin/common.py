@@ -3,8 +3,6 @@ Created on Sep 10, 2016
 
 @author: weizhenyuan
 '''
-from django.template.loader import get_template
-from django.http import HttpResponse
 def checkSession(request):
     returnValue = True
     try :
@@ -18,3 +16,13 @@ def checkSession(request):
     finally:
         
         return returnValue
+    
+def createResponseDic(request):
+    outDic = {}
+    username = request.session.get('username')
+    role = request.session.get('role')
+    explorer = request.session.get('explorer')
+    outDic['username'] = username
+    outDic['role'] = role
+    outDic['explorer'] = explorer
+    return outDic

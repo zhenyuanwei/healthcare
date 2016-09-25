@@ -15,6 +15,7 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from django.views.decorators.csrf import csrf_exempt
+from Health.Admin.common import createResponseDic
 
 timeBJ = 8
 
@@ -32,7 +33,7 @@ class Payment :
     bookingId = ''
 
 def goPrePayment(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     doctorList = DoctorInfo.objects.all()
     outDic['doctorList'] = doctorList
@@ -60,7 +61,7 @@ def goPrePayment(request):
 
 @csrf_exempt
 def doPrePayment(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
     try :
@@ -169,7 +170,7 @@ def doPrePayment(request):
         return HttpResponse(html)
 
 def goPaymentTypeSelect(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     isMembership = True
     try :
@@ -196,7 +197,7 @@ def goPaymentTypeSelect(request):
 
 @csrf_exempt
 def doPaymentTypeSelect(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
     try :
@@ -241,7 +242,7 @@ def doPaymentTypeSelect(request):
 
 @csrf_exempt
 def doPayment(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
     try :
@@ -359,7 +360,7 @@ def createPayment(transaction):
     return payment
 
 def goUnpayedList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
     transactionList = Transaction.objects.filter(successFlag = '0')
@@ -374,7 +375,7 @@ def goUnpayedList(request):
     return HttpResponse(html)
 
 def doDeleteUnpayed(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
     transactionId = request.GET['transactionId']
@@ -396,7 +397,7 @@ def doDeleteUnpayed(request):
     return HttpResponse(html)
 
 def goPaymentList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
     #query form show
@@ -417,7 +418,7 @@ def goPaymentList(request):
     return HttpResponse(html)
 
 def searchPaymentList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
     #query form show
@@ -479,7 +480,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
     return paymentList
 
 def goPaymentSummaryList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
     #query form show
@@ -500,7 +501,7 @@ def goPaymentSummaryList(request):
     return HttpResponse(html)
 
 def searchPaymentSummaryList(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
     #query form show
@@ -523,7 +524,7 @@ def searchPaymentSummaryList(request):
     return HttpResponse(html)
 
 def goAccounting(request):
-    outDic = {}
+    outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
     today = datetime.now() + timedelta(hours=timeBJ)
