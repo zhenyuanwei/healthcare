@@ -8,13 +8,11 @@
 		    <form action="../domembership/" method="get">
 			    <div class="ui-field-contain">
 			    	<input type="hidden" name="operation" id="operation" value="{{ flag }}">
-			    	<label for="vipno">会员号<b style="color:#FF0000">*</b> : </label>
 			    	{% if flag == 'U' or flag == 'M' %}
+			    	<label for="vipno">会员号<b style="color:#FF0000">*</b> : </label>
 			    	<input type="hidden" name="vipid" id="vipid" value="{{ membership.id }}">
 			    	{{ membership.vipno }}
 			    	<input type="hidden" name="vipno" id="vipno" size="10" maxlength="10" value="{{ membership.vipno }}">
-			    	{% else %}
-			    	<input type="text" name="vipno" id="vipno" size="10" maxlength="10">
 			    	{% endif %}
 			    </div>
 			    <div class="ui-field-contain">

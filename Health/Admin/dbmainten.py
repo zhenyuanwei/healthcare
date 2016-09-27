@@ -254,7 +254,7 @@ def doMembership(request):
     
 
 def addMembership(request):
-    vipno = request.GET['vipno']
+    #vipno = request.GET['vipno']
     vipname = request.GET['vipname']
     #vipnameid = request.GET['vipnameid']
     vipnameid = ''
@@ -264,6 +264,7 @@ def addMembership(request):
     '''if request.GET['amount'].strip() :
         amount = float(request.GET['amount'])'''
     lastamount = 0
+    vipno = ''
     
     discountrateId = request.GET['discountrate']
     discounttype = discountrateId
@@ -273,9 +274,11 @@ def addMembership(request):
         discount = ServiceRate.objects.get(id = discountrateId)
         discountrate = discount.rate
         discountrate2 = discount.morningdiscount
+        vipno = discount.nextCardNo
     except :
         discountrate = 1
         discountrate2 = 1
+        vipno = phonenumber
         
     webchatid = ''
     
