@@ -19,16 +19,17 @@
 			    	<label for="comments">说明<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="comments" id="comments" size="10" maxlength="10" value="{{ serviceRate.commnets }}">
 				</div>
-				<div class="ui-field-contain">
+				
+			    {% if serviceRate %}
+		    	<input type="hidden" name="actionType" id="actionType" size="10" value="U">
+		    	<input type="hidden" name="serviceRateId" id="serviceRateId" size="10" value="{{ serviceRate.id }}">
+		    	{% else %}
+		    	<input type="hidden" name="actionType" id="actionType" size="10" value="A">
+		    	<div class="ui-field-contain">
 			    	<label for="discountrate">下一个会员卡号<b style="color:#FF0000">*</b> : </label>
 			    	<input type="text" name="nextCardNo" id="nextCardNo" size="10" value="{{ serviceRate.nextCardNo }}">
-			    	{% if serviceRate %}
-			    	<input type="hidden" name="actionType" id="actionType" size="10" value="U">
-			    	<input type="hidden" name="serviceRateId" id="serviceRateId" size="10" value="{{ serviceRate.id }}">
-			    	{% else %}
-			    	<input type="hidden" name="actionType" id="actionType" size="10" value="A">
-			    	{% endif %}
 			    </div>
+		    	{% endif %}
 		        <input type="submit" value="OK">
 		    </form>
 		    </div>

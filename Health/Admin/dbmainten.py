@@ -405,7 +405,7 @@ def doDiscountRate(request):
             discount.rate = discountrate
             discount.morningdiscount = morningdiscout
             discount.commnets = comments
-            discount.nextCardNo = nextCardNo
+            #discount.nextCardNo = nextCardNo
             discount.save()
     except :
         print '-----------worry--------------'
