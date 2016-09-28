@@ -22,7 +22,11 @@
 		<label for="serviceitem">服务项目 : </label>
 		<fieldset data-role="controlgroup">
 		{% for service in serviceList %}
-		    <label><input type="checkbox" name="service{{service.id}}" id="service{{service.id}}" value="{{service.id}}">{{service.servicename}}</label>
+			{% if service.checkFlag = 'True' %}
+			<label><input type="checkbox" name="service{{service.id}}" id="service{{service.id}}" value="{{service.id}}" checked>{{service.servicename}}</label>
+			{% else %}
+		    <label><input type="checkbox" name="service{{service.id}}" id="service{{service.id}}" value="{{service.id}}" >{{service.servicename}}</label>
+			{% endif %}
 		{% endfor %}
 		</fieldset>
 		</div>

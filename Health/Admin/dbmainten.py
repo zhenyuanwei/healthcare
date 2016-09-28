@@ -96,14 +96,30 @@ def goUpdateDoctorInfo(request):
     except :
         print '------there is no doctor id = ' + doctorid + '----------'
     finally:
-        usedTemplate = get_template('admin/doctor.html')
         outDic = createResponseDic(request=request)
         outDic['hightlight'] = '2'
         outDic['doctorinfo'] = doctor
-        serviceList = ServiceType.objects.all()
+        
+        doctorserviceIds = doctor.service
+        serviceList = []
+        dbServiceList = ServiceType.objects.all()
+        for service in dbServiceList :
+            service.checkFlag = checkServiceCan(doctorserviceIds=doctorserviceIds, serviceId=service.id)
+            serviceList.append(service)
         outDic['serviceList'] = serviceList
+        
+        usedTemplate = get_template('admin/doctor.html')
         html = usedTemplate.render(outDic)
         return HttpResponse(html)
+
+def checkServiceCan(doctorserviceIds, serviceId):
+    serviceCan = 'False'
+    doctorserviceIdList = doctorserviceIds.split(',')
+    for tmpId in doctorserviceIdList :
+        if str(serviceId) == tmpId :
+            serviceCan = 'True'
+            break
+    return serviceCan
 
 def goServiceType(request):
     outDic = createResponseDic(request=request)
