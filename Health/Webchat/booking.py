@@ -17,6 +17,7 @@ from membershipmanage import getMembership
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
 from django.http import HttpResponseRedirect
+from Health.Admin.common import createResponseDic
 
 "@csrf_exempt"
 timeBJ = 8
@@ -360,8 +361,8 @@ def adminRefershDoctor(request):
         doctorservice = ''
         print '----------- there is no doctor selected -----------'
         
-    outDic = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate, selectedServiceId=bookeditem)
-    
+    outDicForm = initForm(openId=openId, doctorservice=doctorservice, doctorId=bookeddoctor, queryDate=bookeddate, selectedServiceId=bookeditem)
+    outDic = dict(createResponseDic(request).items() + outDicForm.items())
     outDic['vipname'] = vipname
     outDic['openId'] = openId
     outDic['phonenumber'] = phonenumber
@@ -437,16 +438,18 @@ def cancelBooking(request):
     return HttpResponse(html)
 
 def goAdminBooking(request):
-    outDic = initForm()
-    outDic['hightlight'] = '1'
+    outDicForm = initForm()
+    outDicForm['hightlight'] = '1'
+    outDic = dict(createResponseDic(request).items() + outDicForm.items())
     
     usedTemplate = get_template('admin/booking_form.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
 def doAdminBooking(request):
-    outDic = initForm()
-    outDic['hightlight'] = '1'
+    outDicForm = initForm()
+    outDicForm['hightlight'] = '1'
+    outDic = dict(createResponseDic(request).items() + outDicForm.items())
     
     name = request.GET['name']
     phonenumber = request.GET['phonenumber']
