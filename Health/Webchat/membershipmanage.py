@@ -17,7 +17,10 @@ def getMembership(openId):
     return membership
 
 def getMembership2(vipno, phonenumber):
-    membership = Membership.objects.get(vipno=vipno, phonenumber=phonenumber)
+    if vipno == '' :
+        membership = Membership.objects.get(phonenumber = phonenumber)
+    else :
+        membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber)
     return membership
 
 def bindMembershipCheck(request):
@@ -51,10 +54,11 @@ def bindMembershipCheck(request):
 def bindMembership(request):
     openId = request.GET['openId']
     phonenumber = request.GET['phonenumber']
-    vipno = request.GET['vipno']
+    #vipno = request.GET['vipno']
+    vipno = ''
     membershipDic = {}
     try :
-        membership = getMembership2(vipno=vipno, phonenumber=phonenumber)
+        membership = getMembership2(vipno = vipno, phonenumber = phonenumber)
         membershipDic['membership'] = membership
         if membership.webchatid == '' :
             membership.webchatid = openId

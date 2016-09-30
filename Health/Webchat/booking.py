@@ -16,6 +16,7 @@ from Health.Webchat.myweixin import getOpenID
 from membershipmanage import getMembership
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
+from django.http import HttpResponseRedirect
 
 "@csrf_exempt"
 timeBJ = 8
@@ -246,7 +247,8 @@ def getServiceList(doctorservice = ''):
 def booking(request):
     name = request.GET['name']
     phonenumber = request.GET['phonenumber']
-    membercard = request.GET['membercard']
+    #membercard = request.GET['membercard']
+    membercard = phonenumber
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
     bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
@@ -418,11 +420,12 @@ def updateBooking(tempId, tempStatus):
 def bookingCancel(request):
     tempId = request.GET['id']
     updateBooking(tempId=tempId, tempStatus='0')
-    usedTemplate = get_template('admin/bookinglist.html')
+    return HttpResponseRedirect('../bookinglist/')
+    '''usedTemplate = get_template('admin/bookinglist.html')
     bookingList = BookingInfo.objects.all().extra(where=["status in ('1')"])
     bookingListDic = {'bookingList' : bookingList}
     html = usedTemplate.render(bookingListDic)
-    return HttpResponse(html)
+    return HttpResponse(html)'''
 
 def cancelBooking(request):
     tempId = request.GET['id']
@@ -445,7 +448,8 @@ def doAdminBooking(request):
     
     name = request.GET['name']
     phonenumber = request.GET['phonenumber']
-    membercard = request.GET['membercard']
+    #membercard = request.GET['membercard']
+    membercard = phonenumber
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
     bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
