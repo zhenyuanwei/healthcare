@@ -346,7 +346,8 @@ def booking(request):
 def adminRefershDoctor(request):
     vipname = request.GET['name']
     phonenumber = request.GET['phonenumber']
-    vipno = request.GET['membercard']
+    #vipno = request.GET['membercard']
+    vipno = phonenumber
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
     bookeddate = request.GET['bookeddate']
@@ -376,7 +377,8 @@ def adminRefershDoctor(request):
 def refershDoctor(request):
     vipname = request.GET['name']
     phonenumber = request.GET['phonenumber']
-    vipno = request.GET['membercard']
+    #vipno = request.GET['membercard']
+    vipno = phonenumber
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
     bookeddate = request.GET['bookeddate']

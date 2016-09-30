@@ -50,12 +50,12 @@
 			<ul><li><a href="../booking/">预约</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '2' and role == '2' %}
+			{% if hightlight == '2' %}
 			<div><hr>
 			<ul><li><a href="../doctor/">医生登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '3' and role == '2' %}
+			{% if hightlight == '3' %}
 			<div><hr>
 			<ul><li><a href="../servicetype/">服务项目登记</a></li></ul>
 			</div>
@@ -76,19 +76,25 @@
 			<ul><li><a href="../summaryquery/">统计查询</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '7' and role == '2' %}
+			{% if hightlight == '7' %}
 			<div><hr>
 			<ul><li><a href="../godiscount/">打折类型登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '8' and role == '2' %}
+			{% if hightlight == '8' %}
 			<div><hr>
 			<ul><li><a href="../goproduct/">产品登记</a></li></ul>
 			</div>
 			{% endif %}
-			{% if hightlight == '9' and role == '2' %}
+			{% if hightlight == '9' %}
 			<div><hr>
 			<ul><li><a href="../gopaymenttype/">支付方式登记</a></li></ul>
+			</div>
+			{% endif %}
+			
+			{% if hightlight == '10' %}
+			<div><hr>
+			<ul><li><a href="../vacationapplication/">休假设置</a></li></ul>
 			</div>
 			{% endif %}
 			

@@ -103,6 +103,8 @@ urlpatterns = [
     url(r'^admin/goaccounting/$', payment.goAccounting),
     url(r'^admin/govacationlist/$', dbmainten.goVacatinList),
     url(r'^admin/cancelvacation/$', dbmainten.doCancelVacation),
+    url(r'^admin/vacationapplication/$', dbmainten.goAdminVacatinApplication),
+    url(r'^admin/dovacationapplication/$', dbmainten.doAdminVacatinApplication),
 ] 
 
 

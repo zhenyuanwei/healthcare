@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% block title %}预定信息一览{% endblock %}
+{% block content %}
+    <div><form  action="../dovacationapplication/" method="post">
+	    <div class="ui-field-contain">
+	    	<label for="doctorId">医生姓名 : </label>
+	    	<select name="doctorId" id="doctorId">
+				{% for doctorInfo in doctorInfoList %}
+					<option value="{{ doctorInfo.id }}">{{ doctorInfo.doctorname }}</option>
+				{% endfor %}
+			</select>
+		</div>
+        
+        <div class="ui-field-contain">
+	    	<label for="vacationDate">日期 : <b style="color:#FF0000">*</b> : </label>
+	    	<select name="vacationDate" id="vacationDate">
+				{% for day in dayList %}
+					<option value="{{ day }}">{{ day }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		
+		<div class="ui-field-contain">
+	    	<label for="starttime">开始时间 : <b style="color:#FF0000">*</b> : </label>
+	    	<select name="starttime" id="starttime">
+				<option value="07:00">07:00</option>
+				<option value="08:00">08:00</option>
+				<option value="09:00">09:00</option>
+				<option value="10:00">10:00</option>
+				<option value="11:00">11:00</option>
+				<option value="12:00">12:00</option>
+				<option value="13:00">13:00</option>
+				<option value="14:00">14:00</option>
+				<option value="15:00">15:00</option>
+				<option value="16:00">16:00</option>
+				<option value="17:00">17:00</option>
+				<option value="18:00">18:00</option>
+				<option value="19:00">19:00</option>
+				<option value="20:00">20:00</option>
+				<option value="21:00">21:00</option>
+			</select>
+		</div>
+		
+		<div class="ui-field-contain">
+	    	<label for="endtime">开始时间 : <b style="color:#FF0000">*</b> : </label>
+	    	<select name="endtime" id="endtime">
+				<option value="08:00">08:00</option>
+				<option value="09:00">09:00</option>
+				<option value="10:00">10:00</option>
+				<option value="11:00">11:00</option>
+				<option value="12:00">12:00</option>
+				<option value="13:00">13:00</option>
+				<option value="14:00">14:00</option>
+				<option value="15:00">15:00</option>
+				<option value="16:00">16:00</option>
+				<option value="17:00">17:00</option>
+				<option value="18:00">18:00</option>
+				<option value="19:00">19:00</option>
+				<option value="20:00">20:00</option>
+				<option value="21:00">21:00</option>
+				<option value="22:00">22:00</option>
+			</select>
+		</div>
+        <button type="submit">提交</button>
+    </form></div>
+{% endblock %}

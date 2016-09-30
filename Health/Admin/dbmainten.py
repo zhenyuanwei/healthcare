@@ -20,6 +20,7 @@ from datetime import datetime
 from datetime import timedelta
 from Health.Admin.common import checkSession
 from Health.Admin.common import createResponseDic
+from Health.Webchat.booking import getDaysList
 
 timeBJ = 8
 
@@ -564,5 +565,43 @@ def doCancelVacation(request):
     finally:
         return HttpResponseRedirect('../govacationlist/')
     
+def goAdminVacatinApplication(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '10'
     
+    dayList = getDaysList(14)
+    outDic['dayList'] = dayList
+    
+    doctorInfoList = DoctorInfo.objects.all()
+    outDic['doctorInfoList'] = doctorInfoList
+    
+    usedTemplate = get_template('admin/vacationapplication.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html) 
+
+@csrf_exempt
+def doAdminVacatinApplication(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '10'
+    
+    doctorId = request.POST['doctorId']
+    vacationDate  = request.POST['vacationDate']
+    starttime = request.POST['starttime']
+    endtime = request.POST['endtime']
+    doctor = DoctorInfo.objects.get(id = doctorId)
+    doctorName = doctor.doctorname
+    flag = '1'
+    comments = ''
+    
+    vacation = Vacation()
+    vacation.doctorId = doctorId
+    vacation.doctorName = doctorName
+    vacation.vacationDate = vacationDate
+    vacation.starttime = starttime
+    vacation.endtime = endtime
+    vacation.flag = flag
+    vacation.comments = comments
+    vacation.save()
+    
+    return HttpResponseRedirect('../govacationlist/')   
     
