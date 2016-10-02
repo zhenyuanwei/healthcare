@@ -5,7 +5,7 @@
 		    {% if isMessages == 'OK' %}
 		    <b style="color:#FF0000">当前的手机号已经注册，请使用新手机号注册。</b>
 		    {% endif %}
-		    <form action="../domembership/" method="get">
+		    <form action="../domembership/" method="post">
 			    <div class="ui-field-contain">
 			    	<input type="hidden" name="operation" id="operation" value="{{ flag }}">
 			    	{% if flag == 'U' or flag == 'M' %}

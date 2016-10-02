@@ -246,36 +246,36 @@ def goMembershipAmountUpdate(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+@csrf_exempt
 def doMembership(request):
-    flag = request.GET['operation']
-    if flag == 'A' :
-        if addMembership(request=request) :
-            outDic = createResponseDic(request=request)
-            outDic['hightlight'] = '4'
-            outDic['isMessages'] = 'OK'
-            usedTemplate = get_template('admin/membership.html')
-            html = usedTemplate.render(outDic)
-            return HttpResponse(html)
-    elif flag == 'U' :
-        updateMembership(request=request)
-    elif flag == 'M' :
-        updateMembershipAmount(request=request)
-    else :
-        addMembership(request=request)
-    '''outDic = createResponseDic(request=request)
-    outDic['hightlight'] = '4'
-    usedTemplate = get_template('admin/success.html')
-    html = usedTemplate.render(outDic)
-    return HttpResponse(html)'''
-    return HttpResponseRedirect("../membershiplist/")
+    try :
+        flag = request.POST['operation']
+        if flag == 'A' :
+            if addMembership(request=request) :
+                outDic = createResponseDic(request=request)
+                outDic['hightlight'] = '4'
+                outDic['isMessages'] = 'OK'
+                usedTemplate = get_template('admin/membership.html')
+                html = usedTemplate.render(outDic)
+                return HttpResponse(html)
+        elif flag == 'U' :
+            updateMembership(request=request)
+        elif flag == 'M' :
+            updateMembershipAmount(request=request)
+        else :
+            addMembership(request=request)
+    except :
+        print
+    finally :
+        return HttpResponseRedirect("../membershiplist/")
     
 
 def addMembership(request):
     #vipno = request.GET['vipno']
-    vipname = request.GET['vipname']
+    vipname = request.POST['vipname']
     #vipnameid = request.GET['vipnameid']
     vipnameid = ''
-    phonenumber = request.GET['phonenumber']
+    phonenumber = request.POST['phonenumber']
     password = '000000'
     amount = 0
     '''if request.GET['amount'].strip() :
@@ -283,7 +283,7 @@ def addMembership(request):
     lastamount = 0
     vipno = ''
     
-    discountrateId = request.GET['discountrate']
+    discountrateId = request.POST['discountrate']
     discounttype = discountrateId
     discountrate = 0
     discountrate2 = 0
@@ -324,11 +324,12 @@ def addMembership(request):
     return isMember
     
 def updateMembership(request):
-    vipid = request.GET['vipid']
-    vipname = request.GET['vipname']
-    phonenumber = request.GET['phonenumber']
-    vipno = request.GET['vipno']
-    discountrateId = request.GET['discountrate']
+    vipid = request.POST['vipid']
+    vipname = request.POST['vipname']
+    phonenumber = request.POST['phonenumber']
+    #vipno = request.POST['vipno']
+    vipno = phonenumber
+    discountrateId = request.POST['discountrate']
     discountrate = 0
     discountrate2 = 0
     try :
@@ -349,10 +350,10 @@ def updateMembership(request):
     membership.save()
 
 def updateMembershipAmount(request):
-    vipid = request.GET['vipid']
+    vipid = request.POST['vipid']
     amount = 0
-    if request.GET['amount'].strip() :
-        amount = float(request.GET['amount'])
+    if request.POST['amount'].strip() :
+        amount = float(request.POST['amount'])
     
     membership = Membership.objects.get(id = vipid)
     lastamount = membership.amount
@@ -372,7 +373,7 @@ def updateMembershipAmount(request):
     transaction.bookingId = ''
     transaction.servicetypeId = ''
     transaction.productIds = ''
-    transaction.paymentType = request.GET['paymenttype']
+    transaction.paymentType = request.POST['paymenttype']
     transaction.serviceamount = 0
     transaction.productamount = amount
     transaction.amount = amount
