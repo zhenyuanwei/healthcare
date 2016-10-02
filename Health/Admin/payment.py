@@ -429,7 +429,7 @@ def searchPaymentList(request):
     #query form show
     dayList = []
     tempday = datetime.now()
-    for i in range(1, 8) :
+    for i in range(0, 8) :
         dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
     outDic['dayList'] = dayList
     doctrList = DoctorInfo.objects.all()
