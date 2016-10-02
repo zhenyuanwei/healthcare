@@ -88,13 +88,18 @@ def doPrePayment(request):
                 productList.append(product)
                 productIds = productIds + request.POST[key] + ','
         outDic['productList'] = productList
-        
-        doctorInfo = DoctorInfo.objects.get(id=doctor)
-        outDic['doctorInfo'] = doctorInfo
-        service = ServiceType.objects.get(id=servicetype)
-        outDic['service'] = service
         outDic['productamount'] = productamount
         
+        if doctor != '0' :
+            doctorInfo = DoctorInfo.objects.get(id=doctor)
+            outDic['doctorInfo'] = doctorInfo
+        
+        serviceamount = 0
+        if servicetype != '0' :
+            service = ServiceType.objects.get(id=servicetype)
+            serviceamount = service.servicerate
+            outDic['service'] = service
+            
         #Membership check
         if phonenumber != '' :
             try :
@@ -114,7 +119,7 @@ def doPrePayment(request):
                     
                 outDic['membership'] = membership
             
-        serviceamount = service.servicerate
+        
         amount = serviceamount * float(servicediscount) + productamount
         
         outDic['amount'] = amount
