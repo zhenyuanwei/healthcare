@@ -553,3 +553,14 @@ def goAccounting(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def deletePayment(request):
+    id = request.GET['id']
+    try :
+        transaction = Transaction.objects.get(id = id)
+        transaction.delete()
+    except :
+        print '-------------there is no transaction id = ' + id
+        
+    finally: 
+        return HttpResponseRedirect('../gopaymentlist/')
+
