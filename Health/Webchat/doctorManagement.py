@@ -151,6 +151,7 @@ def doctorBooking(request):
         tmpList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         tmpList = tmpList.filter(status='1')
         tmpList = tmpList.filter(bookedtime__startswith=today)
+        tmpList = tmpList.order_by('bookedtime')
         for booking in tmpList :
             serviceId = booking.bookeditem
             service = ServiceType.objects.get(id=serviceId)

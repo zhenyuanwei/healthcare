@@ -29,7 +29,8 @@ bookingscale = 15
 multiscale = 60 / bookingscale
 
 def getBookingList():
-    tmpList = BookingInfo.objects.all().extra(where=["status in ('1')"])
+    tmpList = BookingInfo.objects.all()
+    tmpList = tmpList.filter(status='1')
     tmpList = tmpList.order_by('bookedtime')
     bookingList = []
     for bookinginfo in tmpList:
