@@ -272,8 +272,8 @@ def booking(request):
     #check booking
     checkDBFlag = False
     tempBookingList = BookingInfo.objects.filter(webchatid=openId, status='1')
-    if tempBookingList :
-        checkDBFlag = True
+    '''if tempBookingList :
+        checkDBFlag = True'''
 
     if checkFlag :
         if checkDBFlag :
