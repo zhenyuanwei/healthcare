@@ -314,31 +314,9 @@ def booking(request):
             bookingInfo.status = '1'
             bookingInfo.save()
             '''return to next page'''
-            '''usedTemplate = get_template('webchat/booking.html')
-            outputDic = {}
-            outputDic['name'] = name
-            outputDic['phonenumber'] = phonenumber
-            outputDic['membercard'] = membercard
-            outputDic['bookedtime'] = bookedtime
-            outputDic['bookingId'] = bookingInfo.id
-            outputDic['openId'] = openId
-            
-            #cancel link show checked    
-            cancelFlag = getCancelFlag(bookedtime=bookedtime)
-            outputDic['cancelFlag'] = cancelFlag
-            
-            if request.GET['bookeddoctor'].strip() == '0' :
-                outputDic['bookeddoctor'] = ''
-            else :
-                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookeddoctor).doctorname
-                
-            if request.GET['bookeditem'].strip() == '0' :
-                outputDic['bookeditem'] = '' 
-            else :
-                outputDic['bookeditem'] = ServiceType.objects.get(id=bookeditem).servicename
-            html = usedTemplate.render(outputDic)
-            return HttpResponse(html)'''
-            return HttpResponseRedirect('../mybooking/')
+            usedTemplate = get_template('webchat/bookingsucess.html')
+            html = usedTemplate.render()
+            return HttpResponse(html)
     else :
         #messageDic = {'messages' : 'OK'}
         listDic = initForm(openId=openId)
