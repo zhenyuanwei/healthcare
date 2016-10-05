@@ -21,6 +21,7 @@ from datetime import timedelta
 from Health.Admin.common import checkSession
 from Health.Admin.common import createResponseDic
 from Health.Webchat.booking import getDaysList
+from Health.Admin.payment import createPayment
 
 timeBJ = 8
 
@@ -265,6 +266,15 @@ def goMembershipDetail(request):
     membershipAmountLogList = MembershipAmountLog.objects.all()
     membershipAmountLogList = membershipAmountLogList.filter(membershipId = temId)
     outDic['membershipAmountLogList'] = membershipAmountLogList
+    
+    transactionList = Transaction.objects.all()
+    transactionList = transactionList.filter(membershipId = temId, successFlag = '1')
+    paymentList = []
+    for transaction in transactionList :
+        payment = createPayment(transaction = transaction)
+        paymentList.append(payment)
+    
+    outDic['paymentList'] = paymentList
     
     usedTemplate = get_template('admin/membershipinfo.html')
     html = usedTemplate.render(outDic)

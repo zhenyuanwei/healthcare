@@ -445,6 +445,7 @@ def searchPaymentList(request):
     return HttpResponse(html)
 
 def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
+    
     transactionList = Transaction.objects.all()
     
     if querydate != '' :
@@ -460,6 +461,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
         transactionList = transactionList.filter(doctorId=doctorId)
         
     transactionList = transactionList.exclude(successFlag='0')
+    transactionList = transactionList.exclude(successFlag='8')
     
     paymentList = []
     totalamount = 0

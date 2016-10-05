@@ -84,7 +84,7 @@ class Transaction(models.Model):
     productamount = models.FloatField(default = 0)
     amount = models.FloatField(default = 0)
     discount = models.FloatField(default = 1)
-    successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount
+    successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount, 8 deleted
     transactionDate = models.DateField()
     
 class Vacation(models.Model):

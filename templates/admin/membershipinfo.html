@@ -18,6 +18,9 @@
 	<label for="amount">会员余额 : </label>
 	<label for="discountrate">{{ membership.amount }}</label>
 	</div>
+	<div class="ui-field-contain">	
+	<label for="amount"><b>充值记录 : </b></label>
+	</div>
 	<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 		<thead>
 			<tr>
@@ -32,6 +35,37 @@
 				<td>{{ log.id }}</td>
 				<td>{{ log.addAmount }}</td>
 				<td>{{ log.transactionDate }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+	<div class="ui-field-contain">	
+	<label for="amount"><b>消费记录 : </b></label>
+	</div>
+	<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>结账方式</th>
+				<th>会员姓名</th>
+				<th>医生</th>
+				<th>服务项目</th>
+				<th>产品项目</th>
+				<th>金额</th>
+				<th>日期</th>
+				
+			</tr>
+		</thead>
+		{% for payment in paymentList %}
+			<tr>
+				<td>{{ payment.id }}</td>
+			   	<td>{{ payment.paymenttypename }}</td>
+				<td>{{ payment.vipname }}</td>
+				<td>{{ payment.doctorname }}</td>
+				<td>{{ payment.servicename }}</td>
+				<td>{{ payment.productname }}</td>
+				<td>{{ payment.amount }}</td>
+				<td>{{ payment.paymentdate }}</td>
 			</tr>
 		{% endfor %}
 	</table>
