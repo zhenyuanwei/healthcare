@@ -314,7 +314,7 @@ def booking(request):
             bookingInfo.status = '1'
             bookingInfo.save()
             '''return to next page'''
-            usedTemplate = get_template('webchat/booking.html')
+            '''usedTemplate = get_template('webchat/booking.html')
             outputDic = {}
             outputDic['name'] = name
             outputDic['phonenumber'] = phonenumber
@@ -337,7 +337,8 @@ def booking(request):
             else :
                 outputDic['bookeditem'] = ServiceType.objects.get(id=bookeditem).servicename
             html = usedTemplate.render(outputDic)
-            return HttpResponse(html)
+            return HttpResponse(html)'''
+            return HttpResponseRedirect('../mybooking/')
     else :
         #messageDic = {'messages' : 'OK'}
         listDic = initForm(openId=openId)
@@ -491,31 +492,32 @@ def mybooking(request):
     #get webchat user
     
     try :
-        bookingInfo = BookingInfo.objects.get(webchatid=openId, status=1)
         outputDic = {}
-        outputDic['bookingid'] = bookingInfo.id
-        outputDic['name'] = bookingInfo.name
-        outputDic['phonenumber'] = bookingInfo.phonenumber
-        outputDic['membercard'] = bookingInfo.membercard
-        bookedtime = bookingInfo.bookedtime
-        outputDic['bookedtime'] = bookedtime
-        outputDic['bookingId'] = bookingInfo.id
-        outputDic['openId'] = openId
-        outputDic['paymentFlag'] = getPaymentFlag(memberCard=bookingInfo.membercard)
+        tmpBookingList = BookingInfo.objects.filter(webchatid=openId, status=1)
         
-        if bookingInfo.bookeddoctor.strip() == '0' :
-            outputDic['bookeddoctor'] = ''
-        else :
-            outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=bookingInfo.bookeddoctor.strip()).doctorname
+        bookingList = []
+        for bookingInfo in tmpBookingList :
+            bookedtime = bookingInfo.bookedtime
+            cancelFlag = getCancelFlag(bookedtime=bookedtime)
+            bookingInfo.cancelFlag = cancelFlag
             
-        if bookingInfo.bookeditem.strip() == '0' :
-            outputDic['bookeditem'] = '' 
-        else :
-            outputDic['bookeditem'] = ServiceType.objects.get(id=bookingInfo.bookeditem.strip()).servicename
-        
-        #cancel link show checked    
-        cancelFlag = getCancelFlag(bookedtime=bookedtime)
-        outputDic['cancelFlag'] = cancelFlag
+            bookeddoctor = bookingInfo.bookeddoctor
+            bookeditem = bookingInfo.bookeditem
+            if bookeddoctor.strip() == '0' :
+                doctorname = ''
+            else :
+                doctorname = DoctorInfo.objects.get(id=bookeddoctor).doctorname
+            bookingInfo.doctorname = doctorname 
+             
+            if bookeditem.strip() == '0' :
+                servicename = '' 
+            else :
+                servicename = ServiceType.objects.get(id=bookeditem).servicename
+            bookingInfo.servicename = servicename 
+            
+            bookingList.append(bookingInfo)
+            
+        outputDic['bookingList'] = bookingList
         
         usedTemplate = get_template('webchat/booking.html')
         html = usedTemplate.render(outputDic)

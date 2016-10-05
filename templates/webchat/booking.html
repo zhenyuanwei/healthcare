@@ -14,24 +14,30 @@
 </head>
 <body>
 	<div>
-		{% if isMessage|length == 2 %}
-			<div class="ui-field-contain"><span style="color:#FF0000">您有如下预约未消费，请先消费或取消后，重新预约！</span></div>
+		{% if bookingList|length == 0 %}
+			<p>没有未处理的预约!</p>
 		{% else %}
-			<div class="ui-field-contain">您的预约内容如下，请准时到诊所就诊:</div>
-		{% endif %}
-		<div class="ui-field-contain">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 : {{ name }}</div>
-		<div class="ui-field-contain">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话 : {{ phonenumber }}</div>
-		<div class="ui-field-contain">会&nbsp;&nbsp;员&nbsp;号 : {{ membercard }}</div>
-		<div class="ui-field-contain">预约医生 : {{ bookeddoctor }}</div>
-		<div class="ui-field-contain">预约项目 : {{ bookeditem }}</div>
-		<div class="ui-field-contain">预约时间 : {{ bookedtime }}</div>
-		{% if cancelFlag == 'OK' %}
-		<div class="ui-field-contain"><a href="../cancelbooking/?id={{ bookingId }}">取消预约</a></div>
-		{% else %}
-		<div class="ui-field-contain"><span style="color:#FF0000">预约时间临近，不能取消。如有问题请致电0411-54555316咨询。</span></div>
-		{% endif %}
-		{% if paymentFlag == 'OK' %}
-		<!-- <div class="ui-field-contain"><a href="../prepayment/?openId={{ openId }}">自助结账</a></div> -->
+			<p style="color:#FF0000">您的预约信息如下，请准时到店消费，如果取消请至少提前1小时。</p>
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>预约医生</th>
+						<th>预约项目</th>
+						<th>预约时间</th>
+						<th>预约取消</th>
+					</tr>
+				</thead>
+				{% for bookingInfo in bookingList %}
+					<tr>
+						<td>{{ bookingInfo.id }}</td>
+						<td>{{ bookingInfo.doctorname }}</td>
+						<td>{{ bookingInfo.servicename }}</td>
+						<td>{{ bookingInfo.bookedtime }}</td>
+					    <td>{% if bookingInfo.cancelFlag == 'OK' %}<a href="../cancelbooking/?id={{ bookingInfo.id }}">取消</a>{% endif %}</td>
+					</tr>
+				{% endfor %}
+			</table>
 		{% endif %}
 	<div>
 </body>
