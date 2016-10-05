@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %}会员管理{% endblock %}
+{% block content %}
+ <div>
+	<div class="ui-field-contain">
+	<label for="vipname">会员姓名 : </label>
+	<label for="vipname">{{ membership.vipname }}</label>
+	</div>
+	<div class="ui-field-contain">	
+	<label for="phonenumber">手机号 : </label>
+	<label for="phonenumber">{{ membership.phonenumber }}</label>
+	</div>
+	<div class="ui-field-contain">	
+	<label for="discountrate">会员折扣</label>
+	<label for="discountrate">{{ membership.ratename }}</label>
+	</div>
+	<div class="ui-field-contain">	
+	<label for="amount">会员余额 : </label>
+	<label for="discountrate">{{ membership.amount }}</label>
+	</div>
+	<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>充值时间</th>
+				<th>充值金额</th>
+				
+			</tr>
+		</thead>
+		{% for log in membershipAmountLogList %}
+			<tr>
+				<td>{{ log.id }}</td>
+				<td>{{ log.addAmount }}</td>
+				<td>{{ log.transactionDate }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

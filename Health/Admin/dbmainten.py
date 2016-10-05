@@ -207,6 +207,25 @@ def goMembershipList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+@csrf_exempt
+def membershipListQuery(request):
+    outDic = createResponseDic(request=request)
+    
+    phonenumber = request.POST['phonenumber']
+    membershiplist = Membership.objects.all()
+    if phonenumber != '' :
+        membershiplist = membershiplist.filter(phonenumber = phonenumber)
+    outDic['membershipList'] = membershiplist
+    
+    for membership in membershiplist :
+        discoutType = ServiceRate.objects.get(id = membership.discounttype)
+        membership.discounttype = discoutType.ratename
+    
+    outDic['hightlight'] = '4'
+    usedTemplate = get_template('admin/membershiplist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
 def goMembershipDelete(request):
     temId = request.GET['id']
     try :
@@ -229,6 +248,25 @@ def goMembershipUpdate(request):
     outDic['discounttype'] = discounttype
     outDic['flag'] = 'U'
     outDic['hightlight'] = '4'
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goMembershipDetail(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '4'
+    
+    temId = request.GET['id']
+    membership = Membership.objects.get(id = temId)
+    serviceRate = ServiceRate.objects.get(id = membership.discounttype)
+    membership.ratename = serviceRate.ratename
+    
+    outDic['membership'] = membership
+    
+    membershipAmountLogList = MembershipAmountLog.objects.all()
+    membershipAmountLogList = membershipAmountLogList.filter(membershipId = temId)
+    outDic['membershipAmountLogList'] = membershipAmountLogList
+    
+    usedTemplate = get_template('admin/membershipinfo.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 

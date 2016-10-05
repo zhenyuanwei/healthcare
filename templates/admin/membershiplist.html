@@ -1,41 +1,55 @@
 {% extends "admin/base.html" %}
 {% block title %}预定信息一览{% endblock %}
 {% block content %}
-		{% if membershipList|length == 0 %}
-			<p>现在没有会员</p>
-		{% else %}
-			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>姓名</th>
-						<th>电话</th>
-						<!-- <th>会员号</th> -->
-						<th>卡种</th>
-						<th>上午折扣</th>
-						<th>下午折扣</th>
-						<th>账户余额</th>
-						<th>会员充值</th>
-						<th>会员信息更新</th>
-						<th>会员删除</th>
-						
-					</tr>
-				</thead>
-				{% for membership in membershipList %}
-					<tr>
-						<td>{{ membership.id }}</td>
-						<td>{{ membership.vipname }}</td>
-						<td>{{ membership.phonenumber }}</td>
-						<!-- <td>{{ membership.vipno }}</td> -->
-						<td>{{ membership.discounttype }}</td>
-						<td>{{ membership.discountrate2 }}</td>
-						<td>{{ membership.discountrate }}</td>
-						<td>{{ membership.amount }}</td>
-						<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
-					    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
-					    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
-					</tr>
-				{% endfor %}
-			</table>
-		{% endif %}
+	<div>
+	<form action="../membershipquery/" method="post">
+	   	
+		<div class="ui-field-contain">
+		<label for="phonenumber">手机号 : </label>
+	   	<input name="phonenumber" id="phonenumber" data-mini="true" data-inline="true" size="10">
+	   	</div>
+	   	<div class="ui-field-contain">
+	   	<label for="button"></label>
+		<input class="ui-btn ui-btn-inline" type="submit" value="查询" data-mini="true" data-inline="true">
+	   	</div>
+		
+     </form>
+     </div>
+	{% if membershipList|length != 0 %}
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>姓名</th>
+					<th>电话</th>
+					<!-- <th>会员号</th> -->
+					<th>卡种</th>
+					<th>上午折扣</th>
+					<th>下午折扣</th>
+					<th>账户余额</th>
+					<th>会员充值</th>
+					<th>会员信息</th>
+					<th>会员信息更新</th>
+					<th>会员删除</th>
+					
+				</tr>
+			</thead>
+			{% for membership in membershipList %}
+				<tr>
+					<td>{{ membership.id }}</td>
+					<td>{{ membership.vipname }}</td>
+					<td>{{ membership.phonenumber }}</td>
+					<!-- <td>{{ membership.vipno }}</td> -->
+					<td>{{ membership.discounttype }}</td>
+					<td>{{ membership.discountrate2 }}</td>
+					<td>{{ membership.discountrate }}</td>
+					<td>{{ membership.amount }}</td>
+					<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
+					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
+				    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
+				    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
 {% endblock %}

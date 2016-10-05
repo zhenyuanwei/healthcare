@@ -72,6 +72,8 @@ urlpatterns = [
     url(r'^admin/servicetypeupdate/$', dbmainten.goServiceTypeUpdate),
     url(r'^admin/doservicetype/$', dbmainten.doServiceType),
     url(r'^admin/membershiplist/$', dbmainten.goMembershipList),
+    url(r'^admin/membershipquery/$', dbmainten.membershipListQuery),
+    url(r'^admin/membershipdetail/$', dbmainten.goMembershipDetail),
     url(r'^admin/membershipdelete/$', dbmainten.goMembershipDelete),
     url(r'^admin/membershipupdate/$', dbmainten.goMembershipUpdate),
     url(r'^admin/membershipupdateamount/$', dbmainten.goMembershipAmountUpdate),
