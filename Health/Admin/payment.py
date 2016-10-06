@@ -581,15 +581,17 @@ def cancelPayment(request):
             transaction.save()
             
             membershipId = transaction.membershipId
-            amount = transaction.amount
-            membership = Membership.objects.get(id = membershipId)
-            membership.amount = membership.amount + amount
-            membership.save()
+            if membershipId != '' :
+                amount = transaction.amount
+                membership = Membership.objects.get(id = membershipId)
+                membership.amount = membership.amount + amount
+                membership.save()
             
             bookingId = transaction.bookingId
-            bookingInfo = BookingInfo.objects.get(id = bookingId)
-            bookingInfo.status = '1'
-            bookingInfo.save()
+            if bookingId != '' :
+                bookingInfo = BookingInfo.objects.get(id = bookingId)
+                bookingInfo.status = '1'
+                bookingInfo.save()
          
     except :
         print '-------------there is no transaction id = ' + id
