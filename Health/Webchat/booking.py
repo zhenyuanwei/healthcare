@@ -271,38 +271,13 @@ def booking(request):
     
     #check booking
     checkDBFlag = False
-    tempBookingList = BookingInfo.objects.filter(webchatid=openId, status='1')
-    '''if tempBookingList :
-        checkDBFlag = True'''
+    tempBookingList = BookingInfo.objects.filter(webchatid = openId, status = '1')
+    tempBookingList = tempBookingList.filter(bookeddoctor = bookeddoctor, bookedtime = bookedtime)
+    if tempBookingList :
+        checkDBFlag = True
 
     if checkFlag :
-        if checkDBFlag :
-            tempBooking = tempBookingList.get()
-            outputDic = {}
-            outputDic['name'] = tempBooking.name
-            outputDic['phonenumber'] = tempBooking.phonenumber
-            outputDic['membercard'] = tempBooking.membercard
-            outputDic['bookedtime'] = tempBooking.bookedtime
-            
-            if tempBooking.bookeddoctor.strip() == '0' :
-                outputDic['bookeddoctor'] = ''
-            else :
-                outputDic['bookeddoctor'] = DoctorInfo.objects.get(id=tempBooking.bookeddoctor.strip()).doctorname
-                
-            if tempBooking.bookeditem.strip() == '0' :
-                outputDic['bookeditem'] = '' 
-            else :
-                outputDic['bookeditem'] = ServiceType.objects.get(id=tempBooking.bookeditem.strip()).servicename
-            
-            outputDic['isMessage'] = 'OK'
-            #cancel link show checked    
-            cancelFlag = getCancelFlag(bookedtime=tempBooking.bookedtime)
-            outputDic['cancelFlag'] = cancelFlag
-            print '-------------------------------' + cancelFlag
-            usedTemplate = get_template('webchat/booking.html')
-            html = usedTemplate.render(outputDic)
-            return HttpResponse(html) 
-        else :
+        if not checkDBFlag :
             bookingInfo = BookingInfo()
             bookingInfo.name = name
             bookingInfo.phonenumber = phonenumber
@@ -313,10 +288,11 @@ def booking(request):
             bookingInfo.webchatid = openId
             bookingInfo.status = '1'
             bookingInfo.save()
-            '''return to next page'''
-            usedTemplate = get_template('webchat/bookingsucess.html')
-            html = usedTemplate.render()
-            return HttpResponse(html)
+            
+        '''return to next page'''
+        usedTemplate = get_template('webchat/bookingsucess.html')
+        html = usedTemplate.render()
+        return HttpResponse(html)
     else :
         #messageDic = {'messages' : 'OK'}
         listDic = initForm(openId=openId)
