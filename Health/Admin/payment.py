@@ -140,7 +140,7 @@ def doPrePayment(request):
             bookingId = ''
         
         try :
-            transaction = Transaction.objects.get(bookingId = bookingId)
+            transaction = Transaction.objects.get(bookingId = bookingId, successFlag = '0')
             outDic['transactionId'] = transaction.id
         except :
             transaction = Transaction()
@@ -265,9 +265,11 @@ def doPayment(request):
                 transaction = Transaction.objects.get(id = transactionId)
                 membershipId = transaction.membershipId
  
-                serviceAmount = serviceAmount + transaction.serviceamount * transaction.discount
-                prodctAmount = prodctAmount + transaction.productamount
-                amount = amount + transaction.amount
+                successFlag = transaction.successFlag
+                if successFlag != 1 :
+                    serviceAmount = serviceAmount + transaction.serviceamount * transaction.discount
+                    prodctAmount = prodctAmount + transaction.productamount
+                    amount = amount + transaction.amount
         
         #check the member card amount        
         if paymentType == '02' :
@@ -287,9 +289,11 @@ def doPayment(request):
             for transactionId in transactionIds :
                 if transactionId != '' :
                     transaction = Transaction.objects.get(id = transactionId)
-                    transaction.paymentType = paymentType
-                    transaction.successFlag = '1'
-                    transaction.save()  
+                    successFlag = transaction.successFlag
+                    if successFlag != 1 :
+                        transaction.paymentType = paymentType
+                        transaction.successFlag = '1'
+                        transaction.save()  
                     
                     payment = createPayment(transaction = transaction)
                     paymentList.append(payment)
@@ -322,6 +326,7 @@ def createPayment(transaction):
     payment.amount = transaction.amount
     payment.paymentdate = transaction.transactionDate
     payment.bookingId = transaction.bookingId
+    payment.successFlag = transaction.successFlag
     
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
@@ -560,6 +565,32 @@ def deletePayment(request):
     try :
         transaction = Transaction.objects.get(id = id)
         transaction.delete()
+    except :
+        print '-------------there is no transaction id = ' + id
+        
+    finally: 
+        return HttpResponseRedirect('../gopaymentlist/')
+    
+def cancelPayment(request):
+    id = request.GET['id']
+    try :
+        transaction = Transaction.objects.get(id = id)
+        successFlag = transaction.successFlag
+        if successFlag == '1' :
+            transaction.successFlag = '8'
+            transaction.save()
+            
+            membershipId = transaction.membershipId
+            amount = transaction.amount
+            membership = Membership.objects.get(id = membershipId)
+            membership.amount = membership.amount + amount
+            membership.save()
+            
+            bookingId = transaction.bookingId
+            bookingInfo = BookingInfo.objects.get(id = bookingId)
+            bookingInfo.status = '1'
+            bookingInfo.save()
+         
     except :
         print '-------------there is no transaction id = ' + id
         
