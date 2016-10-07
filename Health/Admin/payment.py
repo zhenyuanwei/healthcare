@@ -136,10 +136,8 @@ def doPrePayment(request):
         bookingId = ''
         try : 
             bookingId = request.POST['bookingId']
-        except :
-            bookingId = ''
-        
-        try :
+            if bookingId == '' :
+                raise Exception('for no booking, than can mutil-payment')
             transaction = Transaction.objects.get(bookingId = bookingId, successFlag = '0')
             outDic['transactionId'] = transaction.id
         except :
