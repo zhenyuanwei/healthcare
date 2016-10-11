@@ -1,4 +1,9 @@
+{% if isBooking == 'True' %}
 预约情况如下：
+{% endif %}
+{% if isBooking == 'False' %}
+您有如下预约被取消：
+{% endif %}
 姓名 {{ Name }}
 电话 {{ PhoneNumber }}
 预约医生 {{ DoctorName }}

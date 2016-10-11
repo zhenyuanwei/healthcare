@@ -293,32 +293,8 @@ def booking(request):
             bookingInfo.save()
             
             #send message to doctor
-            doctorname = ''
-            doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
-            try :
-                doctor = DoctorInfo.objects.get(id = bookeddoctor)
-                doctorname = doctor.doctorname
-                doctorOpenId = doctor.webchatid
-            except :
-                doctorname = ''
-            
-            serviceName = ''
-            try :
-                service = ServiceType.objects.get(id = bookeditem)
-                serviceName = service.servicename
-            except :
-                serviceName = ''
-                
-            textTemplate = get_template('webchat/bookingInfo.html')
-            textDic = {}
-            textDic['Name'] = name
-            textDic['PhoneNumber'] = phonenumber
-            textDic['DoctorName'] = doctorname
-            textDic['BookedItem'] = serviceName
-            textDic['BookedTime'] = bookedtime
-            
-            text = textTemplate.render(textDic)
-            sendMessage(openId = doctorOpenId, text = text)
+            sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber)
+            #send message to doctor
             
         '''return to next page'''
         usedTemplate = get_template('webchat/bookingsucess.html')
@@ -331,7 +307,41 @@ def booking(request):
         usedTemplate = get_template('webchat/booking_form.html')
         html = usedTemplate.render(listDic)
         return HttpResponse(html)
+
+def sendMessageToDoctor(bookeddoctor, bookeditem, bookedtime, name, phonenumber, isBooking = True):
+    doctorname = ''
+    doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
+    try :
+        doctor = DoctorInfo.objects.get(id = bookeddoctor)
+        doctorname = doctor.doctorname
+        #doctorOpenId = doctor.webchatid
+    except :
+        doctorname = ''
+        doctorOpenId = ''
     
+    serviceName = ''
+    try :
+        service = ServiceType.objects.get(id = bookeditem)
+        serviceName = service.servicename
+    except :
+        serviceName = ''
+        
+    textTemplate = get_template('webchat/bookingInfo.html')
+    textDic = {}
+    if isBooking :
+        textDic['isBooking'] = 'True'
+    else :
+        textDic['isBooking'] = 'False'
+    textDic['Name'] = name
+    textDic['PhoneNumber'] = phonenumber
+    textDic['DoctorName'] = doctorname
+    textDic['BookedItem'] = serviceName
+    textDic['BookedTime'] = bookedtime
+    
+    text = textTemplate.render(textDic)
+    if doctorOpenId == '' :
+        sendMessage(openId = doctorOpenId, text = text)
+        
 def adminRefershDoctor(request):
     vipname = request.GET['name']
     phonenumber = request.GET['phonenumber']
