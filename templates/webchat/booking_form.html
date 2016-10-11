@@ -51,7 +51,7 @@
 			        
 			        <div class="ui-field-contain">
 				    	<label for="bookeddoctor">预约医生 : </label>
-				    	<select name="bookeddoctor" id="bookeddoctor" data-mini="true" data-inline="true" onchange="submitForm();">
+				    	<select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();">
 							{% for doctorInfo in doctorInfoList %}
 								<option value="{{ doctorInfo.id }}" {% if doctorInfo.id == bookeddoctor %} selected="selected" {% endif %}>{{ doctorInfo.doctorname }}</option>
 							{% endfor %}
@@ -60,22 +60,13 @@
 			        
 					<div class="ui-field-contain">
 				    	<label for="bookeditem">预约项目 : </label>
-				        <select name="bookeditem" id="bookeditem" data-mini="true" data-inline="true" onchange="submitForm();">
+				        <select name="bookeditem" id="bookeditem" onchange="submitForm();">
 							{% for serviceType in serviceTypeList %}
 								<option value="{{ serviceType.id }}" {% if serviceType.id == bookeditem %} selected="selected" {% endif %}>{{ serviceType.servicename }}</option>
 							{% endfor %}
 						</select>
 					</div>
 					
-					<!-- <div class="ui-field-contain">
-				    	<label for="bookedNumber">预约人数 : </label>
-				        <select name="bookedNumber" id="bookedNumber">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-						</select>
-					</div> -->
-
 					<div class="ui-field-contain">
 				    	<label for="bookedtime">预约时间<b style="color:#FF0000">*</b></label>
 						<select name="bookeddate" id="bookeddate" data-mini="true" data-inline="true"  onchange="submitForm();">
@@ -91,7 +82,6 @@
 					</div>
 					<div class="ui-field-contain">
 				    	<p style="color:#FF0000">请至少提前1个小时取消预约！</p>
-				    	
 					</div>
 			        <button type="submit">提交</button>
 			    </form></div>
