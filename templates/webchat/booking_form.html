@@ -51,7 +51,7 @@
 			        
 			        <div class="ui-field-contain">
 				    	<label for="bookeddoctor">预约医生 : </label>
-				    	<select name="bookeddoctor" id="bookeddoctor" onchange="submitForm();">
+				    	<select name="bookeddoctor" id="bookeddoctor" data-mini="true" data-inline="true" onchange="submitForm();">
 							{% for doctorInfo in doctorInfoList %}
 								<option value="{{ doctorInfo.id }}" {% if doctorInfo.id == bookeddoctor %} selected="selected" {% endif %}>{{ doctorInfo.doctorname }}</option>
 							{% endfor %}
@@ -60,7 +60,7 @@
 			        
 					<div class="ui-field-contain">
 				    	<label for="bookeditem">预约项目 : </label>
-				        <select name="bookeditem" id="bookeditem" onchange="submitForm();">
+				        <select name="bookeditem" id="bookeditem" data-mini="true" data-inline="true" onchange="submitForm();">
 							{% for serviceType in serviceTypeList %}
 								<option value="{{ serviceType.id }}" {% if serviceType.id == bookeditem %} selected="selected" {% endif %}>{{ serviceType.servicename }}</option>
 							{% endfor %}
