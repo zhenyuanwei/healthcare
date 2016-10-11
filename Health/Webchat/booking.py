@@ -18,6 +18,7 @@ from HealthModel.models import Membership
 from HealthModel.models import Transaction
 from django.http import HttpResponseRedirect
 from Health.Admin.common import createResponseDic
+from django.views.decorators.csrf import csrf_exempt
 
 "@csrf_exempt"
 timeBJ = 8
@@ -485,16 +486,21 @@ def doAdminBooking(request):
     bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
     openId = ''
     
-    bookingInfo = BookingInfo()
-    bookingInfo.name = name
-    bookingInfo.phonenumber = phonenumber
-    bookingInfo.membercard = membercard
-    bookingInfo.bookeddoctor = bookeddoctor
-    bookingInfo.bookeditem = bookeditem
-    bookingInfo.bookedtime = bookedtime
-    bookingInfo.webchatid = openId
-    bookingInfo.status = '1'
-    bookingInfo.save()
+    tempBookingList = BookingInfo.objects.filter(status = '1')
+    tempBookingList = tempBookingList.filter(bookeddoctor = bookeddoctor, bookedtime = bookedtime)
+    if tempBookingList :
+        print '------duplication booking is cancelled'
+    else :
+        bookingInfo = BookingInfo()
+        bookingInfo.name = name
+        bookingInfo.phonenumber = phonenumber
+        bookingInfo.membercard = membercard
+        bookingInfo.bookeddoctor = bookeddoctor
+        bookingInfo.bookeditem = bookeditem
+        bookingInfo.bookedtime = bookedtime
+        bookingInfo.webchatid = openId
+        bookingInfo.status = '1'
+        bookingInfo.save()
     
     bookingList = getBookingList()
     usedTemplate = get_template('admin/bookinglist.html')
