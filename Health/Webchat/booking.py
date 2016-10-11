@@ -417,6 +417,7 @@ def updateBooking(tempId, tempStatus):
     bookingInfo = BookingInfo.objects.get(id = tempId)
     bookingInfo.status = tempStatus
     bookingInfo.save()
+    return bookingInfo
     
 def bookingCancel(request):
     tempId = request.GET['id']
@@ -430,7 +431,15 @@ def bookingCancel(request):
 
 def cancelBooking(request):
     tempId = request.GET['id']
-    updateBooking(tempId=tempId, tempStatus='0')
+    booking = updateBooking(tempId=tempId, tempStatus='0')
+    #send message to doctor
+    name = booking.name
+    phonenumber = booking.phonenumber
+    bookeddoctor = booking.bookeddoctor
+    bookeditem = booking.bookeditem
+    bookedtime = booking.bookedtime
+    sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=False)
+    #send message to doctor
     usedTemplate = get_template('webchat/cancelbooking.html')
     html = usedTemplate.render()
     return HttpResponse(html)
