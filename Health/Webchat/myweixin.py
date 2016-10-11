@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.template.loader import get_template
 from wechatpy import WeChatClient
+from wechatpy.exceptions import WeChatClientException
 
 def goUrl(request):
     page = request.GET['page']
@@ -42,5 +43,8 @@ def sendMessage(openId, text = ''):
     APP_ID = 'wx21c7501e68d463df'
     APP_SECRET = '82fcc8a8bb59b2318f1e97a6292a7ecc'
     client = WeChatClient(APP_ID, APP_SECRET)
-    client.message.send_text(openId, text)
+    try :
+        client.message.send_text(openId, text)
+    except WeChatClientException as e:
+        print e
     

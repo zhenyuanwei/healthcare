@@ -348,8 +348,8 @@ def sendNoticeMessage(booking, isBooking = True):
     if doctorOpenId != '' :
         sendMessage(openId = doctorOpenId, text = text)
     
-    #if userOpenId != '' :
-    #    sendMessage(openId = userOpenId, text = text)
+    if userOpenId != '' :
+        sendMessage(openId = userOpenId, text = text)
         
 def adminRefershDoctor(request):
     vipname = request.GET['name']
