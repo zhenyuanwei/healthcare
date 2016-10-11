@@ -23,7 +23,6 @@ def goRedirect(page):
     #scope = 'snsapi_userinfo'
     weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
     goUrl = weChatOAuth.authorize_url
-    weChatOAuth.refresh_token()
     return goUrl
     #return REDIRECT_URI
 
