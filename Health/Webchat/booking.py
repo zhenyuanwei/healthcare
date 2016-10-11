@@ -421,7 +421,15 @@ def updateBooking(tempId, tempStatus):
     
 def bookingCancel(request):
     tempId = request.GET['id']
-    updateBooking(tempId=tempId, tempStatus='0')
+    booking = updateBooking(tempId=tempId, tempStatus='0')
+    #send message to doctor
+    name = booking.name
+    phonenumber = booking.phonenumber
+    bookeddoctor = booking.bookeddoctor
+    bookeditem = booking.bookeditem
+    bookedtime = booking.bookedtime
+    sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=False)
+    #send message to doctor
     return HttpResponseRedirect('../bookinglist/')
     '''usedTemplate = get_template('admin/bookinglist.html')
     bookingList = BookingInfo.objects.all().extra(where=["status in ('1')"])
