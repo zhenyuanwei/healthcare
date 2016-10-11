@@ -12,7 +12,7 @@ from Health.formatValidation import required
 from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 import datetime
-from Health.Webchat.myweixin import getOpenID
+from Health.Webchat.myweixin import getOpenID, sendMessage
 from membershipmanage import getMembership
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
@@ -291,6 +291,10 @@ def booking(request):
             bookingInfo.webchatid = openId
             bookingInfo.status = '1'
             bookingInfo.save()
+            
+            doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
+            text = 'bookeditem + bookedtime'
+            sendMessage(openId = doctorOpenId, text = text)
             
         '''return to next page'''
         usedTemplate = get_template('webchat/bookingsucess.html')
