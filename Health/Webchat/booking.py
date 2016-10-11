@@ -293,11 +293,32 @@ def booking(request):
             bookingInfo.save()
             
             #send message to doctor
-            textTemplate = get_template('webchat/bookingInfo.html')
+            doctorname = ''
             doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
-            text = textTemplate.render()
+            try :
+                doctor = DoctorInfo.objects.get(id = bookeddoctor)
+                doctorname = doctor.doctorname
+                #doctorOpenId = doctor.webchatid
+            except :
+                doctorname = ''
+            
+            serviceName = ''
+            try :
+                service = ServiceType.objects.get(id = bookeditem)
+                serviceName = service.servicename
+            except :
+                serviceName = ''
+                
+            textTemplate = get_template('webchat/bookingInfo.html')
+            textDic = {}
+            textDic['Name'] = name
+            textDic['PhoneNumber'] = phonenumber
+            textDic['DoctorName'] = doctorname
+            textDic['BookedItem'] = serviceName
+            textDic['BookedTime'] = bookedtime
+            
+            text = textTemplate.render(textDic)
             sendMessage(openId = doctorOpenId, text = text)
-            #send message to user
             
         '''return to next page'''
         usedTemplate = get_template('webchat/bookingsucess.html')
