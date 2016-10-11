@@ -42,6 +42,7 @@ def sendMessage(openId, text = ''):
     APP_ID = 'wx21c7501e68d463df'
     APP_SECRET = '82fcc8a8bb59b2318f1e97a6292a7ecc'
     client = WeChatClient(APP_ID, APP_SECRET)
+    client.access_token
     client.fetch_access_token()
-    res = client.message.send_text(openId, text)
+    client.message.send_text(openId, text)
     
