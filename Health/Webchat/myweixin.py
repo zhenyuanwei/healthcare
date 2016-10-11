@@ -22,8 +22,8 @@ def goRedirect(page):
     REDIRECT_URI = baseurl + page
     #scope = 'snsapi_userinfo'
     weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
-    weChatOAuth.refresh_token()
     goUrl = weChatOAuth.authorize_url
+    weChatOAuth.refresh_token()
     return goUrl
     #return REDIRECT_URI
 
@@ -36,7 +36,6 @@ def getOpenID(code, page=''):
     weChatOAuth = WeChatOAuth(app_id=APP_ID, secret=APP_SECRET, redirect_uri=REDIRECT_URI)
     res = weChatOAuth.fetch_access_token(code=code)
     openId = res['openid']
-    
     print '------------open id =' + openId +'----------------'
     return openId
 
