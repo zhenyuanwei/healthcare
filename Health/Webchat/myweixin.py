@@ -7,6 +7,7 @@ from wechatpy.oauth import WeChatOAuth
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.template.loader import get_template
+from wechatpy import WeChatClient
 
 def goUrl(request):
     page = request.GET['page']
@@ -36,3 +37,10 @@ def getOpenID(code, page=''):
     openId = res['openid']
     print '------------open id =' + openId +'----------------'
     return openId
+
+def sendMessage(openId, text = ''):
+    APP_ID = 'wx21c7501e68d463df'
+    APP_SECRET = '82fcc8a8bb59b2318f1e97a6292a7ecc'
+    client = WeChatClient(APP_ID, APP_SECRET)
+    res = client.message.send_text(openId, text)
+    
