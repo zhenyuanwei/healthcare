@@ -346,9 +346,11 @@ def sendNoticeMessage(booking, isBooking = True):
     
     text = textTemplate.render(textDic)
     if doctorOpenId != '' :
+        print '------------------doctorOpenId = ' + doctorOpenId
         sendMessage(openId = doctorOpenId, text = text)
     
     if userOpenId != '' :
+        print '------------------userOpenId = ' + userOpenId
         sendMessage(openId = userOpenId, text = text)
         
 def adminRefershDoctor(request):
