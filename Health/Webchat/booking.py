@@ -298,7 +298,7 @@ def booking(request):
             try :
                 doctor = DoctorInfo.objects.get(id = bookeddoctor)
                 doctorname = doctor.doctorname
-                #doctorOpenId = doctor.webchatid
+                doctorOpenId = doctor.webchatid
             except :
                 doctorname = ''
             
