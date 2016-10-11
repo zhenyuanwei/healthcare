@@ -78,8 +78,10 @@ def booking_form(request):
     return HttpResponse(html)
 
 def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedServiceId=''):
-    
-    
+    print '---------------doctorId = ' + doctorId
+    print '---------------doctorservice = ' + doctorservice
+    print '---------------queryDate = ' + queryDate
+    print '---------------selectedServiceId = ' + selectedServiceId
     try :
         doctorInfoList = DoctorInfo.objects.all()
         if doctorId == '' and doctorservice == '' :
@@ -240,8 +242,9 @@ def getServiceList(doctorservice = ''):
         services = doctorservice.split(',')
         for serviceId in services :
             try :
-                service = ServiceType.objects.get(id=serviceId)
-                serviceTypeList.append(service)
+                if serviceId != '' :
+                    service = ServiceType.objects.get(id=serviceId)
+                    serviceTypeList.append(service)
             except :
                 print '----------------------there is no service =' + serviceId
                 
