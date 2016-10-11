@@ -424,16 +424,23 @@ def bookingCompleted(request):
     
 def updateBooking(tempId, tempStatus):
     bookingInfo = BookingInfo.objects.get(id = tempId)
-    bookingInfo.status = tempStatus
-    bookingInfo.save()
-    return bookingInfo
+    if bookingInfo.status != tempStatus:
+        bookingInfo.status = tempStatus
+        bookingInfo.save()
+        return bookingInfo
+    else :
+        raise Exception
+    
     
 def bookingCancel(request):
     tempId = request.GET['id']
-    booking = updateBooking(tempId=tempId, tempStatus='0')
-    #send message to doctor
-    sendNoticeMessage(booking = booking, isBooking = False)
-    #send message to doctor
+    try :
+        booking = updateBooking(tempId=tempId, tempStatus='0')
+        #send message to doctor
+        sendNoticeMessage(booking = booking, isBooking = False)
+        #send message to doctor
+    except :
+        print 'double update checked'
     return HttpResponseRedirect('../bookinglist/')
     '''usedTemplate = get_template('admin/bookinglist.html')
     bookingList = BookingInfo.objects.all().extra(where=["status in ('1')"])
@@ -443,10 +450,13 @@ def bookingCancel(request):
 
 def cancelBooking(request):
     tempId = request.GET['id']
-    booking = updateBooking(tempId=tempId, tempStatus='0')
-    #send message to doctor
-    sendNoticeMessage(booking = booking, isBooking = False)
-    #send message to doctor
+    try :
+        booking = updateBooking(tempId=tempId, tempStatus='0')
+        #send message to doctor
+        sendNoticeMessage(booking = booking, isBooking = False)
+        #send message to doctor
+    except :
+        print 'double update check'
     usedTemplate = get_template('webchat/cancelbooking.html')
     html = usedTemplate.render()
     return HttpResponse(html)
