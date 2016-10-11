@@ -293,7 +293,7 @@ def booking(request):
             bookingInfo.save()
             
             #send message to doctor
-            sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=True)
+            sendNoticeMessage(booking = booking, isBooking = True)
             #send message to doctor
             
         '''return to next page'''
@@ -308,9 +308,15 @@ def booking(request):
         html = usedTemplate.render(listDic)
         return HttpResponse(html)
 
-def sendMessageToDoctor(bookeddoctor, bookeditem, bookedtime, name, phonenumber, isBooking = True):
+def sendNoticeMessage(booking, isBooking = True):
+    name = booking.name
+    phonenumber = booking.phonenumber
+    bookeddoctor = booking.bookeddoctor
+    bookeditem = booking.bookeditem
+    bookedtime = booking.bookedtime
     doctorname = ''
-    doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
+    doctorOpenId = ''
+    userOpenId = booking.webchatid
     try :
         doctor = DoctorInfo.objects.get(id = bookeddoctor)
         doctorname = doctor.doctorname
@@ -341,6 +347,9 @@ def sendMessageToDoctor(bookeddoctor, bookeditem, bookedtime, name, phonenumber,
     text = textTemplate.render(textDic)
     if doctorOpenId != '' :
         sendMessage(openId = doctorOpenId, text = text)
+    
+    if userOpenId != '' :
+        sendMessage(openId = userOpenId, text = text)
         
 def adminRefershDoctor(request):
     vipname = request.GET['name']
@@ -423,12 +432,7 @@ def bookingCancel(request):
     tempId = request.GET['id']
     booking = updateBooking(tempId=tempId, tempStatus='0')
     #send message to doctor
-    name = booking.name
-    phonenumber = booking.phonenumber
-    bookeddoctor = booking.bookeddoctor
-    bookeditem = booking.bookeditem
-    bookedtime = booking.bookedtime
-    sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=False)
+    sendNoticeMessage(booking = booking, isBooking = False)
     #send message to doctor
     return HttpResponseRedirect('../bookinglist/')
     '''usedTemplate = get_template('admin/bookinglist.html')
@@ -441,12 +445,7 @@ def cancelBooking(request):
     tempId = request.GET['id']
     booking = updateBooking(tempId=tempId, tempStatus='0')
     #send message to doctor
-    name = booking.name
-    phonenumber = booking.phonenumber
-    bookeddoctor = booking.bookeddoctor
-    bookeditem = booking.bookeditem
-    bookedtime = booking.bookedtime
-    sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=False)
+    sendNoticeMessage(booking = booking, isBooking = False)
     #send message to doctor
     usedTemplate = get_template('webchat/cancelbooking.html')
     html = usedTemplate.render()
