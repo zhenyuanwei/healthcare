@@ -293,7 +293,7 @@ def booking(request):
             bookingInfo.save()
             
             #send message to doctor
-            sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber)
+            sendMessageToDoctor(bookeddoctor=bookeddoctor, bookeditem=bookeditem, bookedtime=bookedtime, name=name, phonenumber=phonenumber, isBooking=True)
             #send message to doctor
             
         '''return to next page'''
