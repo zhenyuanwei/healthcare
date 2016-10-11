@@ -393,10 +393,10 @@ def bookingCancel(request):
 def cancelBooking(request):
     tempId = request.GET['id']
     updateBooking(tempId=tempId, tempStatus='0')
-    '''usedTemplate = get_template('webchat/cancelbooking.html')
+    usedTemplate = get_template('webchat/cancelbooking.html')
     html = usedTemplate.render()
-    return HttpResponse(html)'''
-    return HttpResponseRedirect('../mybooking/')
+    return HttpResponse(html)
+    #return HttpResponseRedirect('../mybooking/')
 
 def goAdminBooking(request):
     outDicForm = initForm()
