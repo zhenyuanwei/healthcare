@@ -292,9 +292,12 @@ def booking(request):
             bookingInfo.status = '1'
             bookingInfo.save()
             
+            #send message to doctor
+            textTemplate = get_template('webchat/bookingInfo.html')
             doctorOpenId = 'oPCCDwmnDKQcB0HGuBzMjMZ2ZXvY'
-            text = 'bookeditem + bookedtime'
+            text = textTemplate.render()
             sendMessage(openId = doctorOpenId, text = text)
+            #send message to user
             
         '''return to next page'''
         usedTemplate = get_template('webchat/bookingsucess.html')
