@@ -339,7 +339,7 @@ def sendMessageToDoctor(bookeddoctor, bookeditem, bookedtime, name, phonenumber,
     textDic['BookedTime'] = bookedtime
     
     text = textTemplate.render(textDic)
-    if doctorOpenId == '' :
+    if doctorOpenId != '' :
         sendMessage(openId = doctorOpenId, text = text)
         
 def adminRefershDoctor(request):
