@@ -36,6 +36,7 @@ class MembershipAmountLog(models.Model):
     
 class DoctorInfo(models.Model):
     id = models.AutoField(primary_key=True)
+    sn = models.CharField(max_length = 6, default = '001')
     doctorname = models.CharField(max_length = 20)
     phonenumber = models.CharField(max_length = 11)
     comments = models.CharField(max_length = 400)
