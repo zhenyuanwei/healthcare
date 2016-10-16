@@ -2,11 +2,16 @@
 {% block title %}医生信息管理{% endblock %}
 {% block content %}
 <p>
-	<div><form action="../dodoctor/" method="get">
+	<div><form action="../dodoctor/" method="post">
 		<div class="ui-field-contain">
 		<input type="hidden" name="doctorid" id="doctorid" maxlength="10" value="{{ doctorinfo.id }}">
 	   	<label for="doctorname">姓名<b style="color:#FF0000">*</b> : </label>
 	   	<input type="text" name="doctorname" id="doctorname" maxlength="10" value="{{ doctorinfo.doctorname }}">
+	   	</div>
+	   	
+	   	<div class="ui-field-contain">
+	   	<label for="sn">员工号<b style="color:#FF0000">*</b> : </label>
+	   	<input type="text" name="sn" id="sn" maxlength="10" value="{{ doctorinfo.sn }}">
 	   	</div>
 	      
 	    <div class="ui-field-contain">

@@ -8,17 +8,17 @@
 			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 				<thead>
 					<tr>
-						<th width="5%">No.</th>
+						<th width="10%">员工号</th>
 						<th width="10%">姓名</th>
 						<!-- <th>电话</th> -->
-						<th width="70%">医生简介</th>
+						<th width="65%">医生简介</th>
 						<th width="10%">信息更新</th>
 						<th width="5%">删除</th>
 					</tr>
 				</thead>
 				{% for doctorinfo in doctorList %}
 					<tr>
-						<td>{{ doctorinfo.id }}</td>
+						<td>{{ doctorinfo.sn }}</td>
 						<td>{{ doctorinfo.doctorname }}</td>
 						<!-- <td>{{ doctorinfo.phonenumber }}</td> -->
 						<td>{{ doctorinfo.comments }}</td>

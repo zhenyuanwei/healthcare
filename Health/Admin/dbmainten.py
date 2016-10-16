@@ -48,20 +48,21 @@ def goDoctorInfoList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+@csrf_exempt
 def addDoctorInfo(request):
-    doctorid = request.GET['doctorid'] 
-    docotrName = request.GET['doctorname']
-    phoneNumber = request.GET['phonenumber']
-    comments = request.GET['comments']
-    webchatId = ''
-    service = ''
-    for key in request.GET.keys() :
-        if key[0:7] == 'service' :
-            service = service + request.GET[key] + ','
-            
-    #print service
     
     try :
+        doctorid = request.POST['doctorid'] 
+        docotrName = request.POST['doctorname']
+        phoneNumber = request.POST['phonenumber']
+        sn = request.POST['sn']
+        comments = request.POST['comments']
+        webchatId = ''
+        service = ''
+        for key in request.POST.keys() :
+            if key[0:7] == 'service' :
+                service = service + request.POST[key] + ','
+                
         if doctorid.strip() == '' :
             doctor = DoctorInfo() # for add doctor
         else :
@@ -70,6 +71,7 @@ def addDoctorInfo(request):
             webchatId = doctor.webchatid
             
         doctor.doctorname = docotrName
+        doctor.sn = sn
         doctor.phonenumber = phoneNumber
         doctor.comments = comments
         doctor.webchatid = webchatId
