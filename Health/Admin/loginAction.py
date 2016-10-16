@@ -38,6 +38,7 @@ def doLogin(request):
     
     try :
         adminUser = AdminUser.objects.get(username = username, password = password)
+        request.session['userId'] = adminUser.id
         request.session['username'] = username
         request.session['role'] = adminUser.role
         request.session['explorer'] = explorer

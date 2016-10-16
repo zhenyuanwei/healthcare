@@ -23,6 +23,7 @@ from django.conf.urls import url
 from Health import helloworld
 from Health.Webchat import booking
 from Health.Admin import loginAction
+from Health.Admin import adminuserDB
 from Health.Admin import dbmainten
 from Health.Webchat import membershipmanage
 from Health.Webchat import introduce
@@ -55,6 +56,8 @@ urlpatterns = [
     #Below is for administrator
     url(r'^admin/login/$', loginAction.login),
     url(r'^admin/doLogin/$', loginAction.doLogin),
+    url(r'^admin/gopasswordchange/$', adminuserDB.goChangePassword),
+    url(r'^admin/dopasswordchange/$', adminuserDB.doChangePassword),
     url(r'^admin/booking/$', booking.goAdminBooking),
     url(r'^admin/refershdoctor/$', booking.adminRefershDoctor),
     url(r'^admin/dobooking/$', booking.doAdminBooking),
