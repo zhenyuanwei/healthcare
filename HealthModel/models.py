@@ -32,6 +32,7 @@ class MembershipAmountLog(models.Model):
     id = models.AutoField(primary_key=True)
     membershipId = models.CharField(max_length = 10)
     addAmount = models.FloatField()
+    username = models.CharField(max_length = 10, default = 'admin')
     transactionDate = models.DateTimeField()
     
 class DoctorInfo(models.Model):
@@ -80,6 +81,7 @@ class Transaction(models.Model):
     bookingId = models.CharField(max_length = 10)
     servicetypeId = models.CharField(max_length = 10)
     productIds = models.CharField(default = '', max_length = 50)
+    account = models.IntegerField(default = 1)
     paymentType = models.CharField(max_length = 2) #01 cash, 02 membership card, 03 weixin,04 pos, 05 alipay, 00 not decied
     serviceamount = models.FloatField(default = 0)
     productamount = models.FloatField(default = 0)
@@ -87,6 +89,7 @@ class Transaction(models.Model):
     discount = models.FloatField(default = 1)
     successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount, 8 deleted
     transactionDate = models.DateField()
+    username = models.CharField(max_length = 10, default = 'admin')
     
 class Vacation(models.Model):
     id = models.AutoField(primary_key=True) 

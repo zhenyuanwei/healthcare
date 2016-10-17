@@ -59,6 +59,7 @@
 					<th>产品项目</th>
 					<th>金额</th>
 					<th>日期</th>
+					{% if role == '9' %}<th>操作员</th>{% endif %}
 				</tr>
 			</thead>
 			{% for payment in paymentList %}
@@ -72,6 +73,7 @@
 					<td>{{ payment.productname }}</td>
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
+					{% if role == '9' %}<td>{{ payment.username }}</td>{% endif %}
 				</tr>
 			{% endfor %}
 		</table>

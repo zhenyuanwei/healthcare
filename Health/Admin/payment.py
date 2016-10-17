@@ -289,8 +289,10 @@ def doPayment(request):
                     transaction = Transaction.objects.get(id = transactionId)
                     successFlag = transaction.successFlag
                     if successFlag != 1 :
+                        username = outDic['username']
                         transaction.paymentType = paymentType
                         transaction.successFlag = '1'
+                        transaction.username = username
                         transaction.save()  
                     
                     payment = createPayment(transaction = transaction)
@@ -325,6 +327,7 @@ def createPayment(transaction):
     payment.paymentdate = transaction.transactionDate
     payment.bookingId = transaction.bookingId
     payment.successFlag = transaction.successFlag
+    payment.username = transaction.username
     
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)

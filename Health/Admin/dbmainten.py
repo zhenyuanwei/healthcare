@@ -401,6 +401,7 @@ def updateMembership(request):
 
 def updateMembershipAmount(request):
     vipid = request.POST['vipid']
+    username = request.session.get('username')
     amount = 0
     if request.POST['amount'].strip() :
         amount = float(request.POST['amount'])
@@ -416,6 +417,7 @@ def updateMembershipAmount(request):
     membershipAmountLog.membershipId = vipid
     membershipAmountLog.addAmount = amount
     membershipAmountLog.transactionDate = today
+    membershipAmountLog.username = username
     membershipAmountLog.save()
     transaction = Transaction()
     transaction.membershipId = membership.id
@@ -430,6 +432,7 @@ def updateMembershipAmount(request):
     transaction.discount = 1
     transaction.successFlag = '9'
     transaction.transactionDate = today
+    transaction.username = username
     transaction.save()
     
 def goDiscountRateList(request):
