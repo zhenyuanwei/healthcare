@@ -19,12 +19,13 @@ from HealthModel.models import Transaction
 from django.http import HttpResponseRedirect
 from Health.Admin.common import createResponseDic
 from django.views.decorators.csrf import csrf_exempt
+from Health.Admin.common import getToday
 
 "@csrf_exempt"
 timeBJ = 8
 starttime = 7
 endtime = 22
-canceltime = timeBJ + 1
+canceltime = 1
 #booking time scale
 bookingscale = 15
 multiscale = 60 / bookingscale
@@ -85,6 +86,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
     print '---------------selectedServiceId = ' + selectedServiceId
     try :
         doctorInfoList = DoctorInfo.objects.all()
+        doctorInfoList = doctorInfoList.exclude(service = '')
         if doctorId == '' and doctorservice == '' :
             doctor = doctorInfoList[0]
             doctorId = doctor.id
@@ -128,8 +130,10 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
 
 def getDaysList(length = 7):
     dayList = []
-    today = datetime.datetime.now()
-    now = int(today.strftime('%H')) + timeBJ + 1
+    #today = datetime.datetime.now()
+    #now = int(today.strftime('%H')) + timeBJ + 1
+    today = getToday()
+    now = int(today.strftime('%H')) + 1
     if now >= endtime :
         for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
@@ -141,8 +145,10 @@ def getDaysList(length = 7):
 
 def getTimeList(doctorId = '', queryDate = '', backCount = 0):
     timeList = []
-    today = datetime.datetime.now().strftime('%Y/%m/%d')
-    now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
+    #today = datetime.datetime.now().strftime('%Y/%m/%d')
+    #now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
+    today = getToday().strftime('%Y/%m/%d')
+    now = int(getToday().strftime('%H')) + 1
     if now < starttime :
         now = starttime
         
@@ -565,7 +571,7 @@ def getPaymentFlag(memberCard):
         return returnValue
     
 def getCancelFlag(bookedtime):
-    now = datetime.datetime.now()
+    now = getToday()
     now = now + datetime.timedelta(hours=canceltime)
     nowstr = now.strftime('%Y/%m/%d %H:%M')
     cancelFlag = ''
@@ -587,7 +593,8 @@ def prePay(request):
         
         membership = Membership.objects.get(vipno=mybookingInfo.membercard)
         servicediscount = membership.discountrate
-        now = (datetime.timedelta(hours=timeBJ) + datetime.datetime.now()).strftime('%H')
+        #now = (datetime.timedelta(hours=timeBJ) + datetime.datetime.now()).strftime('%H')
+        now = getToday().strftime('%H')
         if now < '13' :
             servicediscount = membership.discountrate2
         outputDic['servicediscount'] = servicediscount
@@ -607,7 +614,8 @@ def prePay(request):
         try :
             transaction = Transaction.objects.get(bookingId=bookingId, successFlag='0')
         except :
-            today = datetime.datetime.now() + datetime.timedelta(hours=timeBJ)
+            #today = datetime.datetime.now() + datetime.timedelta(hours=timeBJ)
+            today = getToday()
             transaction = Transaction()
             transaction.membershipId = membership.id
             transaction.bookingId = mybookingInfo.id

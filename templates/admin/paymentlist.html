@@ -40,7 +40,7 @@
 					<th>产品项目</th>
 					<th>金额</th>
 					<th>日期</th>
-					{% if role == '9' %}<th>操作员</th>{% endif %}
+					<th>操作员</th>
 					<th>取消支付</th>
 					{% if role == '9' %}<th>删除</th>{% endif %}
 				</tr>
@@ -56,7 +56,7 @@
 					<td>{{ payment.productname }}</td>
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
-					{% if role == '9' %}<td>{{ payment.username }}</td>{% endif %}
+					<td>{{ payment.username }}</td>
 					<td>{% if payment.successFlag == '1' %}<a href="../cancelpayment/?id={{ payment.id }}">取消支付</a>{% endif %}</td>
 					{% if role == '9' %}<td><a href="../deletepayment/?id={{ payment.id }}">删除</a></td>{% endif %}
 				</tr>

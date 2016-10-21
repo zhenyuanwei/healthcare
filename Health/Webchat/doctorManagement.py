@@ -11,9 +11,8 @@ from Health.Admin.payment import getPaymentList
 from HealthModel.models import BookingInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import Vacation
-from datetime import datetime
-from datetime import timedelta
 from datetime import time
+from Health.Admin.common import getToday
 from Health.Webchat.booking import getDaysList
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
@@ -86,7 +85,8 @@ def goDoctorQuery(request):
     try :
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
-        today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y-%m-%d')
+        #today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y-%m-%d')
+        today = getToday().strftime('%Y-%m-%d')
         paymentList = getPaymentList(doctorId=doctorId, querydate=today)
         outDic['paymentList'] = paymentList
         usedTemplate = get_template('webchat/doctorpaymentlist.html')
@@ -114,7 +114,7 @@ def goDoctorMonthQuery(request):
     try :
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
-        today = datetime.now() + timedelta(hours=timeBJ)
+        today = getToday()
         year = today.strftime('%Y')
         month = today.strftime('%m')
         paymentList = getPaymentList(doctorId=doctorId, queryyear=year, querymonth=month)
@@ -145,7 +145,7 @@ def doctorBooking(request):
     try :
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
-        today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
+        today = getToday().strftime('%Y/%m/%d')
         
         bookingList = []
         tmpList = BookingInfo.objects.filter(bookeddoctor=doctorId)
@@ -192,7 +192,7 @@ def goVacationApply(request):
         outDic['doctorName'] = doctorName
         outDic['dayList'] = dayList
         
-        today = (datetime.now() + timedelta(hours=timeBJ)).strftime('%Y/%m/%d')
+        today = getToday().strftime('%Y/%m/%d')
         vacationList = Vacation.objects.filter(flag='1', doctorId = doctorId)
         vacationList = vacationList.filter(vacationDate__gte = today)
         outDic['vacationList'] = vacationList

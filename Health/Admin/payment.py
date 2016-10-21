@@ -16,6 +16,7 @@ from datetime import datetime
 from datetime import timedelta
 from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import createResponseDic
+from Health.Admin.common import getToday
 
 timeBJ = 8
 
@@ -113,7 +114,8 @@ def doPrePayment(request):
                 servicediscount = membership.discountrate
                 membershipId = membership.id
                 phonenumber = membership.phonenumber
-                now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
+                #now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
+                now = getToday().strftime('%H')
                 if now < '13' :
                     servicediscount = membership.discountrate2
                     
@@ -130,7 +132,7 @@ def doPrePayment(request):
         outDic['serviceamount'] = serviceamount
         outDic['amount'] = amount
         outDic['servicediscount'] = servicediscount
-        today = datetime.now() + timedelta(hours=timeBJ)
+        today = getToday()
         
         #save to transaction
         bookingId = ''
@@ -413,7 +415,7 @@ def goPaymentList(request):
     
     #query form show
     dayList = []
-    tempday = datetime.now()
+    tempday = getToday()
     for i in range(0, 8) :
         dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
     outDic['dayList'] = dayList
@@ -421,7 +423,8 @@ def goPaymentList(request):
     outDic['doctrList'] = doctrList
     #query form show
         
-    today = str(date.today())
+    #today = str(date.today())
+    today = tempday.strftime('%Y-%m-%d')
     paymentList = getPaymentList(querydate=today)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
@@ -434,7 +437,7 @@ def searchPaymentList(request):
     
     #query form show
     dayList = []
-    tempday = datetime.now()
+    tempday = getToday()
     for i in range(0, 8) :
         dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
     outDic['dayList'] = dayList
@@ -540,7 +543,8 @@ def goAccounting(request):
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
-    today = datetime.now() + timedelta(hours=timeBJ)
+    #today = datetime.now() + timedelta(hours=timeBJ)
+    today = getToday()
     paymentList = []
     paymentTypeList = PaymentType.objects.all()
     for tmpPaymentType in paymentTypeList:
@@ -550,6 +554,7 @@ def goAccounting(request):
         transactionList = Transaction.objects.filter(transactionDate = today)
         transactionList = transactionList.filter(paymentType = paymenttype)
         transactionList = transactionList.exclude(successFlag = '0')
+        transactionList = transactionList.exclude(successFlag = '8')
         amount = 0
         for transaction in transactionList :
             amount = amount + transaction.amount

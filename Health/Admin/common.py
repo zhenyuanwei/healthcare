@@ -3,6 +3,9 @@ Created on Sep 10, 2016
 
 @author: weizhenyuan
 '''
+from datetime import datetime
+from datetime import timedelta
+
 def checkSession(request):
     returnValue = True
     try :
@@ -28,3 +31,8 @@ def createResponseDic(request):
     outDic['role'] = role
     outDic['explorer'] = explorer
     return outDic
+
+def getToday():
+    timeBJ = 8
+    today = datetime.now() + timedelta(hours=timeBJ)
+    return today
