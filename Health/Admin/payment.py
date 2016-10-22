@@ -17,6 +17,7 @@ from datetime import timedelta
 from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import createResponseDic
 from Health.Admin.common import getToday
+from Health.Webchat.myweixin import sendMessage
 
 timeBJ = 8
 
@@ -278,7 +279,10 @@ def doPayment(request):
             membership.lastamount = lastamount
             membershipAmount = lastamount - amount
             if membershipAmount >= 0 :
-                membership.amount = membershipAmount
+                
+                if membership.webchatid != '' :
+                    sendPaymentLogToWebchat(membership = membership, amount = amount)
+                membership.amount = membershipAmount    
                 membership.save()
             else :
                 isSave = False
@@ -320,6 +324,18 @@ def doPayment(request):
     usedTemplate = get_template('admin/prepaymentresultlist.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
+
+def sendPaymentLogToWebchat(membership, amount):
+    webchatId = membership.webchatid
+    textTemplate = get_template('webchat/paymentlog.html')
+    textDic = {}
+    textDic['Name'] = membership.vipname
+    textDic['today'] = getToday().strftime('%Y/%m/%d %H:%M')
+    textDic['amount'] = amount
+    textDic['membershipAmount'] = membership.amount
+    text = textTemplate.render(textDic)
+    #print text
+    sendMessage(openId = webchatId, text = text)
 
 def createPayment(transaction):
     payment = Payment()
