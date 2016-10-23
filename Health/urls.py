@@ -30,6 +30,7 @@ from Health.Webchat import introduce
 from Health.Admin import payment
 from Health.Webchat import myweixin
 from Health.Webchat import doctorManagement
+from Health.Admin import message
 
 urlpatterns = [
     url(r'^hello/$', helloworld.hello),
@@ -112,6 +113,8 @@ urlpatterns = [
     url(r'^admin/cancelvacation/$', dbmainten.doCancelVacation),
     url(r'^admin/vacationapplication/$', dbmainten.goAdminVacatinApplication),
     url(r'^admin/dovacationapplication/$', dbmainten.doAdminVacatinApplication),
+    url(r'^admin/gosendmessage/$', message.goSendMessage),
+    url(r'^admin/sendmessage/$', message.sendMessage),
 ] 
 
 

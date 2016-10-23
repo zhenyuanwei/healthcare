@@ -47,4 +47,15 @@ def sendMessage(openId, text = ''):
         client.message.send_text(openId, text)
     except WeChatClientException as e:
         print e
+        
+def sendMessageToAll(text = ''):
+    APP_ID = 'wx21c7501e68d463df'
+    APP_SECRET = '82fcc8a8bb59b2318f1e97a6292a7ecc'
+    client = WeChatClient(APP_ID, APP_SECRET)
+    followers = client.user.get_followers()
+    try :
+        for openId in followers :
+            client.message.send_text(openId, text)
+    except WeChatClientException as e:
+        print e
     

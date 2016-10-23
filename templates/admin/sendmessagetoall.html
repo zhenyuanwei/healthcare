@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}医生信息管理{% endblock %}
+{% block content %}
+<div><form action="../sendmessage/" method="post">
+
+	<div class="ui-field-contain">
+   	<label for="message">消息 : </label>
+	<textarea cols="40" rows="8" name="message" id="message" maxlength="500"></textarea>
+	</div>
+	
+     <input type="submit" value="OK">
+     
+</form></div>
+{% endblock %}
+			
