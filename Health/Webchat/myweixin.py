@@ -13,6 +13,7 @@ from wechatpy.exceptions import WeChatClientException
 def goUrl(request):
     page = request.GET['page']
     redirectURL = goRedirect(page=page)
+    print redirectURL
     return HttpResponseRedirect(redirectURL)
 
 def goRedirect(page):
