@@ -346,7 +346,7 @@ def sendNoticeMessage(booking, isBooking = True):
     else :
         textDic['isBooking'] = 'False'
     textDic['Name'] = name
-    textDic['PhoneNumber'] = phonenumber
+    #textDic['PhoneNumber'] = phonenumber
     textDic['DoctorName'] = doctorname
     textDic['BookedItem'] = serviceName
     textDic['BookedTime'] = bookedtime
