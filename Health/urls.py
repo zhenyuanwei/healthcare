@@ -90,6 +90,7 @@ urlpatterns = [
     url(r'^admin/deletediscount/$', dbmainten.deleteDiscountRate),
     url(r'^admin/goproductlist/$', dbmainten.goProductList),
     url(r'^admin/goproduct/$', dbmainten.goProduct),
+    url(r'^admin/goproductupdate/$', dbmainten.goProductUpdate),
     url(r'^admin/doproduct/$', dbmainten.doProduct),
     url(r'^admin/deleteproduct/$', dbmainten.deleteProduct),
     url(r'^admin/gopaymenttypelist/$', dbmainten.goPaymentTypeList),

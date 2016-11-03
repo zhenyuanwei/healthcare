@@ -10,7 +10,7 @@
 						<th>No.</th>
 						<th>产品名称</th>
 						<th>价格</th>
-						<!-- <th>更新</th> -->
+						<th>更新</th>
 						<th>删除</th>
 					</tr>
 				</thead>
@@ -19,7 +19,7 @@
 						<td>{{ product.id }}</td>
 						<td>{{ product.productname }}</td>
 						<td>{{ product.productprice }}</td>
-					    <!-- <td><a href="../＃/?id={{ product }}">更新</a></td> -->
+					    <td><a href="../goproductupdate/?id={{ product.id }}">更新</a></td>
 					    <td><a href="../deleteproduct/?id={{ product.id }}">删除</a></td>
 					</tr>
 				{% endfor %}

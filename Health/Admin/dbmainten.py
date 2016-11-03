@@ -525,13 +525,32 @@ def goProduct(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def goProductUpdate(request):
+    usedTemplate = get_template('admin/product.html')
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '8'
+    
+    try :
+        id = request.GET['id']
+        product = Product.objects.get(id = id)
+        outDic['product'] = product
+    except :
+        print '------------ther is no product selected'
+        
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
 @csrf_exempt
 def doProduct(request):
     usedTemplate = get_template('admin/productlist.html')
     try :
+        id = request.POST['productid']
         productName = request.POST['productname']
         productPrice = request.POST['productprice']
-        product = Product()
+        if id == '' :
+            product = Product()
+        else :
+            product = Product.objects.get(id = id)
         product.productname = productName
         product.productprice = productPrice
         product.save()
