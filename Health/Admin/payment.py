@@ -524,12 +524,14 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     if isSummary :    
         for paymentType in paymentTypeList :
             payment = Payment()
+            payment.id = ''
             payment.servicename = paymentType.paymenttypename
             payment.amount = paymentTypeTotal[paymentType.paymenttype]
             payment.paymentdate = summarydate
             paymentList.append(payment)
             
         payment = Payment()
+        payment.id = ''
         payment.servicename = 'Total'
         payment.amount = totalamount
         payment.paymentdate = summarydate
