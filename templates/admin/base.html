@@ -94,7 +94,7 @@
 			{% endif %}
 			{% if hightlight == '6' %}
 			<div><hr>
-			<ul><li><a href="../goaccounting/">当日对账</a></li></ul>
+			{% if role == '9' %}<ul><li><a href="../goaccounting/">医生对账</a></li></ul>{% endif %}
 			<ul><li><a href="../summaryquery/">统计查询</a></li></ul>
 			</div>
 			{% endif %}

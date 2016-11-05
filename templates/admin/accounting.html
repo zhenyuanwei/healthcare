@@ -3,13 +3,26 @@
 {% block content %}
 <p>
     <div>
-    	{% for payment in paymentList %}
-	    <div class="ui-field-contain">
-	    	<label><b style="color:#FF0000">{{ payment.paymenttypename }} : </b></label>
-	    	<label>{{ payment.amount }}</label>
-		</div>
+	    <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			<thead>
+				<tr>
+					<th>医生姓名</th>
+					<th>服务项目{{ month }}月{{ day }}日总金额</th>
+					<th>产品项目{{ month }}月{{ day }}日总金额</th>
+					<th>服务项目{{ month }}月总金额</th>
+					<th>产品项目{{ month }}月总金额</th>
+				</tr>
+			</thead>
+    	{% for payment in doctorPaymentList %}
+	    	<tr>
+				<td>{{ payment.paymenttypename }}</td>
+				<td>{{ payment.dayserviceamount }}</td>
+				<td>{{ payment.dayproductamount }}</td>
+				<td>{{ payment.monthserviceamount }}</td>
+				<td>{{ payment.monthproductamount }}</td>
+			</tr>
 		{% endfor %}
-        
+        </table>
     </div>
    </p>
 {% endblock %}

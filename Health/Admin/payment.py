@@ -342,6 +342,9 @@ def createPayment(transaction):
     payment.id = transaction.id
     payment.paymenttype = transaction.paymentType
     payment.amount = transaction.amount
+    payment.serviceamount = transaction.serviceamount
+    payment.productamount = transaction.productamount
+    payment.discount = transaction.discount
     payment.paymentdate = transaction.transactionDate
     payment.bookingId = transaction.bookingId
     payment.successFlag = transaction.successFlag
@@ -350,6 +353,7 @@ def createPayment(transaction):
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
         payment.paymenttypename = paymentType.paymenttypename
+        payment.paymentType = paymentType.paymentType
     except :
         payment.paymenttypename = ''
         
@@ -363,15 +367,19 @@ def createPayment(transaction):
         
     try :    
         doctor = DoctorInfo.objects.get(id=transaction.doctorId)
+        payment.doctorId = doctor.id
         payment.doctorname = doctor.doctorname
     except :
         payment.doctorname = ''
+        payment.doctorId = ''
         
     try :
         service = ServiceType.objects.get(id=transaction.servicetypeId)
         payment.servicename = service.servicename
+        payment.servicetypeId = service.id
     except :
         payment.servicename = ''
+        payment.servicetypeId = ''
     
     try :
         productNames = ''
@@ -383,8 +391,10 @@ def createPayment(transaction):
         if transaction.successFlag == '9' :
             productNames = 'Recharge'
         payment.productname = productNames
+        payment.productIds = transaction.productIds
     except :
         payment.servicename = ''
+        payment.productIds = ''
         
     return payment
 
@@ -469,7 +479,7 @@ def searchPaymentList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
+def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSummary=True):
     
     transactionList = Transaction.objects.all()
     
@@ -490,14 +500,18 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
     
     paymentList = []
     totalamount = 0
+    
+    #init the payment total by payment type
+    paymentTypeList = PaymentType.objects.all()
+    paymentTypeTotal = {}
+    for paymentType in paymentTypeList :
+        paymentTypeTotal[paymentType.paymenttype] = 0
+        
     for transaction in transactionList :
         payment = createPayment(transaction = transaction)
         paymentList.append(payment)
         totalamount = totalamount + transaction.amount
-    
-    payment = Payment()
-    payment.servicename = 'Total'
-    payment.amount = totalamount
+        paymentTypeTotal[transaction.paymentType] = paymentTypeTotal[transaction.paymentType] + transaction.amount
     
     summarydate = ''
     if querydate != '' :
@@ -507,8 +521,20 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth=''):
     if querymonth != '' :
         summarydate = summarydate + '-' +querymonth
         
-    payment.paymentdate = summarydate
-    paymentList.append(payment)
+    if isSummary :    
+        for paymentType in paymentTypeList :
+            payment = Payment()
+            payment.servicename = paymentType.paymenttypename
+            payment.amount = paymentTypeTotal[paymentType.paymenttype]
+            payment.paymentdate = summarydate
+            paymentList.append(payment)
+            
+        payment = Payment()
+        payment.servicename = 'Total'
+        payment.amount = totalamount
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+    
     return paymentList
 
 def goPaymentSummaryList(request):
@@ -516,8 +542,11 @@ def goPaymentSummaryList(request):
     outDic['hightlight'] = '6'
     
     #query form show
+    today = getToday()
     yearList = []
-    year = datetime.strftime(date.today(), '%Y')
+    year = datetime.strftime(today, '%Y')
+    month = datetime.strftime(today, '%m')
+
     for i in range(0, 5) :
         yearList.append(int(year) - i)
     outDic['yearList'] = yearList
@@ -526,7 +555,7 @@ def goPaymentSummaryList(request):
     #query form show
         
     #today = str(date.today())
-    paymentList = getPaymentList(queryyear=year)
+    paymentList = getPaymentList(queryyear=year, querymonth=month)
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentsummarylist.html')
     html = usedTemplate.render(outDic)
@@ -560,24 +589,50 @@ def goAccounting(request):
     outDic['hightlight'] = '6'
     
     #today = datetime.now() + timedelta(hours=timeBJ)
+    doctorMonthProduct = {}
+    doctorMonthService = {}
+    doctorDayProduct = {}
+    doctorDayService = {}
     today = getToday()
-    paymentList = []
-    paymentTypeList = PaymentType.objects.all()
-    for tmpPaymentType in paymentTypeList:
-        payment = Payment()
-        payment.paymenttypename = tmpPaymentType.paymenttypename
-        paymenttype = tmpPaymentType.paymenttype
-        transactionList = Transaction.objects.filter(transactionDate = today)
-        transactionList = transactionList.filter(paymentType = paymenttype)
-        transactionList = transactionList.exclude(successFlag = '0')
-        transactionList = transactionList.exclude(successFlag = '8')
-        amount = 0
-        for transaction in transactionList :
-            amount = amount + transaction.amount
-        payment.amount = amount
-        paymentList.append(payment)
+    year = datetime.strftime(today, '%Y')
+    month = datetime.strftime(today, '%m')
+    day = datetime.strftime(today, '%d')
+    
+    
+    doctorList = DoctorInfo.objects.all()
+    for doctor in doctorList :
+        doctorMonthService[doctor.id] = 0
+        doctorMonthProduct[doctor.id] = 0
+        doctorDayService[doctor.id] = 0
+        doctorDayProduct[doctor.id] = 0
         
-    outDic['paymentList'] = paymentList   
+    paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False)    
+    for payment in paymentList :
+        if payment.doctorId != '' :
+            doctorMonthService[payment.doctorId] = doctorMonthService[payment.doctorId] + payment.serviceamount * payment.discount
+            doctorMonthProduct[payment.doctorId] = doctorMonthProduct[payment.doctorId] + payment.productamount
+            
+    paymentList = getPaymentList(querydate=today.strftime('%Y-%m-%d'), isSummary=False)    
+    for payment in paymentList :
+        if payment.doctorId != '' :
+            doctorDayService[payment.doctorId] = doctorDayService[payment.doctorId] + payment.serviceamount * payment.discount
+            doctorDayProduct[payment.doctorId] = doctorDayProduct[payment.doctorId] + payment.productamount
+
+    doctorPaymentList = []
+    for doctor in doctorList :
+        payment = Payment()
+        payment.paymenttypename = doctor.doctorname
+        payment.dayserviceamount = doctorDayService[doctor.id]
+        payment.dayproductamount = doctorDayProduct[doctor.id]
+        payment.monthserviceamount = doctorMonthService[doctor.id]
+        payment.monthproductamount = doctorMonthProduct[doctor.id]
+        
+        doctorPaymentList.append(payment)
+    
+        
+    outDic['doctorPaymentList'] = doctorPaymentList
+    outDic['day'] = day
+    outDic['month'] = month  
     usedTemplate = get_template('admin/accounting.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
