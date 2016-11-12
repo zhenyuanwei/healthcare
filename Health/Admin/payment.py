@@ -11,6 +11,7 @@ from HealthModel.models import ServiceType
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
 from HealthModel.models import ServiceRate
+from HealthModel.models import Messages
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
@@ -506,12 +507,16 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal = {}
     for paymentType in paymentTypeList :
         paymentTypeTotal[paymentType.paymenttype] = 0
+    paymentTypeTotal['P00002'] = 0
+    paymentTypeTotal['P00003'] = 0
         
     for transaction in transactionList :
         payment = createPayment(transaction = transaction)
         paymentList.append(payment)
         totalamount = totalamount + transaction.amount
         paymentTypeTotal[transaction.paymentType] = paymentTypeTotal[transaction.paymentType] + transaction.amount
+        paymentTypeTotal['P00002'] = paymentTypeTotal['P00002'] + transaction.productamount
+        paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
     
     summarydate = ''
     if querydate != '' :
@@ -531,9 +536,26 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             paymentList.append(payment)
             
         payment = Payment()
+        messages = Messages.objects.get(messageId = 'P00001')
         payment.id = ''
-        payment.servicename = 'Total'
+        payment.servicename = messages.message
         payment.amount = totalamount
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+        
+        payment = Payment()
+        messages = Messages.objects.get(messageId = 'P00003')
+        payment.id = ''
+        payment.servicename = messages.message
+        payment.amount = paymentTypeTotal['P00003']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+        
+        payment = Payment()
+        messages = Messages.objects.get(messageId = 'P00002')
+        payment.id = ''
+        payment.servicename = messages.message
+        payment.amount = paymentTypeTotal['P00002']
         payment.paymentdate = summarydate
         paymentList.append(payment)
     
