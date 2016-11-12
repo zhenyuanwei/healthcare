@@ -101,4 +101,8 @@ class Vacation(models.Model):
     flag = models.CharField(max_length = 1) #flag=1 vacation, flag=0 cancelled
     comments = models.CharField(max_length = 50)
     
+class Messages(models.Model):
+    id = models.AutoField(primary_key=True) 
+    messageId = models.CharField(max_length = 10)
+    message = models.CharField(max_length = 256)
     

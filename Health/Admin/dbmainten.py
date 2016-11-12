@@ -13,6 +13,7 @@ from HealthModel.models import ServiceRate
 from HealthModel.models import Membership
 from HealthModel.models import MembershipAmountLog
 from HealthModel.models import Product
+from HealthModel.models import Messages
 from django.template.context_processors import request
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
@@ -677,4 +678,37 @@ def doAdminVacatinApplication(request):
     vacation.save()
     
     return HttpResponseRedirect('../govacationlist/')   
+
+def goMessageList(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '13'
+    messageList = Messages.objects.all()
+    outDic['messageList'] = messageList
+    usedTemplate = get_template('admin/messagelist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+def goAddMessage(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '13'
+    usedTemplate = get_template('admin/message.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
+@csrf_exempt
+def doAddMessage(request):
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '13'
+    try :
+        messageId = request.POST['messageId']
+        message = request.POST['message']
+        messages = Messages()
+        messages.messageId = messageId
+        messages.message = message
+        messages.save()
+    except :
+        print 'ERROR'
+        
+    return HttpResponseRedirect('../gomessagelist/')  
+    
     

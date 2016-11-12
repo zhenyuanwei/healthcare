@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% block title %}Message一览{% endblock %}
+{% block content %}
+		{% if messageList|length == 0 %}
+			<p>现在没有定义的消息。</p>
+		{% else %}
+			<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>MessageId</th>
+						<th>Message</th>
+						<th>更新</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				{% for message in messageList %}
+					<tr>
+						<td>{{ message.id }}</td>
+						<td>{{ message.messageId }}</td>
+						<td>{{ message.message }}</td>
+					    <td><a href="../#/?id={{ message.id }}">更新</a></td>
+					    <td><a href="../#/?id={{ message.id }}">删除</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}医生信息管理{% endblock %}
+{% block content %}
+<div><form action="../doaddmessage/" method="post">
+
+	<div class="ui-field-contain">
+   	<label for=""messageId"">MessageID<b style="color:#FF0000">*</b> : </label>
+   	<input type="text" name="messageId" id=""messageId"" maxlength="10">
+   	</div>
+
+	<div class="ui-field-contain">
+   	<label for="message">Message : </label>
+	<textarea cols="40" rows="8" name="message" id="message" maxlength="512"></textarea>
+	</div>
+	
+     <input type="submit" value="OK">
+     
+</form></div>
+{% endblock %}
+			
