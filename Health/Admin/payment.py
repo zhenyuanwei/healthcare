@@ -390,7 +390,8 @@ def createPayment(transaction):
                 productNames = productNames + product.productname + ' & '
         productNames = productNames[0:len(productNames) - 3]
         if transaction.successFlag == '9' :
-            productNames = 'Recharge'
+            messages = Messages.objects.get(messageId = 'P00004')
+            productNames = messages.message
         payment.productname = productNames
         payment.productIds = transaction.productIds
     except :
@@ -509,13 +510,18 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         paymentTypeTotal[paymentType.paymenttype] = 0
     paymentTypeTotal['P00002'] = 0
     paymentTypeTotal['P00003'] = 0
+    paymentTypeTotal['P00004'] = 0
         
     for transaction in transactionList :
         payment = createPayment(transaction = transaction)
         paymentList.append(payment)
         totalamount = totalamount + transaction.amount
         paymentTypeTotal[transaction.paymentType] = paymentTypeTotal[transaction.paymentType] + transaction.amount
-        paymentTypeTotal['P00002'] = paymentTypeTotal['P00002'] + transaction.productamount
+        if transaction.successFlag == '9' :
+            paymentTypeTotal['P00004'] = paymentTypeTotal['P00004'] + transaction.productamount
+        else :
+            paymentTypeTotal['P00002'] = paymentTypeTotal['P00002'] + transaction.productamount
+            
         paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
     
     summarydate = ''
@@ -556,6 +562,14 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.id = ''
         payment.servicename = messages.message
         payment.amount = paymentTypeTotal['P00002']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+        
+        payment = Payment()
+        messages = Messages.objects.get(messageId = 'P00004')
+        payment.id = ''
+        payment.servicename = messages.message
+        payment.amount = paymentTypeTotal['P00004']
         payment.paymentdate = summarydate
         paymentList.append(payment)
     
