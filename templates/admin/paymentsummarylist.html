@@ -60,6 +60,7 @@
 					<th>金额</th>
 					<th>日期</th>
 					{% if role == '9' %}<th>操作员</th>{% endif %}
+					{% if role == '9' %}<th>删除</th>{% endif %}
 				</tr>
 			</thead>
 			{% for payment in paymentList %}
@@ -74,6 +75,7 @@
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
 					{% if role == '9' %}<td>{{ payment.username }}</td>{% endif %}
+					{% if role == '9' %}<td><a href="../deletepayment/?id={{ payment.id }}&type=Summary">删除</a></td>{% endif %}
 				</tr>
 			{% endfor %}
 		</table>

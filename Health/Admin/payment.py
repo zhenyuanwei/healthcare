@@ -677,6 +677,7 @@ def goAccounting(request):
 
 def deletePayment(request):
     id = request.GET['id']
+    operation = request.GET['type']
     try :
         transaction = Transaction.objects.get(id = id)
         transaction.delete()
@@ -684,7 +685,10 @@ def deletePayment(request):
         print '-------------there is no transaction id = ' + id
         
     finally: 
-        return HttpResponseRedirect('../gopaymentlist/')
+        if operation == 'Summary' :
+            return HttpResponseRedirect('../summaryquery/')
+        else :
+            return HttpResponseRedirect('../gopaymentlist/')
     
 def cancelPayment(request):
     id = request.GET['id']
