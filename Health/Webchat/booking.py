@@ -90,6 +90,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         if doctorId == '' and doctorservice == '' :
             doctor = doctorInfoList[0]
             doctorId = doctor.id
+            
             doctorservice = doctor.service
         serviceTypeList = getServiceList(doctorservice=doctorservice)
         if selectedServiceId == '' :
@@ -104,6 +105,11 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
             queryDate = dayList[0]
         timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount)
     
+        try :
+            tmpdoctor = DoctorInfo.objects.get(id = doctorId)
+            doctorintroduce = tmpdoctor.comments
+        except :
+            doctorintroduce = ''
         
         vipno = ''
         vipname = ''
@@ -125,7 +131,8 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
                'vipname' : vipname,
                'phonenumber' : phonenumber,
                'openId' : openId,
-               'timeList' : timeList}
+               'timeList' : timeList,
+               'doctorintroduce' : doctorintroduce}
     return listDic
 
 def getDaysList(length = 7):
