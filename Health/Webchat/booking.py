@@ -271,6 +271,8 @@ def booking(request):
     membercard = phonenumber
     bookeddoctor = request.GET['bookeddoctor']
     bookeditem = request.GET['bookeditem']
+    bookeddate = request.GET['bookeddate']
+    bookedhour = request.GET['bookedhour']
     bookedtime = request.GET['bookeddate'] + ' ' + request.GET['bookedhour']
     openId = request.GET['openId']
     
@@ -287,28 +289,38 @@ def booking(request):
         checkFlag = False
     
     #check booking
-    checkDBFlag = False
+    #checkDBFlag = False
     tempBookingList = BookingInfo.objects.filter(webchatid = openId, status = '1')
     tempBookingList = tempBookingList.filter(bookeddoctor = bookeddoctor, bookedtime = bookedtime)
     if tempBookingList :
-        checkDBFlag = True
+        #checkDBFlag = True
+        checkFlag = False
+    
+    #if not checkDBFlag :    
+    selectedService = ServiceType.objects.get(id = bookeditem)
+    # delete how many bookingscale
+    backCount = int((selectedService.serviceperiod -1) / bookingscale)
+    timeList = getTimeList(doctorId = bookeddoctor, queryDate = bookeddate, backCount = backCount)
+    if bookedhour not in timeList :
+        #checkDBFlag = True
+        checkFlag = False
 
     if checkFlag :
-        if not checkDBFlag :
-            bookingInfo = BookingInfo()
-            bookingInfo.name = name
-            bookingInfo.phonenumber = phonenumber
-            bookingInfo.membercard = membercard
-            bookingInfo.bookeddoctor = bookeddoctor
-            bookingInfo.bookeditem = bookeditem
-            bookingInfo.bookedtime = bookedtime
-            bookingInfo.webchatid = openId
-            bookingInfo.status = '1'
-            bookingInfo.save()
-            
-            #send message to doctor
-            sendNoticeMessage(booking = bookingInfo, isBooking = True)
-            #send message to doctor
+        #if not checkDBFlag :
+        bookingInfo = BookingInfo()
+        bookingInfo.name = name
+        bookingInfo.phonenumber = phonenumber
+        bookingInfo.membercard = membercard
+        bookingInfo.bookeddoctor = bookeddoctor
+        bookingInfo.bookeditem = bookeditem
+        bookingInfo.bookedtime = bookedtime
+        bookingInfo.webchatid = openId
+        bookingInfo.status = '1'
+        bookingInfo.save()
+        
+        #send message to doctor
+        sendNoticeMessage(booking = bookingInfo, isBooking = True)
+        #send message to doctor
             
         '''return to next page'''
         usedTemplate = get_template('webchat/bookingsucess.html')
