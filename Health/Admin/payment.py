@@ -118,7 +118,7 @@ def doPrePayment(request):
                 phonenumber = membership.phonenumber
                 #now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
                 now = getToday().strftime('%H')
-                if now < '13' :
+                if now < '12' :
                     servicediscount = membership.discountrate2
                     
                 outDic['membership'] = membership
