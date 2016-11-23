@@ -280,11 +280,12 @@ def doPayment(request):
             membership.lastamount = lastamount
             membershipAmount = lastamount - amount
             if membershipAmount >= 0 :
-                
-                if membership.webchatid != '' :
-                    sendPaymentLogToWebchat(membership = membership, amount = amount)
                 membership.amount = membershipAmount    
                 membership.save()
+
+                if membership.webchatid != '' :
+                    sendPaymentLogToWebchat(membership = membership, amount = amount)
+                
             else :
                 isSave = False
                 outDic['messages'] = 'ERROR'
@@ -717,4 +718,3 @@ def cancelPayment(request):
         
     finally: 
         return HttpResponseRedirect('../gopaymentlist/')
-
