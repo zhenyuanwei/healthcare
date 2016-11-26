@@ -155,20 +155,52 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
     #today = datetime.datetime.now().strftime('%Y/%m/%d')
     #now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
     today = getToday().strftime('%Y/%m/%d')
-    now = int(getToday().strftime('%H')) + 1
+    #update for booking in now 2016/1126 start
+    #now = int(getToday().strftime('%H')) + 1
+    now = int(getToday().strftime('%H'))
+    now_minutes = getToday().strftime('%M')
+    #update for booking in now 2016/1126 end 
+    
     if now < starttime :
         now = starttime
+        #update for booking in now 2016/1126 start
+        now_minutes = '00'
+        #update for booking in now 2016/1126 end 
         
     if now >= endtime :
         now = starttime
+        #update for booking in now 2016/1126 start
+        now_minutes = '00'
+        #update for booking in now 2016/1126 end
+    
+    #update for booking in now 2016/1126 start
+    now_time = ''
+    if now < 10 :
+        now_time = '0' + str(now) + ':' + now_minutes
+    else :
+        now_time = str(now) + ':' + now_minutes
+    #update for booking in now 2016/1126 end
         
     if doctorId == '' :
         for i in range(now, endtime):
-            timeList.append(getTime(value=i))
+            #update for booking in now 2016/1126 start
+            #timeList.append(getTime(value=i))
+            if now_time <= getTime(value=i) :
+                timeList.append(getTime(value=i))
+            #update for booking in now 2016/1126 end 
             
     elif queryDate <> '' :
         if today < queryDate :
             now = starttime
+            #update for booking in now 2016/1126 start
+            now_minutes = '00'
+            #update for booking in now 2016/1126 end
+        #update for booking in now 2016/1126 start   
+        if now < 10 :
+            now_time = '0' + str(now) + ':' + now_minutes
+        else :
+            now_time = str(now) + ':' + now_minutes
+        #update for booking in now 2016/1126 end 
             
         bookingList = BookingInfo.objects.filter(bookeddoctor = doctorId)
         bookingList = bookingList.filter(status = '1')
@@ -181,6 +213,12 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
         i = 0
         while (i < (endtime - now) * multiscale):
             time = getTime(value=i, now=now)
+            #update for booking in now 2016/1126 start
+            if now_time > time :
+                i = i + 1
+                continue
+            #update for booking in now 2016/1126 end
+            
             addflag = True
             breakcount = 0
             #check booking for avoiding double booking
@@ -193,7 +231,29 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     serviceperiod = service.serviceperiod
                 except :
                     serviceperiod = 0
+                
+                # bug fixing for booking when the service started 2016/11/26 start   
+                bookedHour = int(bookedtime.split(':')[0])
+                bookedMinutes = int(bookedtime.split(':')[1]) 
+                bookedEndMinute = bookedMinutes + serviceperiod
+                bookedEndHour = bookedHour
+                if bookedEndMinute > 59 :
+                    bookedEndHour = bookedHour + 1
+                    bookedEndMinute = bookedEndMinute - 60
+                if bookedEndHour < 10 :
+                    bookedEndTime = '0' + str(bookedEndHour) + ':'
+                else :
+                    bookedEndTime = str(bookedEndHour) + ':'
+                if bookedEndMinute == 0 :
+                    bookedEndTime = bookedEndTime  + '0' + str(bookedEndMinute)
+                else :
+                    bookedEndTime = bookedEndTime  + str(bookedEndMinute)
+                
+                if time > bookedtime and time < bookedEndTime :
+                        addflag = False
                     
+                # bug fixing for booking when the service started 2016/11/26 end
+                
                 if bookedtime == time :
                     addflag = False
                     

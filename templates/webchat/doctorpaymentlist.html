@@ -18,8 +18,8 @@
 			<thead>
 				<tr>
 					<th>No.</th>
-					<!-- <th>姓名</th> -->
-					<th>结账方式</th>
+					<th>姓名</th>
+					<!-- <th>结账方式</th> -->
 					<th>项目</th>
 					<th>金额</th>
 					<th>日期</th>
@@ -28,8 +28,8 @@
 			{% for payment in paymentList %}
 				<tr>
 					<td>{{ payment.id }}</td>
-					<!-- <td>{{ payment.vipname }}</td> -->
-					<td>{{ payment.paymenttypename }}</td>
+					<td>{{ payment.vipname }}</td>
+					<!-- <td>{{ payment.paymenttypename }}</td> -->
 					<td>{{ payment.servicename }}</td>
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
