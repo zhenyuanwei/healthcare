@@ -140,10 +140,12 @@ def getDaysList(length = 7):
     #today = datetime.datetime.now()
     #now = int(today.strftime('%H')) + timeBJ + 1
     today = getToday()
+    
     #update for booking in now 2016/1126 start
     #now = int(today.strftime('%H')) + 1
     now = int(today.strftime('%H'))
     #update for booking in now 2016/1126 end
+    
     if now >= endtime :
         for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
@@ -267,8 +269,8 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     for j in range(0, backCount) :
                         del timeList[count - j -1]
                     # delete the time scale for enough time to do selected service before the next booking
-                        
-                    breakcount = int((serviceperiod - 1) / bookingscale)
+                    if serviceperiod > 0 :    
+                        breakcount = int((serviceperiod - 1) / bookingscale)
                     break
             #check booking for avoiding double booking
             
