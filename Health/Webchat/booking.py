@@ -140,7 +140,10 @@ def getDaysList(length = 7):
     #today = datetime.datetime.now()
     #now = int(today.strftime('%H')) + timeBJ + 1
     today = getToday()
-    now = int(today.strftime('%H')) + 1
+    #update for booking in now 2016/1126 start
+    #now = int(today.strftime('%H')) + 1
+    now = int(today.strftime('%H'))
+    #update for booking in now 2016/1126 end
     if now >= endtime :
         for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
