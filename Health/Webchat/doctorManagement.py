@@ -14,6 +14,7 @@ from HealthModel.models import Vacation
 from datetime import time
 from Health.Admin.common import getToday
 from Health.Webchat.booking import getDaysList
+from Health.Webchat.booking import bookingDays
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 
@@ -187,7 +188,7 @@ def goVacationApply(request):
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
         doctorName = doctor.doctorname
-        dayList = getDaysList(14)
+        dayList = getDaysList(bookingDays + 7)
         outDic['doctorId'] = doctorId
         outDic['doctorName'] = doctorName
         outDic['dayList'] = dayList

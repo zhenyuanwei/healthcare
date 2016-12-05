@@ -22,7 +22,9 @@ from datetime import timedelta
 from Health.Admin.common import checkSession
 from Health.Admin.common import createResponseDic
 from Health.Webchat.booking import getDaysList
+from Health.Webchat.booking import bookingDays
 from Health.Admin.payment import createPayment
+import Health
 
 timeBJ = 8
 
@@ -643,7 +645,7 @@ def goAdminVacatinApplication(request):
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
-    dayList = getDaysList(14)
+    dayList = getDaysList(bookingDays + 7)
     outDic['dayList'] = dayList
     
     doctorInfoList = DoctorInfo.objects.all()
