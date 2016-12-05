@@ -29,6 +29,7 @@ canceltime = 1
 #booking time scale
 bookingscale = 15
 multiscale = 60 / bookingscale
+bookingDays = 21
 
 def getBookingList():
     tmpList = BookingInfo.objects.all()
@@ -135,7 +136,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
                'doctorintroduce' : doctorintroduce}
     return listDic
 
-def getDaysList(length = 7):
+def getDaysList(length = bookingDays):
     dayList = []
     #today = datetime.datetime.now()
     #now = int(today.strftime('%H')) + timeBJ + 1
