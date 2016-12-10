@@ -237,6 +237,7 @@ def goMembershipUnbind(request):
     try :
         membership = Membership.objects.get(id = temId)
         membership.webchatid = ''
+        membership.webchatid2 = ''
         membership.save()
     except :
         print '---------there is no membership id = '  + temId + '----------'
