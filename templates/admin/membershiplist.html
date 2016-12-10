@@ -47,9 +47,9 @@
 					<td>{{ membership.discountrate }}</td>
 					<td>{{ membership.amount }}</td>
 					{% if membership.webchatid != '' %}
-					<td color="blue">已绑定</td>
+					<td>已绑定</td>
 					{% else %}
-					<td>未绑定</td>
+					<td></td>
 					{% endif %}
 					<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
 					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
