@@ -27,9 +27,11 @@
 					<th>上午折扣</th>
 					<th>下午折扣</th>
 					<th>账户余额</th>
+					<th>是否绑定</th>
 					<th>会员充值</th>
 					<th>会员信息</th>
 					<th>会员信息更新</th>
+					<th>解除绑定</th>
 					<th>会员删除</th>
 					
 				</tr>
@@ -44,9 +46,15 @@
 					<td>{{ membership.discountrate2 }}</td>
 					<td>{{ membership.discountrate }}</td>
 					<td>{{ membership.amount }}</td>
+					{% if membership.webchatid != '' %}
+					<td color="blue">已绑定</td>
+					{% else %}
+					<td>未绑定</td>
+					{% endif %}
 					<td><a href="../membershipupdateamount/?id={{ membership.id }}">会员充值</a></td>
 					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
 				    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
+				    <td><a href="../membershipunbind/?id={{ membership.id }}">解除绑定</a></td>
 				    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
 				</tr>
 			{% endfor %}

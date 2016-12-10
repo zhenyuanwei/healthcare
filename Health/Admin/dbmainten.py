@@ -232,6 +232,17 @@ def membershipListQuery(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def goMembershipUnbind(request):
+    temId = request.GET['id']
+    try :
+        membership = Membership.objects.get(id = temId)
+        membership.webchatid = ''
+        membership.save()
+    except :
+        print '---------there is no membership id = '  + temId + '----------'
+    finally:   
+        return HttpResponseRedirect("../membershiplist/")
+    
 def goMembershipDelete(request):
     temId = request.GET['id']
     try :
