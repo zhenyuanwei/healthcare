@@ -81,7 +81,7 @@ def bindMembership(request):
 def getPaymentLog(membershipId):
     paymentList = []
     transactionList = Transaction.objects.filter(membershipId = membershipId)
-    transactionList = transactionList.exclude(successFlag = '0').order_by('transactionDate')
+    transactionList = transactionList.exclude(successFlag = '0').order_by('-transactionDate')
     count = len(transactionList)
     if count >= maxCount :
         count = maxCount

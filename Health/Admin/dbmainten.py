@@ -281,11 +281,11 @@ def goMembershipDetail(request):
     outDic['membership'] = membership
     
     membershipAmountLogList = MembershipAmountLog.objects.all()
-    membershipAmountLogList = membershipAmountLogList.filter(membershipId = temId)
+    membershipAmountLogList = membershipAmountLogList.filter(membershipId = temId).order_by('-transactionDate')
     outDic['membershipAmountLogList'] = membershipAmountLogList
     
     transactionList = Transaction.objects.all()
-    transactionList = transactionList.filter(membershipId = temId, successFlag = '1')
+    transactionList = transactionList.filter(membershipId = temId, successFlag = '1').order_by('-transactionDate')
     paymentList = []
     for transaction in transactionList :
         payment = createPayment(transaction = transaction)
