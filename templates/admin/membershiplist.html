@@ -33,6 +33,9 @@
 					<th>会员信息更新</th>
 					<th>解除绑定</th>
 					<th>会员删除</th>
+					{% if role == '9' %}
+				    <th>OpenId</th>
+				    {% endif %}
 					
 				</tr>
 			</thead>
@@ -56,6 +59,9 @@
 				    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
 				    <td><a href="../membershipunbind/?id={{ membership.id }}">解除绑定</a></td>
 				    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
+				    {% if role == '9' %}
+				    <td>{{ membership.webchatid }}</td>
+				    {% endif %}
 				</tr>
 			{% endfor %}
 		</table>
