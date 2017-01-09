@@ -5,6 +5,7 @@ Created on Sep 10, 2016
 '''
 from datetime import datetime
 from datetime import timedelta
+from HealthModel.models import Messages
 
 def checkSession(request):
     returnValue = True
@@ -36,3 +37,11 @@ def getToday():
     timeBJ = 8
     today = datetime.now() + timedelta(hours=timeBJ)
     return today
+
+def getMessage(messageId):
+    message = ''
+    try :
+        message = Messages.objects.get(messageId = messageId).message
+    except :
+        message = '7'
+    return message

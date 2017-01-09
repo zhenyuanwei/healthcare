@@ -20,6 +20,7 @@ from django.http import HttpResponseRedirect
 from Health.Admin.common import createResponseDic
 from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import getToday
+from Health.Admin.common import getMessage
 
 "@csrf_exempt"
 timeBJ = 8
@@ -29,7 +30,7 @@ canceltime = 1
 #booking time scale
 bookingscale = 15
 multiscale = 60 / bookingscale
-bookingDays = 21
+bookingDays = int(getMessage(messageId = 'bookingDay'))
 
 def getBookingList():
     tmpList = BookingInfo.objects.all()

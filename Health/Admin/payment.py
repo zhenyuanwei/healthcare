@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import createResponseDic
 from Health.Admin.common import getToday
 from Health.Webchat.myweixin import sendMessage
+from Health.Admin.common import getMessage
 
 timeBJ = 8
 
@@ -543,33 +544,33 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             paymentList.append(payment)
             
         payment = Payment()
-        messages = Messages.objects.get(messageId = 'P00001')
+        message = getMessage(messageId = 'P00001')
         payment.id = ''
-        payment.servicename = messages.message
+        payment.servicename = message
         payment.amount = totalamount
         payment.paymentdate = summarydate
         paymentList.append(payment)
         
         payment = Payment()
-        messages = Messages.objects.get(messageId = 'P00003')
+        message = getMessage(messageId = 'P00003')
         payment.id = ''
-        payment.servicename = messages.message
+        payment.servicename = message
         payment.amount = paymentTypeTotal['P00003']
         payment.paymentdate = summarydate
         paymentList.append(payment)
         
         payment = Payment()
-        messages = Messages.objects.get(messageId = 'P00002')
+        message = getMessage(messageId = 'P00002')
         payment.id = ''
-        payment.servicename = messages.message
+        payment.servicename = message
         payment.amount = paymentTypeTotal['P00002']
         payment.paymentdate = summarydate
         paymentList.append(payment)
         
         payment = Payment()
-        messages = Messages.objects.get(messageId = 'P00004')
+        message = getMessage(messageId = 'P00004')
         payment.id = ''
-        payment.servicename = messages.message
+        payment.servicename = message
         payment.amount = paymentTypeTotal['P00004']
         payment.paymentdate = summarydate
         paymentList.append(payment)
