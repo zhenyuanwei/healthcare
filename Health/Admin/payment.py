@@ -521,9 +521,9 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal['P00003'] = 0
     paymentTypeTotal['P00004'] = 0
     
-    '''adminUserList = AdminUser.objects.all()
+    adminUserList = AdminUser.objects.all()
     for adminUser in adminUserList :
-        paymentTypeTotal[adminUser.username] = 0'''
+        paymentTypeTotal[adminUser.username] = 0
     #init the payment total by payment type
         
     for transaction in transactionList :
@@ -538,8 +538,8 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             
         paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
         
-        '''if transaction.paymentType == '01' and transaction.username <> '' :
-            paymentTypeTotal[transaction.username] = paymentTypeTotal[transaction.username] + transaction.amount'''
+        if transaction.paymentType == '01' and transaction.username <> '' :
+            paymentTypeTotal[transaction.username] = paymentTypeTotal[transaction.username] + transaction.amount
     
     summarydate = ''
     if querydate != '' :
@@ -590,7 +590,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.paymentdate = summarydate
         paymentList.append(payment)
         
-        '''adminUserList = adminUserList.exclude(username = 'wzy')
+        adminUserList = adminUserList.exclude(username = 'wzy')
         for adminUser in adminUserList :
             payment = Payment()
             message = adminUser.username
@@ -598,7 +598,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             payment.servicename = message
             payment.amount = paymentTypeTotal[adminUser.username]
             payment.paymentdate = summarydate
-            paymentList.append(payment)'''
+            paymentList.append(payment)
             
     
     return paymentList
