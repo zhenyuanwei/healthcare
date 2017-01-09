@@ -28,6 +28,9 @@ class Membership(models.Model):
     discountrate2 = models.FloatField()
     webchatid = models.CharField(max_length = 50)
     webchatid2 = models.CharField(max_length = 50, default = '')
+    startDate = models.CharField(max_length=10, default = '0000/01/01')
+    endDate = models.CharField(max_length=10, default = '9999/12/31')
+    deleteFlag = models.CharField(max_length=10, default = '0') # 0 effective, 1 un-effective
     
     
 class MembershipAmountLog(models.Model):
