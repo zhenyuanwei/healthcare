@@ -591,7 +591,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.paymentdate = summarydate
         paymentList.append(payment)
         
-        adminUserList = adminUserList.exclude(username = 'wzy')
+        '''adminUserList = adminUserList.exclude(username = 'wzy')
         for adminUser in adminUserList :
             payment = Payment()
             message = adminUser.username
@@ -599,7 +599,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             payment.servicename = message
             payment.amount = paymentTypeTotal[adminUser.username]
             payment.paymentdate = summarydate
-            paymentList.append(payment)
+            paymentList.append(payment)'''
             
     
     return paymentList
