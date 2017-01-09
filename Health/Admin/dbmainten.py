@@ -316,12 +316,14 @@ def goMembershipDetail(request):
 def goMembershipAmountUpdate(request):
 
     temId = request.GET['id']
+    redirectUrl = request.GET['redirectUrl']
     membership = Membership.objects.get(id = temId, deleteFlag = '0')
     paymentTypeList = PaymentType.objects.exclude(paymenttype = '02')
     usedTemplate = get_template('admin/membership.html')
     outDic = createResponseDic(request=request)
     outDic['membership'] = membership
     outDic['paymentTypeList'] = paymentTypeList
+    outDic['redirectUrl'] = redirectUrl
     outDic['flag'] = 'M'
     outDic['hightlight'] = '4'
     html = usedTemplate.render(outDic)
@@ -331,6 +333,11 @@ def goMembershipAmountUpdate(request):
 def doMembership(request):
     try :
         flag = request.POST['operation']
+        try :
+            redirectUrl = '../' + request.POST['redirectUrl'] + '/'
+        except :
+            redirectUrl = '../membershiplist/'
+            
         if flag == 'A' :
             if addMembership(request=request) :
                 outDic = createResponseDic(request=request)
@@ -348,7 +355,8 @@ def doMembership(request):
     except :
         print
     finally :
-        return HttpResponseRedirect("../membershiplist/")
+        
+        return HttpResponseRedirect(redirectUrl)
     
 
 def addMembership(request):

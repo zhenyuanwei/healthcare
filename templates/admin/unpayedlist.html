@@ -19,6 +19,8 @@
 					<th>产品项目</th>
 					<th>金额</th>
 					<th>日期</th>
+					<th>会员余额</th>
+					<th>会员充值</th>
 					<th>支付</th>
 					<th>删除</th>
 				</tr>
@@ -37,6 +39,12 @@
 					<td>{{ payment.productname }}</td>
 					<td>{{ payment.amount }}</td>
 					<td>{{ payment.paymentdate }}</td>
+					<td>{{ payment.membershiAmount }}</td>
+					<td>
+					{% if payment.isMembership == 'Yes' %}
+					<a href = "../membershipupdateamount/?id={{ payment.membershiId }}&redirectUrl=gounpayedlist">充值</a>
+					{% endif %}
+					</td>
 					<td><a href="../gopaymenttypeselect/?transactionId={{ payment.id }}">支付</a></td>
 					<td><a href="../dodeleteunpayed/?transactionId={{ payment.id }}">删除</a></td>
 				</tr>

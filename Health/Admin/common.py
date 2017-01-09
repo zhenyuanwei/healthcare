@@ -6,6 +6,7 @@ Created on Sep 10, 2016
 from datetime import datetime
 from datetime import timedelta
 from HealthModel.models import Messages
+from HealthModel.models import Membership
 
 def checkSession(request):
     returnValue = True
@@ -45,3 +46,27 @@ def getMessage(messageId):
     except :
         message = '7'
     return message
+
+def getMembership(openId):
+    membership = Membership.objects.get(webchatid=openId, deleteFlag = '0')
+    return membership
+
+def getMembership2(vipno = '', phonenumber = ''):
+    if vipno == '' :
+        membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
+    else :
+        membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
+    return membership
+
+def getDiscount(phonenumber):
+    discount = 1
+    try :
+        membership = getMembership2(phonenumber = phonenumber)
+        discount = membership.discountrate
+        now = getToday().strftime('%H')
+        if now < '12' :
+            discount = membership.discountrate2
+    except :
+        discount = 1
+        
+    return discount

@@ -14,6 +14,8 @@
 						<th>预约医生</th>
 						<th>预约项目</th>
 						<th>预约时间</th>
+						<th>会员余额</th>
+						<th>会员充值</th>
 						<th>支付</th>
 						<!-- <th>预约完成</th> -->
 						<th>预约取消</th>
@@ -28,6 +30,12 @@
 						<td>{{ bookingInfo.bookeddoctor }}</td>
 						<td>{{ bookingInfo.bookeditem }}</td>
 						<td>{{ bookingInfo.bookedtime }}</td>
+						<td>{{ bookingInfo.membershipAmount }}</td>
+						<td>
+						{% if bookingInfo.isEnoughtAmount == 'No' %}
+						余额不足，请<a href = "../membershipupdateamount/?id={{ bookingInfo.membershipId }}&redirectUrl=bookinglist">充值</a>。
+						{% endif %}
+						</td>
 						<td><a href="../goprepayment/?id={{ bookingInfo.id }}">支付</a></td>
 						<!-- <td><a href="../complatedBooking/?id={{ bookingInfo.id }}">完成</a></td> -->
 					    <td><a href="../cancelBooking/?id={{ bookingInfo.id }}">取消</a></td>

@@ -13,7 +13,7 @@ from HealthModel.models import DoctorInfo
 from HealthModel.models import ServiceType
 import datetime
 from Health.Webchat.myweixin import getOpenID, sendMessage
-from membershipmanage import getMembership
+from Health.Admin.common import getMembership, getDiscount
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
 from django.http import HttpResponseRedirect
@@ -21,6 +21,7 @@ from Health.Admin.common import createResponseDic
 from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import getToday
 from Health.Admin.common import getMessage
+from Health.Admin.common import getMembership2
 
 "@csrf_exempt"
 timeBJ = 8
@@ -49,16 +50,36 @@ def getBookingList():
         else :
             bookinginfo.bookeddoctor = ''
         
+        price = 0
         if bookinginfo.bookeditem.strip() != '0' :
             tmpStr = ''
             try :
-                tmpStr = ServiceType.objects.get(id=bookinginfo.bookeditem).servicename
+                service = ServiceType.objects.get(id=bookinginfo.bookeditem)
+                tmpStr = service.servicename
+                price = service.servicerate
             except :
                 print '-------there is no service type' + bookinginfo.bookeditem + '----------'
             finally:
                 bookinginfo.bookeditem = tmpStr
         else :
             bookinginfo.bookeditem = ''
+            
+        phonenumber = bookinginfo.phonenumber
+        try :
+            membership = getMembership2(phonenumber = phonenumber)
+            amount = membership.amount
+            discount = getDiscount(phonenumber = phonenumber)
+            membershipPrice = price * float(discount)
+            bookinginfo.membershipAmount = amount
+            bookinginfo.isEnoughtAmount = 'Yes'
+            bookinginfo.membershipId = membership.id
+            if amount < membershipPrice :
+                bookinginfo.isEnoughtAmount = 'No'
+        except :
+            bookinginfo.membershipAmount = ''
+            bookinginfo.isEnoughtAmount = ''
+            bookinginfo.membershipId = ''
+            print 'This is not a booking for membership : phonenumber = ' + phonenumber
         
         bookingList.append(bookinginfo)
     

@@ -16,7 +16,7 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from django.views.decorators.csrf import csrf_exempt
-from Health.Admin.common import createResponseDic
+from Health.Admin.common import createResponseDic, getDiscount
 from Health.Admin.common import getToday
 from Health.Webchat.myweixin import sendMessage
 from Health.Admin.common import getMessage
@@ -114,14 +114,14 @@ def doPrePayment(request):
                 except :
                     membership = None
             if membership != None :
-                servicediscount = membership.discountrate
                 membershipId = membership.id
                 phonenumber = membership.phonenumber
+                '''servicediscount = membership.discountrate
                 #now = (timedelta(hours=timeBJ) + datetime.now()).strftime('%H')
                 now = getToday().strftime('%H')
                 if now < '12' :
-                    servicediscount = membership.discountrate2
-                    
+                    servicediscount = membership.discountrate2'''
+                servicediscount = getDiscount(phonenumber = phonenumber)    
                 outDic['membership'] = membership
             
         
@@ -364,9 +364,15 @@ def createPayment(transaction):
         membership = Membership.objects.get(id=transaction.membershipId, deleteFlag = '0')
         payment.vipname = membership.vipname
         payment.vipno = membership.vipno
+        payment.isMembership = 'Yes'
+        payment.membershiAmount = membership.amount
+        payment.membershiId = membership.id
     except :
         payment.vipname = ''
         payment.vipno = ''
+        payment.isMembership = 'No'
+        payment.membershiAmount = ''
+        payment.membershiId = ''
         
     try :    
         doctor = DoctorInfo.objects.get(id=transaction.doctorId)

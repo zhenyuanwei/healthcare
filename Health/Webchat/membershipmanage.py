@@ -9,19 +9,12 @@ from Health.Webchat.myweixin import getOpenID
 from HealthModel.models import Membership, Transaction
 from Health.formatValidation import phoneNumberCheck
 from Health.Admin.payment import createPayment
+from Health.Admin.common import getMembership
+from Health.Admin.common import getMembership2
 
 maxCount = 5 
 
-def getMembership(openId):
-    membership = Membership.objects.get(webchatid=openId, deleteFlag = '0')
-    return membership
 
-def getMembership2(vipno, phonenumber):
-    if vipno == '' :
-        membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
-    else :
-        membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
-    return membership
 
 def bindMembershipCheck(request):
     #get webchat user
