@@ -14,11 +14,12 @@
 	   	</div>
 		
      </form>
+     <hr>
      </div>
-	{% if membershipList|length != 0 %}
+	{% if newMembershipList|length != 0 %}
 		<div class="ui-field-contain">
-		<label for="phonenumber">会员总数 : </label>
-	   	<label for="phonenumber">{{ membershipList|length }}位</label>
+		<label for="phonenumber">本月新增会员 : </label>
+	   	<label for="phonenumber">{{ newMembershipList|length }}位</label>
 	   	</div>
 		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 			<thead>
@@ -31,19 +32,9 @@
 					<th>上午折扣</th>
 					<th>下午折扣</th>
 					<th>账户余额</th>
-					<th>是否绑定</th>
-					<th>会员充值</th>
-					<th>会员信息</th>
-					<th>会员更新</th>
-					<th>解除绑定</th>
-					<th>会员删除</th>
-					{% if role == '9' %}
-				    <th>OpenId</th>
-				    {% endif %}
-					
 				</tr>
 			</thead>
-			{% for membership in membershipList %}
+			{% for membership in newMembershipList %}
 				<tr>
 					<td>{{ membership.id }}</td>
 					<td>{{ membership.vipname }}</td>
@@ -53,24 +44,39 @@
 					<td>{{ membership.discountrate2 }}</td>
 					<td>{{ membership.discountrate }}</td>
 					<td>{{ membership.amount }}</td>
-					{% if membership.webchatid != '' or membership.webchatid2 != '' %}
-					<td>已绑定</td>
-					{% else %}
-					<td></td>
-					{% endif %}
-					<td><a href="../membershipupdateamount/?id={{ membership.id }}&&redirectUrl=membershiplist">会员充值</a></td>
-					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
-				    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
-				    <td><a href="../membershipunbind/?id={{ membership.id }}">解除绑定</a></td>
-				    <td>
-				    <a href="../membershipend/?id={{ membership.id }}">会员注销</a>
-				    {% if role == '9' %}
-				    </br><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a>
-				    {% endif %}
-				    </td>
-				    {% if role == '9' %}
-				    <td>{{ membership.webchatid }}</td>
-				    {% endif %}
+				</tr>
+			{% endfor %}
+		</table>
+		<hr>
+	{% endif %}
+	{% if endMembershipList|length != 0 %}
+		<div class="ui-field-contain">
+		<label for="phonenumber">本月退籍会员 : </label>
+	   	<label for="phonenumber">{{ endMembershipList|length }}位</label>
+	   	</div>
+		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>姓名</th>
+					<th>电话</th>
+					<!-- <th>会员号</th> -->
+					<th>卡种</th>
+					<th>上午折扣</th>
+					<th>下午折扣</th>
+					<th>账户余额</th>
+				</tr>
+			</thead>
+			{% for membership in endMembershipList %}
+				<tr>
+					<td>{{ membership.id }}</td>
+					<td>{{ membership.vipname }}</td>
+					<td>{{ membership.phonenumber }}</td>
+					<!-- <td>{{ membership.vipno }}</td> -->
+					<td>{{ membership.discounttype }}</td>
+					<td>{{ membership.discountrate2 }}</td>
+					<td>{{ membership.discountrate }}</td>
+					<td>{{ membership.amount }}</td>
 				</tr>
 			{% endfor %}
 		</table>

@@ -214,6 +214,37 @@ def goMembershipList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def goMembershipMonthlyList(request):
+    outDic = createResponseDic(request=request)
+    monthlyDay01 = getToday().strftime('%Y/%m') + '/01'
+    monthlyDay31 = getToday().strftime('%Y/%m') + '/31'
+    newMembershipList = Membership.objects.all()
+    newMembershipList = newMembershipList.filter(startDate__gte = monthlyDay01)
+    newMembershipList = newMembershipList.filter(startDate__lte = monthlyDay31)
+    newMembershipList = newMembershipList.filter(deleteFlag = '0')
+    
+    for membership in newMembershipList :
+        discoutType = ServiceRate.objects.get(id = membership.discounttype)
+        membership.discounttype = discoutType.ratename
+        
+    outDic['newMembershipList'] = newMembershipList
+    
+    endMembershipList = Membership.objects.all()
+    endMembershipList = endMembershipList.filter(endDate__gte = monthlyDay01)
+    endMembershipList = endMembershipList.filter(endDate__lte = monthlyDay31)
+    endMembershipList = endMembershipList.filter(deleteFlag = '1')
+    
+    for membership in endMembershipList :
+        discoutType = ServiceRate.objects.get(id = membership.discounttype)
+        membership.discounttype = discoutType.ratename
+        
+    outDic['endMembershipList'] = endMembershipList
+    
+    outDic['hightlight'] = '4'
+    usedTemplate = get_template('admin/membershipmonthlylist.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
+
 @csrf_exempt
 def membershipListQuery(request):
     outDic = createResponseDic(request=request)
