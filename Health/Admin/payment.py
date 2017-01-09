@@ -522,9 +522,9 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal['P00003'] = 0
     paymentTypeTotal['P00004'] = 0
     
-    adminUserList = AdminUser.objects.all()
+    '''adminUserList = AdminUser.objects.all()
     for adminUser in adminUserList :
-        paymentTypeTotal[adminUser.username] = 0
+        paymentTypeTotal[adminUser.username] = 0'''
     #init the payment total by payment type
         
     for transaction in transactionList :
