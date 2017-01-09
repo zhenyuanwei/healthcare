@@ -2,25 +2,35 @@
 {% block title %}预定信息一览{% endblock %}
 {% block content %}
 	<div>
-	<form action="../membershipquery/" method="post">
-	   	
+	<form action="../membershipmonthlylist/" method="post">
+	   	<div class="ui-field-contain">
+	   	<label for="queryyear">年份 : </label>
+	   	<select name="queryyear" id="queryyear" data-mini="true" data-inline="true">
+		    {% for optionyear in yearList %}
+				<option value="{{ optionyear }}">{{ optionyear }}</option>
+			{% endfor %}
+		</select>
+		</div>
 		<div class="ui-field-contain">
-		<label for="phonenumber">手机号 : </label>
-	   	<input name="phonenumber" id="phonenumber" data-mini="true" data-inline="true" size="10">
+	   	<label for="querymonth">月份 : </label>
+	   	<select name="querymonth" id="querymonth" data-mini="true" data-inline="true">
+	   	{% for month in monthList %}
+	   		<option value="{{ month }}" {% if month == currentMonth %} selected="selected" {% endif %}>{{ month }}</option>
+		{% endfor %}
+		</select>
 	   	</div>
 	   	<div class="ui-field-contain">
 	   	<label for="button"></label>
 		<input class="ui-btn ui-btn-inline" type="submit" value="查询" data-mini="true" data-inline="true">
 	   	</div>
-		
-     </form>
-     <hr>
-     </div>
+    </form>
+    <hr>
+    </div>
+    <div class="ui-field-contain">
+		<label for="newMembership">本月新增会员 : </label>
+	   	<label for="newMembership">{{ newMembershipList|length }}位</label>
+	</div>
 	{% if newMembershipList|length != 0 %}
-		<div class="ui-field-contain">
-		<label for="phonenumber">本月新增会员 : </label>
-	   	<label for="phonenumber">{{ newMembershipList|length }}位</label>
-	   	</div>
 		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 			<thead>
 				<tr>
@@ -49,11 +59,11 @@
 		</table>
 		<hr>
 	{% endif %}
+	<div class="ui-field-contain">
+		<label for="endMembership">本月退籍会员 : </label>
+	   	<label for="endMembership">{{ endMembershipList|length }}位</label>
+	</div>
 	{% if endMembershipList|length != 0 %}
-		<div class="ui-field-contain">
-		<label for="phonenumber">本月退籍会员 : </label>
-	   	<label for="phonenumber">{{ endMembershipList|length }}位</label>
-	   	</div>
 		<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 			<thead>
 				<tr>

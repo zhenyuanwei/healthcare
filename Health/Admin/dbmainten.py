@@ -214,10 +214,31 @@ def goMembershipList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+@csrf_exempt
 def goMembershipMonthlyList(request):
     outDic = createResponseDic(request=request)
-    monthlyDay01 = getToday().strftime('%Y/%m') + '/01'
-    monthlyDay31 = getToday().strftime('%Y/%m') + '/31'
+    outDic['hightlight'] = '4'
+    
+    yearList = []
+    year = getToday().strftime('%Y')
+    for i in range(0, 3) :
+        yearList.append(int(year) - i)
+    outDic['yearList'] = yearList
+    
+    monthList = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    outDic['monthList'] = monthList
+    currentMonth = getToday().strftime('%m')
+    outDic['currentMonth'] = currentMonth
+    
+    try :
+        queryYear = request.POST['queryyear']
+        queryMonth = request.POST['querymonth']
+        monthlyDay01 = queryYear + '/' + queryMonth + '/01'
+        monthlyDay31 = queryYear + '/' + queryMonth + '/31'
+    except :
+        monthlyDay01 = getToday().strftime('%Y/%m') + '/01'
+        monthlyDay31 = getToday().strftime('%Y/%m') + '/31'
+        
     newMembershipList = Membership.objects.all()
     newMembershipList = newMembershipList.filter(startDate__gte = monthlyDay01)
     newMembershipList = newMembershipList.filter(startDate__lte = monthlyDay31)
@@ -240,7 +261,6 @@ def goMembershipMonthlyList(request):
         
     outDic['endMembershipList'] = endMembershipList
     
-    outDic['hightlight'] = '4'
     usedTemplate = get_template('admin/membershipmonthlylist.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)

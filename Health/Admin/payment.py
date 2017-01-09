@@ -633,7 +633,7 @@ def searchPaymentSummaryList(request):
     
     #query form show
     yearList = []
-    year = datetime.strftime(date.today(), '%Y')
+    year = getToday().strftime('%Y')
     for i in range(0, 5) :
         yearList.append(int(year) - i)
     outDic['yearList'] = yearList
