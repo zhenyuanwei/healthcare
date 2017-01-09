@@ -29,6 +29,7 @@ class Membership(models.Model):
     webchatid = models.CharField(max_length = 50)
     webchatid2 = models.CharField(max_length = 50, default = '')
     
+    
 class MembershipAmountLog(models.Model):
     id = models.AutoField(primary_key=True)
     membershipId = models.CharField(max_length = 10)
