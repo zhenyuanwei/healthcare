@@ -649,7 +649,7 @@ def mybooking(request):
     
 def getPaymentFlag(memberCard):
     try :
-        Membership.objects.get(vipno=memberCard)
+        Membership.objects.get(vipno=memberCard, deleteFlag = '0')
         returnValue = 'OK'
     except :
         returnValue = ''
@@ -677,7 +677,7 @@ def prePay(request):
         outputDic['phonenumber'] = mybookingInfo.phonenumber
         outputDic['membercard'] = mybookingInfo.membercard
         
-        membership = Membership.objects.get(vipno=mybookingInfo.membercard)
+        membership = Membership.objects.get(vipno=mybookingInfo.membercard, deleteFlag = '0')
         servicediscount = membership.discountrate
         #now = (datetime.timedelta(hours=timeBJ) + datetime.datetime.now()).strftime('%H')
         now = getToday().strftime('%H')
@@ -750,7 +750,7 @@ def doPayment(request):
         
         amount = 0
         if membershipId <> '' :
-            membership = Membership.objects.get(id=membershipId)
+            membership = Membership.objects.get(id=membershipId, deleteFlag = '0')
             lastAmount = membership.amount
             membership.lastamount = lastAmount
             amount = lastAmount - transaction.amount

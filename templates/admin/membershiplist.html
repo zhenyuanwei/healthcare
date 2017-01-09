@@ -58,7 +58,12 @@
 					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
 				    <td><a href="../membershipupdate/?id={{ membership.id }}">会员信息更新</a></td>
 				    <td><a href="../membershipunbind/?id={{ membership.id }}">解除绑定</a></td>
-				    <td><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a></td>
+				    <td>
+				    <a href="../membershipend/?id={{ membership.id }}">会员注销</a>
+				    {% if role == '9' %}
+				    </br><a href="../membershipdelete/?id={{ membership.id }}">会员删除</a>
+				    {% endif %}
+				    </td>
 				    {% if role == '9' %}
 				    <td>{{ membership.webchatid }}</td>
 				    {% endif %}

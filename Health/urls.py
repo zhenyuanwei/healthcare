@@ -80,6 +80,7 @@ urlpatterns = [
     url(r'^admin/membershipdetail/$', dbmainten.goMembershipDetail),
     url(r'^admin/membershipunbind/$', dbmainten.goMembershipUnbind),
     url(r'^admin/membershipdelete/$', dbmainten.goMembershipDelete),
+    url(r'^admin/membershipend/$', dbmainten.goMembershipEnd),
     url(r'^admin/membershipupdate/$', dbmainten.goMembershipUpdate),
     url(r'^admin/membershipupdateamount/$', dbmainten.goMembershipAmountUpdate),
     url(r'^admin/membership/$', dbmainten.goMembership),

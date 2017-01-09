@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from datetime import timedelta
-from Health.Admin.common import checkSession
+from Health.Admin.common import checkSession, getToday
 from Health.Admin.common import createResponseDic
 from Health.Webchat.booking import getDaysList
 from Health.Webchat.booking import bookingDays
@@ -202,6 +202,7 @@ def goMembershipList(request):
     outDic = createResponseDic(request=request)
     
     membershiplist = Membership.objects.all()
+    membershiplist = membershiplist.filter(deleteFlag = '0')
     outDic['membershipList'] = membershiplist
     
     for membership in membershiplist :
@@ -219,6 +220,7 @@ def membershipListQuery(request):
     
     phonenumber = request.POST['phonenumber']
     membershiplist = Membership.objects.all()
+    membershiplist = membershiplist.filter(deleteFlag = '0')
     if phonenumber != '' :
         membershiplist = membershiplist.filter(phonenumber = phonenumber)
     outDic['membershipList'] = membershiplist
@@ -235,7 +237,7 @@ def membershipListQuery(request):
 def goMembershipUnbind(request):
     temId = request.GET['id']
     try :
-        membership = Membership.objects.get(id = temId)
+        membership = Membership.objects.get(id = temId, deleteFlag = '0')
         membership.webchatid = ''
         membership.webchatid2 = ''
         membership.save()
@@ -253,10 +255,24 @@ def goMembershipDelete(request):
         print '---------there is no membership id = '  + temId + '----------'
     finally:   
         return HttpResponseRedirect("../membershiplist/")
+    
+def goMembershipEnd(request):
+    temId = request.GET['id']
+    try :
+        membership = Membership.objects.get(id = temId, deleteFlag = '0')
+        membership.endDate = getToday().strftime('%Y/%m/%d')
+        membership.deleteFlag = '1'
+        membership.webchatid = ''
+        membership.webchatid2 = ''
+        membership.save()
+    except :
+        print '---------there is no membership id = '  + temId + '----------'
+    finally:   
+        return HttpResponseRedirect("../membershiplist/")
 
 def goMembershipUpdate(request):
     temId = request.GET['id']
-    membership = Membership.objects.get(id = temId)
+    membership = Membership.objects.get(id = temId, deleteFlag = '0')
     discounttype = int(membership.discounttype)
     usedTemplate = get_template('admin/membership.html')
     outDic = createResponseDic(request=request)
@@ -274,7 +290,7 @@ def goMembershipDetail(request):
     outDic['hightlight'] = '4'
     
     temId = request.GET['id']
-    membership = Membership.objects.get(id = temId)
+    membership = Membership.objects.get(id = temId, deleteFlag = '0')
     serviceRate = ServiceRate.objects.get(id = membership.discounttype)
     membership.ratename = serviceRate.ratename
     
@@ -300,7 +316,7 @@ def goMembershipDetail(request):
 def goMembershipAmountUpdate(request):
 
     temId = request.GET['id']
-    membership = Membership.objects.get(id = temId)
+    membership = Membership.objects.get(id = temId, deleteFlag = '0')
     paymentTypeList = PaymentType.objects.exclude(paymenttype = '02')
     usedTemplate = get_template('admin/membership.html')
     outDic = createResponseDic(request=request)
@@ -365,7 +381,7 @@ def addMembership(request):
     webchatid = ''
     
     isMember = False
-    tmpMembership = Membership.objects.filter(vipno = vipno)
+    tmpMembership = Membership.objects.filter(vipno = vipno).filter(deleteFlag = '0')
     if tmpMembership :
         isMember = True
     else :
@@ -381,6 +397,10 @@ def addMembership(request):
         membership.discountrate2 = discountrate2
         membership.discounttype = discounttype
         membership.webchatid = webchatid
+        membership.webchatid2 = webchatid
+        membership.startDate = getToday().strftime('%Y/%m/%d')
+        membership.deleteFlag = '0'
+        membership.endDate = '9999/12/31'
         membership.save()
         
         #update the next membership id
@@ -405,7 +425,7 @@ def updateMembership(request):
         discountrate = 1
         discountrate2 = 1
     
-    membership = Membership.objects.get(id = vipid)
+    membership = Membership.objects.get(id = vipid, deleteFlag = '0')
     membership.vipname = vipname
     membership.vipno = vipno
     membership.discounttype = discountrateId
@@ -421,7 +441,7 @@ def updateMembershipAmount(request):
     if request.POST['amount'].strip() :
         amount = float(request.POST['amount'])
     
-    membership = Membership.objects.get(id = vipid)
+    membership = Membership.objects.get(id = vipid, deleteFlag = '0')
     lastamount = membership.amount
     membership.lastamount = lastamount
     membership.amount = lastamount + amount

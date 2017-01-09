@@ -107,10 +107,10 @@ def doPrePayment(request):
         #Membership check
         if phonenumber != '' :
             try :
-                membership = Membership.objects.get(phonenumber=phonenumber)
+                membership = Membership.objects.get(phonenumber=phonenumber, deleteFlag = '0')
             except :
                 try :
-                    membership = Membership.objects.get(vipno=phonenumber)
+                    membership = Membership.objects.get(vipno=phonenumber, deleteFlag = '0')
                 except :
                     membership = None
             if membership != None :
@@ -276,7 +276,7 @@ def doPayment(request):
         
         #check the member card amount        
         if paymentType == '02' :
-            membership = Membership.objects.get(id = membershipId)
+            membership = Membership.objects.get(id = membershipId, deleteFlag = '0')
             lastamount = membership.amount
             membership.lastamount = lastamount
             membershipAmount = lastamount - amount
@@ -361,7 +361,7 @@ def createPayment(transaction):
         payment.paymenttypename = ''
         
     try :    
-        membership = Membership.objects.get(id=transaction.membershipId)
+        membership = Membership.objects.get(id=transaction.membershipId, deleteFlag = '0')
         payment.vipname = membership.vipname
         payment.vipno = membership.vipno
     except :
@@ -704,7 +704,7 @@ def cancelPayment(request):
             membershipId = transaction.membershipId
             if membershipId != '' :
                 amount = transaction.amount
-                membership = Membership.objects.get(id = membershipId)
+                membership = Membership.objects.get(id = membershipId, deleteFlag = '0')
                 membership.amount = membership.amount + amount
                 membership.save()
             
