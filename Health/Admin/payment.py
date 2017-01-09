@@ -538,7 +538,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             
         paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
         
-        if transaction.paymentType == '01' and transaction.username <> '' :
+        if transaction.paymentType != '02' and transaction.username <> '' :
             paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[transaction.username.upper()] + transaction.amount
     
     summarydate = ''
