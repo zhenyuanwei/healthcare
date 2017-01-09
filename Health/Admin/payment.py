@@ -357,7 +357,6 @@ def createPayment(transaction):
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
         payment.paymenttypename = paymentType.paymenttypename
-        payment.paymentType = paymentType.paymentType
     except :
         payment.paymenttypename = ''
         
