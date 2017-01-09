@@ -6,7 +6,8 @@ Created on Aug 6, 2016
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.http import HttpResponseRedirect
-from HealthModel.models import DoctorInfo, Product, PaymentType, BookingInfo
+from HealthModel.models import DoctorInfo, Product, PaymentType, BookingInfo,\
+    AdminUser
 from HealthModel.models import ServiceType
 from HealthModel.models import Membership
 from HealthModel.models import Transaction
@@ -516,9 +517,15 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal = {}
     for paymentType in paymentTypeList :
         paymentTypeTotal[paymentType.paymenttype] = 0
+        
     paymentTypeTotal['P00002'] = 0
     paymentTypeTotal['P00003'] = 0
     paymentTypeTotal['P00004'] = 0
+    
+    adminUserList = AdminUser.objects.all()
+    for adminUser in adminUserList :
+        paymentTypeTotal[adminUser.username] = 0
+    #init the payment total by payment type
         
     for transaction in transactionList :
         payment = createPayment(transaction = transaction)
@@ -531,6 +538,9 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             paymentTypeTotal['P00002'] = paymentTypeTotal['P00002'] + transaction.productamount
             
         paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
+        
+        if transaction.paymentType == '01' and transaction.username <> '' :
+            paymentTypeTotal[transaction.username] = paymentTypeTotal[transaction.username] + transaction.amount
     
     summarydate = ''
     if querydate != '' :
@@ -580,6 +590,17 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.amount = paymentTypeTotal['P00004']
         payment.paymentdate = summarydate
         paymentList.append(payment)
+        
+        adminUserList = adminUserList.exclude(username = 'wzy')
+        for adminUser in adminUserList :
+            payment = Payment()
+            message = adminUser.username
+            payment.id = ''
+            payment.servicename = message
+            payment.amount = paymentTypeTotal[adminUser.username]
+            payment.paymentdate = summarydate
+            paymentList.append(payment)
+            
     
     return paymentList
 
