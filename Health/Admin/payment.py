@@ -655,9 +655,9 @@ def goAccounting(request):
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
-    yearList = []
     yearStart = getToday().strftime('%Y')
-    for i in range(0, 3) :
+    yearList = [yearStart]
+    for i in range(1, 3) :
         yearList.append(int(yearStart) - i)
     outDic['yearList'] = yearList
     
