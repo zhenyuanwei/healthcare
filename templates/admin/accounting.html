@@ -2,22 +2,48 @@
 {% block title %}产品登记{% endblock %}
 {% block content %}
 <p>
+	<div>
+	<form action="../goaccounting/" method="post">
+	   	<div class="ui-field-contain">
+	   	<label for="queryyear">年份 : </label>
+	   	<select name="queryyear" id="queryyear" data-mini="true" data-inline="true">
+		    {% for optionyear in yearList %}
+				<option value="{{ optionyear }}" {% if optionyear == year %} selected="selected" {% endif %}>{{ optionyear }}</option>
+			{% endfor %}
+		</select>
+		</div>
+		<div class="ui-field-contain">
+	   	<label for="querymonth">月份 : </label>
+	   	<select name="querymonth" id="querymonth" data-mini="true" data-inline="true">
+	   	{% for optionmonth in monthList %}
+	   		<option value="{{ optionmonth }}" {% if optionmonth == month %} selected="selected" {% endif %}>{{ optionmonth }}</option>
+		{% endfor %}
+		</select>
+	   	</div>
+	   	<div class="ui-field-contain">
+	   	<label for="button"></label>
+		<input class="ui-btn ui-btn-inline" type="submit" value="查询" data-mini="true" data-inline="true">
+	   	</div>
+    </form>
+    <hr>
+    </div>
+    
     <div>
 	    <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
 			<thead>
 				<tr>
 					<th>医生姓名</th>
-					<th>服务项目{{ month }}月{{ day }}日总金额</th>
-					<th>产品项目{{ month }}月{{ day }}日总金额</th>
-					<th>服务项目{{ month }}月总金额</th>
-					<th>产品项目{{ month }}月总金额</th>
+					<!-- <th>服务项目{{ month }}月{{ day }}日总金额</th> -->
+					<!-- <th>产品项目{{ month }}月{{ day }}日总金额</th> -->
+					<th>服务项目{{ year }}年{{ month }}月总金额</th>
+					<th>产品项目{{ year }}年{{ month }}月总金额</th>
 				</tr>
 			</thead>
     	{% for payment in doctorPaymentList %}
 	    	<tr>
 				<td>{{ payment.paymenttypename }}</td>
-				<td>{{ payment.dayserviceamount }}</td>
-				<td>{{ payment.dayproductamount }}</td>
+				<!-- <td>{{ payment.dayserviceamount }}</td> -->
+				<!-- <td>{{ payment.dayproductamount }}</td> -->
 				<td>{{ payment.monthserviceamount }}</td>
 				<td>{{ payment.monthproductamount }}</td>
 			</tr>

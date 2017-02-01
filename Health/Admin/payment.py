@@ -650,19 +650,38 @@ def searchPaymentSummaryList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+@csrf_exempt
 def goAccounting(request):
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
+    
+    yearList = []
+    yearStart = getToday().strftime('%Y')
+    for i in range(0, 3) :
+        yearList.append(int(yearStart) - i)
+    outDic['yearList'] = yearList
+    
+    monthList = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    outDic['monthList'] = monthList
+    currentMonth = getToday().strftime('%m')
+    outDic['currentMonth'] = currentMonth
+    
+    try :
+        year = request.POST['queryyear']
+        month = request.POST['querymonth']
+        #day = '01'
+    except :
+        today = getToday()
+        year = datetime.strftime(today, '%Y')
+        month = datetime.strftime(today, '%m')
+        #day = datetime.strftime(today, '%d')
     
     #today = datetime.now() + timedelta(hours=timeBJ)
     doctorMonthProduct = {}
     doctorMonthService = {}
     doctorDayProduct = {}
     doctorDayService = {}
-    today = getToday()
-    year = datetime.strftime(today, '%Y')
-    month = datetime.strftime(today, '%m')
-    day = datetime.strftime(today, '%d')
+    
     
     
     doctorList = DoctorInfo.objects.all()
@@ -678,18 +697,18 @@ def goAccounting(request):
             doctorMonthService[payment.doctorId] = doctorMonthService[payment.doctorId] + payment.serviceamount * payment.discount
             doctorMonthProduct[payment.doctorId] = doctorMonthProduct[payment.doctorId] + payment.productamount
             
-    paymentList = getPaymentList(querydate=today.strftime('%Y-%m-%d'), isSummary=False)    
+    '''paymentList = getPaymentList(querydate=today.strftime('%Y-%m-%d'), isSummary=False)    
     for payment in paymentList :
         if payment.doctorId != '' :
             doctorDayService[payment.doctorId] = doctorDayService[payment.doctorId] + payment.serviceamount * payment.discount
-            doctorDayProduct[payment.doctorId] = doctorDayProduct[payment.doctorId] + payment.productamount
+            doctorDayProduct[payment.doctorId] = doctorDayProduct[payment.doctorId] + payment.productamount'''
 
     doctorPaymentList = []
     for doctor in doctorList :
         payment = Payment()
         payment.paymenttypename = doctor.doctorname
-        payment.dayserviceamount = doctorDayService[doctor.id]
-        payment.dayproductamount = doctorDayProduct[doctor.id]
+        '''payment.dayserviceamount = doctorDayService[doctor.id]
+        payment.dayproductamount = doctorDayProduct[doctor.id]'''
         payment.monthserviceamount = doctorMonthService[doctor.id]
         payment.monthproductamount = doctorMonthProduct[doctor.id]
         
@@ -697,8 +716,9 @@ def goAccounting(request):
     
         
     outDic['doctorPaymentList'] = doctorPaymentList
-    outDic['day'] = day
-    outDic['month'] = month  
+    #outDic['day'] = day
+    outDic['month'] = month 
+    outDic['year'] = year 
     usedTemplate = get_template('admin/accounting.html')
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
