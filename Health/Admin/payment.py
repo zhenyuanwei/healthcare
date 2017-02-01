@@ -452,7 +452,7 @@ def goPaymentList(request):
     #query form show
     dayList = []
     tempday = getToday()
-    for i in range(0, 8) :
+    for i in range(0, 29) :
         dayList.append((tempday + timedelta(days=-i)).strftime('%Y-%m-%d'))
     outDic['dayList'] = dayList
     doctrList = DoctorInfo.objects.all()
