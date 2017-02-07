@@ -341,7 +341,8 @@ def goMembershipDetail(request):
     outDic['hightlight'] = '4'
     
     temId = request.GET['id']
-    membership = Membership.objects.get(id = temId, deleteFlag = '0')
+    #membership = Membership.objects.get(id = temId, deleteFlag = '0')
+    membership = Membership.objects.get(id = temId)
     serviceRate = ServiceRate.objects.get(id = membership.discounttype)
     membership.ratename = serviceRate.ratename
     

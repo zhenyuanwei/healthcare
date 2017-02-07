@@ -42,6 +42,7 @@
 					<th>上午折扣</th>
 					<th>下午折扣</th>
 					<th>账户余额</th>
+					<th>会员信息</th>
 				</tr>
 			</thead>
 			{% for membership in newMembershipList %}
@@ -54,6 +55,7 @@
 					<td>{{ membership.discountrate2 }}</td>
 					<td>{{ membership.discountrate }}</td>
 					<td>{{ membership.amount }}</td>
+					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
 				</tr>
 			{% endfor %}
 		</table>
@@ -75,6 +77,7 @@
 					<th>上午折扣</th>
 					<th>下午折扣</th>
 					<th>账户余额</th>
+					<th>会员信息</th>
 				</tr>
 			</thead>
 			{% for membership in endMembershipList %}
@@ -87,6 +90,7 @@
 					<td>{{ membership.discountrate2 }}</td>
 					<td>{{ membership.discountrate }}</td>
 					<td>{{ membership.amount }}</td>
+					<td><a href="../membershipdetail/?id={{ membership.id }}">会员信息</a></td>
 				</tr>
 			{% endfor %}
 		</table>
