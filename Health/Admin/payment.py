@@ -423,6 +423,35 @@ def goUnpayedList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
+def goUnpayedCopy(request):
+    #unpayed copy start 20170217
+    paymenttype = '00'
+    try :
+        transactionId = request.GET['transactionId']
+        transaction = Transaction.objects.get(id = transactionId)
+        try :
+            newTransaction = Transaction()
+            newTransaction.membershipId = transaction.membershipId
+            newTransaction.bookingId = transaction.bookingId
+            newTransaction.doctorId = transaction.doctorId
+            newTransaction.servicetypeId = transaction.servicetypeId
+            newTransaction.amount = transaction.amount
+            newTransaction.productamount = transaction.productamount
+            newTransaction.serviceamount = transaction.serviceamount
+            newTransaction.productIds = transaction.productIds
+            newTransaction.discount = transaction.discount
+            newTransaction.paymentType = paymenttype
+            newTransaction.successFlag = '0'
+            newTransaction.transactionDate = getToday()
+            newTransaction.save()
+        except :
+            print 'copy failt transactionId: ' + transactionId
+    except :
+        print 'there is no transaction record transactionId :' + transactionId
+    #unpayed copy end 20170217
+    
+    return HttpResponseRedirect("../gounpayedlist/")
+
 def doDeleteUnpayed(request):
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'

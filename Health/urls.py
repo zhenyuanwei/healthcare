@@ -107,6 +107,7 @@ urlpatterns = [
     url(r'^admin/doprepayment/$', payment.doPrePayment),
     url(r'^admin/gopaymenttypeselect/$', payment.goPaymentTypeSelect),
     url(r'^admin/gounpayedlist/$', payment.goUnpayedList),
+    url(r'^admin/gounpayedcopy/$', payment.goUnpayedCopy),
     url(r'^admin/dodeleteunpayed/$', payment.doDeleteUnpayed),
     url(r'^admin/dopaymenttypeselect/$', payment.doPaymentTypeSelect),
     url(r'^admin/dopayment/$', payment.doPayment),
