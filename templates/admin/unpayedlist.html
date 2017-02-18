@@ -21,9 +21,7 @@
 					<th>日期</th>
 					<th>会员余额</th>
 					<th>会员充值</th>
-					{% if role == '9' %}
 					<th>复制</th>
-					{% endif %}
 					<th>支付</th>
 					<th>删除</th>
 				</tr>
@@ -48,9 +46,7 @@
 					<a href = "../membershipupdateamount/?id={{ payment.membershiId }}&redirectUrl=gounpayedlist">充值</a>
 					{% endif %}
 					</td>
-					{% if role == '9' %}
 					<td><a href="../gounpayedcopy/?transactionId={{ payment.id }}">复制</a></td>
-					{% endif %}
 					<td><a href="../gopaymenttypeselect/?transactionId={{ payment.id }}">支付</a></td>
 					<td><a href="../dodeleteunpayed/?transactionId={{ payment.id }}">删除</a></td>
 				</tr>
