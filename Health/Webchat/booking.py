@@ -121,13 +121,13 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         
         selectedService = ServiceType.objects.get(id=selectedServiceId)
         
-        # delete how many bookingscale
-        backCount = int((selectedService.serviceperiod -1) / bookingscale)
-        
         #check the service provide by the selcted doctor 20170311
         if selectedService not in serviceTypeList :
-            backCount = 0
+            selectedService = serviceTypeList[0]
         #check the service provide by the selcted doctor 20170311
+        
+        # delete how many bookingscale
+        backCount = int((selectedService.serviceperiod -1) / bookingscale)
         
         dayList = getDaysList()
         if queryDate == '' :
