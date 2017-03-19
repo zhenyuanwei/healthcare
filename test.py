@@ -5,3 +5,5 @@ Created on Jul 16, 2016
 '''
 from mysql.connector import MySQLConnection
 MySQLConnection.connect()
+
+print
