@@ -6,6 +6,7 @@ Created on Aug 6, 2016
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.http import HttpResponseRedirect
+from django.db import transaction as dbTransaction
 from HealthModel.models import DoctorInfo, Product, PaymentType, BookingInfo,\
     AdminUser
 from HealthModel.models import ServiceType
@@ -275,13 +276,16 @@ def doPayment(request):
                     prodctAmount = prodctAmount + transaction.productamount
                     amount = amount + transaction.amount
         
-        #check the member card amount        
+        #check the member card amount  
+        membership = None  
+        lastamount = 0
+        membershipAmount = 0    
         if paymentType == '02' :
             membership = Membership.objects.get(id = membershipId, deleteFlag = '0')
             lastamount = membership.amount
             membership.lastamount = lastamount
             membershipAmount = lastamount - amount
-            if membershipAmount >= 0 :
+            '''if membershipAmount >= 0 :
                 membership.amount = membershipAmount    
                 membership.save()
 
@@ -290,33 +294,43 @@ def doPayment(request):
                 
             else :
                 isSave = False
+                outDic['messages'] = 'ERROR' '''
+            if membershipAmount < 0 :
+                isSave = False
                 outDic['messages'] = 'ERROR'
         
         #do payment        
         if isSave :
-            for transactionId in transactionIds :
-                if transactionId != '' :
-                    transaction = Transaction.objects.get(id = transactionId)
-                    successFlag = transaction.successFlag
-                    if successFlag != 1 :
-                        username = outDic['username']
-                        transaction.paymentType = paymentType
-                        transaction.successFlag = '1'
-                        transaction.username = username
-                        transaction.save()  
+            with dbTransaction.atomic() :
+                if paymentType == '02' :
+                    membership.amount = membershipAmount    
+                    membership.save()
+                    if membership.webchatid != '' :
+                        sendPaymentLogToWebchat(membership = membership, amount = amount)
                     
-                    payment = createPayment(transaction = transaction)
-                    paymentList.append(payment)
-                    
-                    #complete the booking
-                    bookingId = transaction.bookingId
-                    if bookingId != '' :
-                        try :
-                            bookingInfo = BookingInfo.objects.get(id = bookingId)
-                            bookingInfo.status = '9'
-                            bookingInfo.save()
-                        except :
-                            print '--------the booking info is not exist. Id = ' + bookingId
+                for transactionId in transactionIds :
+                    if transactionId != '' :
+                        transaction = Transaction.objects.get(id = transactionId)
+                        successFlag = transaction.successFlag
+                        if successFlag != 1 :
+                            username = outDic['username']
+                            transaction.paymentType = paymentType
+                            transaction.successFlag = '1'
+                            transaction.username = username
+                            transaction.save()  
+                        
+                        payment = createPayment(transaction = transaction)
+                        paymentList.append(payment)
+                        
+                        #complete the booking
+                        bookingId = transaction.bookingId
+                        if bookingId != '' :
+                            try :
+                                bookingInfo = BookingInfo.objects.get(id = bookingId)
+                                bookingInfo.status = '9'
+                                bookingInfo.save()
+                            except :
+                                print '--------the booking info is not exist. Id = ' + bookingId
                             
         outDic['paymentList'] = paymentList
         outDic['serviceAmount'] = serviceAmount
@@ -772,22 +786,23 @@ def cancelPayment(request):
     try :
         transaction = Transaction.objects.get(id = id)
         successFlag = transaction.successFlag
-        if successFlag == '1' :
-            transaction.successFlag = '8'
-            transaction.save()
-            
-            membershipId = transaction.membershipId
-            if membershipId != '' :
-                amount = transaction.amount
-                membership = Membership.objects.get(id = membershipId, deleteFlag = '0')
-                membership.amount = membership.amount + amount
-                membership.save()
-            
-            bookingId = transaction.bookingId
-            if bookingId != '' :
-                bookingInfo = BookingInfo.objects.get(id = bookingId)
-                bookingInfo.status = '1'
-                bookingInfo.save()
+        with dbTransaction.atomic() :
+            if successFlag == '1' :
+                transaction.successFlag = '8'
+                transaction.save()
+                
+                membershipId = transaction.membershipId
+                if membershipId != '' :
+                    amount = transaction.amount
+                    membership = Membership.objects.get(id = membershipId, deleteFlag = '0')
+                    membership.amount = membership.amount + amount
+                    membership.save()
+                
+                bookingId = transaction.bookingId
+                if bookingId != '' :
+                    bookingInfo = BookingInfo.objects.get(id = bookingId)
+                    bookingInfo.status = '1'
+                    bookingInfo.save()
          
     except :
         print '-------------there is no transaction id = ' + id

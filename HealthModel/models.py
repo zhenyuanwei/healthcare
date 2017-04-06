@@ -26,8 +26,8 @@ class Membership(models.Model):
     discounttype = models.CharField(max_length = 20)
     discountrate = models.FloatField()
     discountrate2 = models.FloatField()
-    webchatid = models.CharField(max_length = 50)
-    webchatid2 = models.CharField(max_length = 50, default = '')
+    webchatid = models.CharField(max_length = 128)
+    webchatid2 = models.CharField(max_length = 128, default = '')
     startDate = models.CharField(max_length=10, default = '0000/01/01')
     endDate = models.CharField(max_length=10, default = '9999/12/31')
     deleteFlag = models.CharField(max_length=10, default = '0') # 0 effective, 1 un-effective
@@ -47,7 +47,7 @@ class DoctorInfo(models.Model):
     phonenumber = models.CharField(max_length = 11)
     comments = models.CharField(max_length = 400)
     service = models.CharField(max_length = 200)
-    webchatid = models.CharField(max_length = 50)
+    webchatid = models.CharField(max_length = 128)
     
 class ServiceType(models.Model):
     id = models.AutoField(primary_key=True)
@@ -76,7 +76,7 @@ class BookingInfo(models.Model):
     bookeddoctor = models.CharField(max_length = 20)
     bookeditem = models.CharField(max_length = 50)
     bookedtime = models.CharField(max_length = 20)
-    webchatid = models.CharField(max_length = 50)
+    webchatid = models.CharField(max_length = 128)
     status = models.CharField(max_length = 1) # 0 cancel, 1 new booking, 9 completed
     
 class Transaction(models.Model):
