@@ -320,7 +320,8 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
 
         #print(vacationTimeList)
         for vacationtime in vacationTimeList:
-            timeList.remove(vacationtime)
+            if vacationtime in timeList :
+                timeList.remove(vacationtime)
 
             # check doctor vacation to avoid booking in vacation period
     
