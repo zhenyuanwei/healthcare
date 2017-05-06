@@ -313,7 +313,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
         for vacation in vacationList:
             vacationStartTime = changeHourToNum(vacation.starttime)
             vacationEndTime = changeHourToNum(vacation.endtime)
-            i = 0
+            i = 0 - backCount # delete the booking period befor vacation start in order to finish the service
             while (i < (vacationEndTime - vacationStartTime) * multiscale):
                 vacationTimeList.append(getTime(i, vacationStartTime))
                 i = i + 1
