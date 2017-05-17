@@ -288,6 +288,12 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     
                 # bug fixing for booking when the service started 2016/11/26 end
                 
+                #bug fixing for booking when the service endtime in bookinglist 2017/05/18
+                servicebookendtime = getTime(value=i + backCount - 1, now=now)
+                if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
+                        addflag = False
+                #bug fixing for booking when the service endtime in bookinglist 2017/05/18
+                
                 if bookedtime == time :
                     addflag = False
                     
