@@ -278,7 +278,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     bookedEndTime = '0' + str(bookedEndHour) + ':'
                 else :
                     bookedEndTime = str(bookedEndHour) + ':'
-                if bookedEndMinute == 0 :
+                if bookedEndMinute < 10 :
                     bookedEndTime = bookedEndTime  + '0' + str(bookedEndMinute)
                 else :
                     bookedEndTime = bookedEndTime  + str(bookedEndMinute)
@@ -290,7 +290,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 servicebookendtime = getTime(value=i + backCount - 1, now=now)
-                if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
+                if servicebookendtime < bookedEndTime :
                         addflag = False
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 
