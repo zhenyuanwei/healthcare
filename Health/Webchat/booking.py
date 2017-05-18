@@ -290,7 +290,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 servicebookendtime = getTime(value=i + backCount, now=now)
-                if servicebookendtime < bookedEndTime :
+                if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
                         addflag = False
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 
