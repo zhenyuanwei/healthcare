@@ -283,7 +283,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 else :
                     bookedEndTime = bookedEndTime  + str(bookedEndMinute)
                 
-                if time > bookedtime and time < bookedEndTime :
+                if time >= bookedtime and time <= bookedEndTime :
                         addflag = False
                     
                 # bug fixing for booking when the service started 2016/11/26 end
@@ -296,7 +296,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 
                 if bookedtime == time :
                     addflag = False
-                    
+                    '''
                     # delete the time scale for enough time to do selected service before the next booking
                     count = len(timeList)
                     if count < backCount :
@@ -307,8 +307,8 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     if serviceperiod > 0 :    
                         breakcount = int((serviceperiod - 1) / bookingscale)
                     break
-            #check booking for avoiding double booking
-            
+                    #check booking for avoiding double booking
+                    '''
             if addflag :
                 timeList.append(time)
 
