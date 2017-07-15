@@ -127,23 +127,23 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         #check the service provide by the selcted doctor 20170311
         
         # delete how many bookingscale
-        backCount = int((selectedService.serviceperiod - 1) / bookingscale)
-        
+        backCount = int((selectedService.serviceperiod -1) / bookingscale)
+
         dayList = getDaysList()
         if queryDate == '' :
             queryDate = dayList[0]
         timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount)
-    
+
         try :
             tmpdoctor = DoctorInfo.objects.get(id = doctorId)
             doctorintroduce = tmpdoctor.comments
         except :
             doctorintroduce = ''
-        
+
         vipno = ''
         vipname = ''
         phonenumber = ''
-        
+
         membership = getMembership(openId=openId)
         vipno = membership.vipno
         vipname = membership.vipname
@@ -152,9 +152,9 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         vipno = ''
         vipname = ''
         phonenumber = ''
-    
-    listDic = {'doctorInfoList' : doctorInfoList, 
-               'serviceTypeList' : serviceTypeList, 
+
+    listDic = {'doctorInfoList' : doctorInfoList,
+               'serviceTypeList' : serviceTypeList,
                'dayList' : dayList,
                'vipno' : vipno,
                'vipname' : vipname,
@@ -169,19 +169,19 @@ def getDaysList(length = bookingDays):
     #today = datetime.datetime.now()
     #now = int(today.strftime('%H')) + timeBJ + 1
     today = getToday()
-    
+
     #update for booking in now 2016/1126 start
     #now = int(today.strftime('%H')) + 1
     now = int(today.strftime('%H'))
     #update for booking in now 2016/1126 end
-    
+
     if now >= endtime :
         for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
     else :
         for i in range(0, length):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
-        
+
     return dayList
 
 def getTimeList(doctorId = '', queryDate = '', backCount = 0):
@@ -193,20 +193,20 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
     #now = int(getToday().strftime('%H')) + 1
     now = int(getToday().strftime('%H'))
     now_minutes = getToday().strftime('%M')
-    #update for booking in now 2016/1126 end 
-    
+    #update for booking in now 2016/1126 end
+
     if now < starttime :
         now = starttime
         #update for booking in now 2016/1126 start
         now_minutes = '00'
-        #update for booking in now 2016/1126 end 
-        
+        #update for booking in now 2016/1126 end
+
     if now >= endtime :
         now = starttime
         #update for booking in now 2016/1126 start
         now_minutes = '00'
         #update for booking in now 2016/1126 end
-    
+
     #update for booking in now 2016/1126 start
     now_time = ''
     if now < 10 :
@@ -214,32 +214,32 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
     else :
         now_time = str(now) + ':' + now_minutes
     #update for booking in now 2016/1126 end
-        
+
     if doctorId == '' :
         for i in range(now, endtime):
             #update for booking in now 2016/1126 start
             #timeList.append(getTime(value=i))
             if now_time <= getTime(value=i) :
                 timeList.append(getTime(value=i))
-            #update for booking in now 2016/1126 end 
-            
+            #update for booking in now 2016/1126 end
+
     elif queryDate <> '' :
         if today < queryDate :
             now = starttime
             #update for booking in now 2016/1126 start
             now_minutes = '00'
             #update for booking in now 2016/1126 end
-        #update for booking in now 2016/1126 start   
+        #update for booking in now 2016/1126 start
         if now < 10 :
             now_time = '0' + str(now) + ':' + now_minutes
         else :
             now_time = str(now) + ':' + now_minutes
-        #update for booking in now 2016/1126 end 
-            
+        #update for booking in now 2016/1126 end
+
         bookingList = BookingInfo.objects.filter(bookeddoctor = doctorId)
         bookingList = bookingList.filter(status = '1')
         bookingList = bookingList.filter(bookedtime__startswith = queryDate)
-        
+
         vacationList = Vacation.objects.filter(doctorId = doctorId)
         vacationList = vacationList.filter(flag = '1')
         vacationList = vacationList.filter(vacationDate = queryDate)
@@ -252,7 +252,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 i = i + 1
                 continue
             #update for booking in now 2016/1126 end
-            
+
             addflag = True
             breakcount = 0
             #check booking for avoiding double booking
@@ -265,10 +265,10 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     serviceperiod = service.serviceperiod
                 except :
                     serviceperiod = 0
-                
-                # bug fixing for booking when the service started 2016/11/26 start   
+
+                # bug fixing for booking when the service started 2016/11/26 start
                 bookedHour = int(bookedtime.split(':')[0])
-                bookedMinutes = int(bookedtime.split(':')[1]) 
+                bookedMinutes = int(bookedtime.split(':')[1])
                 bookedEndMinute = bookedMinutes + serviceperiod
                 bookedEndHour = bookedHour
                 if bookedEndMinute > 59 :
@@ -282,7 +282,7 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     bookedEndTime = bookedEndTime  + '0' + str(bookedEndMinute)
                 else :
                     bookedEndTime = bookedEndTime  + str(bookedEndMinute)
-                
+
                 if time > bookedtime and time < bookedEndTime :
                         addflag = False
                     
@@ -296,19 +296,20 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 
                 if bookedtime == time :
                     addflag = False
-                    '''
+
                     # delete the time scale for enough time to do selected service before the next booking
                     count = len(timeList)
-                    if count < backCount :
-                        backCount = count
-                    for j in range(0, backCount) :
+                    tmpBackCount = backCount
+                    if count < tmpBackCount :
+                        tmpBackCount = count
+                    for j in range(0, tmpBackCount) :
                         del timeList[count - j -1]
                     # delete the time scale for enough time to do selected service before the next booking
                     if serviceperiod > 0 :    
                         breakcount = int((serviceperiod - 1) / bookingscale)
                     break
                     #check booking for avoiding double booking
-                    '''
+
             if addflag :
                 timeList.append(time)
 
