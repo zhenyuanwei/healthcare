@@ -22,6 +22,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Health.Admin.common import getToday
 from Health.Admin.common import getMessage
 from Health.Admin.common import getMembership2
+import math
 
 "@csrf_exempt"
 timeBJ = 8
@@ -127,7 +128,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         #check the service provide by the selcted doctor 20170311
         
         # delete how many bookingscale
-        backCount = int((selectedService.serviceperiod -1) / bookingscale)
+        backCount = math.ceil((selectedService.serviceperiod -1) / bookingscale)
 
         dayList = getDaysList()
         if queryDate == '' :
