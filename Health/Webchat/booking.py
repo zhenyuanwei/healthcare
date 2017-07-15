@@ -128,7 +128,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         #check the service provide by the selcted doctor 20170311
         
         # delete how many bookingscale
-        backCount = math.ceil((selectedService.serviceperiod -1) / bookingscale)
+        backCount = int(math.ceil((selectedService.serviceperiod -1) / bookingscale))
 
         dayList = getDaysList()
         if queryDate == '' :
