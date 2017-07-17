@@ -57,11 +57,11 @@ def getMembership2(vipno = '', phonenumber = ''):
             membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
         else :
             membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
-        return membership
+
     except:
-        print('error')
+        membership = None
     finally:
-        return None
+        return membership
 
 def getDiscount(phonenumber):
     discount = 1
