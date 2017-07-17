@@ -52,6 +52,7 @@ def getMembership(openId):
     return membership
 
 def getMembership2(vipno = '', phonenumber = ''):
+    membership = None
     try:
         if vipno == '' :
             membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
