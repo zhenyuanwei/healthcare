@@ -55,9 +55,7 @@ def getMembership2(vipno = '', phonenumber = ''):
     membership = None
     try:
         if vipno == '' :
-            #membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
-            membershipList = Membership.objects.all().filter(deleteFlag='0')
-            membership = membershipList.get()
+            membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
         elif phonenumber == '' :
             membership = Membership.objects.get(vipno = vipno, deleteFlag = '0')
 

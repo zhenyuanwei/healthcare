@@ -57,7 +57,7 @@ def getBookingList():
             try :
                 service = ServiceType.objects.get(id=bookinginfo.bookeditem)
                 tmpStr = service.servicename
-                price = service.servicerate
+                price = float(service.servicerate)
             except :
                 print '-------there is no service type' + bookinginfo.bookeditem + '----------'
             finally:
