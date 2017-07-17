@@ -66,28 +66,26 @@ def getBookingList():
             bookinginfo.bookeditem = ''
 
         phonenumber = bookinginfo.phonenumber
-        #phonenumber = '13019489793'
-        if phonenumber != '':
-            try :
-                membership = getMembership2(phonenumber = phonenumber)
-
-                amount = membership.amount
-                discount = getDiscount(phonenumber = phonenumber)
-                membershipPrice = price * float(discount)
-                bookinginfo.membershipAmount = amount
-                bookinginfo.isEnoughtAmount = 'Yes'
-                bookinginfo.membershipId = membership.id
-                if amount < membershipPrice :
-                    bookinginfo.isEnoughtAmount = 'No'
-
-            except :
-                #return phonenumber
-                print 'This is not a booking for membership : phonenumber = ' + phonenumber
-
-            finally :
-                bookinginfo.membershipAmount = '-'
+        phonenumber = '15242655399'
+        try :
+            membership = getMembership2(phonenumber = phonenumber)
+            amount = membership.amount
+            discount = getDiscount(phonenumber = phonenumber)
+            membershipPrice = price * float(discount)
+            bookinginfo.membershipAmount = amount
+            bookinginfo.isEnoughtAmount = 'Yes'
+            bookinginfo.membershipId = membership.id
+            if amount < membershipPrice :
                 bookinginfo.isEnoughtAmount = 'No'
-                bookinginfo.membershipId = '-'
+
+        except :
+            #return phonenumber
+            print 'This is not a booking for membership : phonenumber = ' + phonenumber
+
+        finally :
+            bookinginfo.membershipAmount = '-'
+            bookinginfo.isEnoughtAmount = 'No'
+            bookinginfo.membershipId = '-'
 
 
         bookingList.append(bookinginfo)
