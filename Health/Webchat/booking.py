@@ -50,7 +50,7 @@ def getBookingList():
                 bookinginfo.bookeddoctor = tmpStr
         else :
             bookinginfo.bookeddoctor = ''
-        '''
+
         price = 0
         if bookinginfo.bookeditem.strip() != '0' :
             tmpStr = ''
@@ -64,7 +64,7 @@ def getBookingList():
                 bookinginfo.bookeditem = tmpStr
         else :
             bookinginfo.bookeditem = ''
-            
+        '''
         phonenumber = bookinginfo.phonenumber
         try :
             membership = getMembership2(phonenumber = phonenumber)
