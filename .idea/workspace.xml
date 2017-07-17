@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Health/Webchat/booking.py" afterPath="$PROJECT_DIR$/Health/Webchat/booking.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Health/Admin/common.py" afterPath="$PROJECT_DIR$/Health/Admin/common.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,21 +24,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="booking.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="booking.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="85" column="49" lean-forward="false" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+            <state relative-caret-position="420">
+              <caret line="80" column="32" lean-forward="false" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Health/Admin/common.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="61" column="11" lean-forward="true" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
+            <state relative-caret-position="292">
+              <caret line="59" column="61" lean-forward="false" selection-start-line="59" selection-start-column="61" selection-end-line="59" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -117,8 +117,8 @@
         <option value="$PROJECT_DIR$/Health/settings.py" />
         <option value="$PROJECT_DIR$/templates/admin/admintest.html" />
         <option value="$PROJECT_DIR$/Health/Admin/loginAction.py" />
-        <option value="$PROJECT_DIR$/Health/Admin/common.py" />
         <option value="$PROJECT_DIR$/Health/Webchat/booking.py" />
+        <option value="$PROJECT_DIR$/Health/Admin/common.py" />
       </list>
     </option>
   </component>
@@ -705,7 +705,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500300496858</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="fixing bug for admin login test">
+      <created>1500300605999</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1500300605999</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1003,18 +1010,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Admin/common.py">
+    <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="61" column="11" lean-forward="true" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
+        <state relative-caret-position="420">
+          <caret line="80" column="32" lean-forward="false" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
+    <entry file="file://$PROJECT_DIR$/Health/Admin/common.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="85" column="49" lean-forward="false" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+        <state relative-caret-position="292">
+          <caret line="59" column="61" lean-forward="false" selection-start-line="59" selection-start-column="61" selection-end-line="59" selection-end-column="61" />
           <folding />
         </state>
       </provider>
