@@ -52,11 +52,16 @@ def getMembership(openId):
     return membership
 
 def getMembership2(vipno = '', phonenumber = ''):
-    if vipno == '' :
-        membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
-    else :
-        membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
-    return membership
+    try:
+        if vipno == '' :
+            membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
+        else :
+            membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
+        return membership
+    except:
+        print('error')
+    finally:
+        return None
 
 def getDiscount(phonenumber):
     discount = 1
