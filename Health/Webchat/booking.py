@@ -83,9 +83,9 @@ def getBookingList():
             print 'This is not a booking for membership : phonenumber = ' + phonenumber
 
         finally :
-            bookinginfo.membershipAmount = '-'
-            bookinginfo.isEnoughtAmount = 'No'
-            bookinginfo.membershipId = '-'
+            bookinginfo.membershipAmount = ''
+            bookinginfo.isEnoughtAmount = ''
+            bookinginfo.membershipId = ''
 
 
         bookingList.append(bookinginfo)
