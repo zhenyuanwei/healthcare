@@ -78,12 +78,10 @@ def getBookingList():
                 bookinginfo.membershipId = membership.id
                 if amount < membershipPrice :
                     bookinginfo.isEnoughtAmount = 'No'
-
             except :
-                #return phonenumber
+                return bookingList
                 print 'This is not a booking for membership : phonenumber = ' + bookinginfo.phonenumber.strip()
-
-            finally :
+            finally:
                 bookinginfo.membershipAmount = ''
                 bookinginfo.isEnoughtAmount = ''
                 bookinginfo.membershipId = ''
