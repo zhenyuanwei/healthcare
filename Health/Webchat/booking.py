@@ -40,7 +40,7 @@ def getBookingList():
     tmpList = tmpList.order_by('bookedtime')
     bookingList = []
     for bookinginfo in tmpList:
-        if bookinginfo.bookeddoctor.strip() != '0' :
+        '''if bookinginfo.bookeddoctor.strip() != '0' :
             tmpStr = ''
             try :
                 tmpStr = DoctorInfo.objects.get(id=bookinginfo.bookeddoctor).doctorname
@@ -81,7 +81,7 @@ def getBookingList():
             bookinginfo.isEnoughtAmount = ''
             bookinginfo.membershipId = ''
             print 'This is not a booking for membership : phonenumber = ' + phonenumber
-        
+        '''
         bookingList.append(bookinginfo)
     
     return bookingList
