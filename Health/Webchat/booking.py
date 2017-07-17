@@ -66,7 +66,7 @@ def getBookingList():
             bookinginfo.bookeditem = ''
 
         phonenumber = bookinginfo.phonenumber
-        phonenumber = '15242655399'
+        #phonenumber = '15242655399'
         try :
             membership = getMembership2(phonenumber = phonenumber)
             amount = membership.amount

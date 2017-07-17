@@ -53,7 +53,7 @@ def getMembership(openId):
 
 def getMembership2(vipno = '', phonenumber = ''):
     if vipno == '' :
-        membership = Membership.objects.get(phonenumber = phonenumber, deleteFlag = '0')
+        membership = Membership.objects.get(phonenumber = phonenumber)
     else :
         membership = Membership.objects.get(vipno = vipno, phonenumber = phonenumber, deleteFlag = '0')
     return membership
