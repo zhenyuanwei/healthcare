@@ -65,8 +65,8 @@ def getBookingList():
         else :
             bookinginfo.bookeditem = ''
 
-        #phonenumber = bookinginfo.phonenumber
-        phonenumber = '13019489793'
+        phonenumber = bookinginfo.phonenumber
+        #phonenumber = '13019489793'
         if phonenumber != '':
             try :
                 membership = getMembership2(phonenumber = phonenumber)
@@ -85,7 +85,6 @@ def getBookingList():
                 print 'This is not a booking for membership : phonenumber = ' + phonenumber
 
             finally :
-
                 bookinginfo.membershipAmount = '-'
                 bookinginfo.isEnoughtAmount = ''
                 bookinginfo.membershipId = '-'

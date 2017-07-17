@@ -28,7 +28,7 @@
         <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
-              <caret line="68" column="34" lean-forward="false" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
+              <caret line="68" column="35" lean-forward="false" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -562,7 +562,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500296986699</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixing bug for admin login test">
+      <created>1500297141438</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1500297141438</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -855,7 +862,7 @@
     <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="68" column="34" lean-forward="false" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
+          <caret line="68" column="35" lean-forward="false" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="35" />
           <folding />
         </state>
       </provider>
