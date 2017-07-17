@@ -66,9 +66,10 @@ def getBookingList():
             bookinginfo.bookeditem = ''
 
         #phonenumber = bookinginfo.phonenumber
+        '''
         if bookinginfo.phonenumber.strip() != '':
             try :
-                bookingList(bookinginfo.id)
+                #bookingList(bookinginfo.id)
                 membership = getMembership2(phonenumber = bookinginfo.phonenumber.strip())
                 amount = membership.amount
                 discount = getDiscount(phonenumber = bookinginfo.phonenumber.strip())
@@ -79,15 +80,15 @@ def getBookingList():
                 if amount < membershipPrice :
                     bookinginfo.isEnoughtAmount = 'No'
             except :
-                return bookingList
+                #return bookingList
                 print 'This is not a booking for membership : phonenumber = ' + bookinginfo.phonenumber.strip()
             finally:
                 bookinginfo.membershipAmount = ''
                 bookinginfo.isEnoughtAmount = ''
                 bookinginfo.membershipId = ''
+        '''
 
-
-        #bookingList.append(bookinginfo)
+        bookingList.append(bookinginfo)
     
     return bookingList
 

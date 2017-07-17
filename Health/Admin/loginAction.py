@@ -23,8 +23,8 @@ def login(request):
     return HttpResponse(html)
 
 def bookingList(request):
-    #usedTemplate = get_template('admin/bookinglist.html')
-    usedTemplate = get_template('admin/admintest.html')
+    usedTemplate = get_template('admin/bookinglist.html')
+    #usedTemplate = get_template('admin/admintest.html')
     bookingList = getBookingList()
     outDic = createResponseDic(request=request)
     outDic['bookingList'] = bookingList
