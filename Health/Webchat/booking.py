@@ -86,7 +86,7 @@ def getBookingList():
 
             finally :
                 bookinginfo.membershipAmount = '-'
-                bookinginfo.isEnoughtAmount = ''
+                bookinginfo.isEnoughtAmount = 'No'
                 bookinginfo.membershipId = '-'
 
 
