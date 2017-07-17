@@ -65,29 +65,30 @@ def getBookingList():
         else :
             bookinginfo.bookeditem = ''
 
-        phonenumber = bookinginfo.phonenumber
+        #phonenumber = bookinginfo.phonenumber
         #phonenumber = '15242655399'
-        webchatid = bookinginfo.webchatid
-        try :
-            #membership = getMembership2(phonenumber = phonenumber)
-            membership = getMembership(openId = webchatid)
-            amount = membership.amount
-            discount = getDiscount(phonenumber = phonenumber)
-            membershipPrice = price * float(discount)
-            bookinginfo.membershipAmount = amount
-            bookinginfo.isEnoughtAmount = 'Yes'
-            bookinginfo.membershipId = membership.id
-            if amount < membershipPrice :
-                bookinginfo.isEnoughtAmount = 'No'
+        #webchatid = bookinginfo.webchatid
+        if bookinginfo.phonenumber.strip() != '':
+            try :
+                membership = getMembership2(phonenumber = bookinginfo.phonenumber.strip())
+                #membership = getMembership(openId = webchatid)
+                amount = membership.amount
+                discount = getDiscount(phonenumber = bookinginfo.phonenumber.strip())
+                membershipPrice = price * float(discount)
+                bookinginfo.membershipAmount = amount
+                bookinginfo.isEnoughtAmount = 'Yes'
+                bookinginfo.membershipId = membership.id
+                if amount < membershipPrice :
+                    bookinginfo.isEnoughtAmount = 'No'
 
-        except :
-            #return phonenumber
-            print 'This is not a booking for membership : phonenumber = ' + phonenumber
+            except :
+                #return phonenumber
+                print 'This is not a booking for membership : phonenumber = ' + bookinginfo.phonenumber.strip()
 
-        finally :
-            bookinginfo.membershipAmount = ''
-            bookinginfo.isEnoughtAmount = ''
-            bookinginfo.membershipId = ''
+            finally :
+                bookinginfo.membershipAmount = ''
+                bookinginfo.isEnoughtAmount = ''
+                bookinginfo.membershipId = ''
 
 
         bookingList.append(bookinginfo)
