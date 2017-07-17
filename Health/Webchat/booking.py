@@ -67,8 +67,10 @@ def getBookingList():
 
         phonenumber = bookinginfo.phonenumber
         #phonenumber = '15242655399'
+        webchatid = bookinginfo.webchatid
         try :
-            membership = getMembership2(phonenumber = phonenumber)
+            #membership = getMembership2(phonenumber = phonenumber)
+            membership = getMembership(openId = webchatid)
             amount = membership.amount
             discount = getDiscount(phonenumber = phonenumber)
             membershipPrice = price * float(discount)
