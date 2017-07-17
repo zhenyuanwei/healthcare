@@ -66,12 +66,10 @@ def getBookingList():
             bookinginfo.bookeditem = ''
 
         #phonenumber = bookinginfo.phonenumber
-        #phonenumber = '15242655399'
-        #webchatid = bookinginfo.webchatid
         if bookinginfo.phonenumber.strip() != '':
             try :
+                bookingList(bookinginfo.id)
                 membership = getMembership2(phonenumber = bookinginfo.phonenumber.strip())
-                #membership = getMembership(openId = webchatid)
                 amount = membership.amount
                 discount = getDiscount(phonenumber = bookinginfo.phonenumber.strip())
                 membershipPrice = price * float(discount)
@@ -91,7 +89,7 @@ def getBookingList():
                 bookinginfo.membershipId = ''
 
 
-        bookingList.append(bookinginfo)
+        #bookingList.append(bookinginfo)
     
     return bookingList
 
