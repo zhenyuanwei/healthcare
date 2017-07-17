@@ -71,14 +71,19 @@ def getBookingList():
             try :
                 #bookingList(bookinginfo.id)
                 membership = getMembership2(phonenumber = bookinginfo.phonenumber.strip())
-                amount = membership.amount
-                discount = getDiscount(phonenumber=bookinginfo.phonenumber.strip())
-                membershipPrice = price * float(discount)
-                bookinginfo.membershipAmount = amount
-                bookinginfo.isEnoughtAmount = 'Yes'
-                bookinginfo.membershipId = membership.id
-                if amount < membershipPrice:
-                    bookinginfo.isEnoughtAmount = 'No'
+                if None != membership:
+                    amount = membership.amount
+                    discount = getDiscount(phonenumber=bookinginfo.phonenumber.strip())
+                    membershipPrice = price * float(discount)
+                    bookinginfo.membershipAmount = amount
+                    bookinginfo.isEnoughtAmount = 'Yes'
+                    bookinginfo.membershipId = membership.id
+                    if amount < membershipPrice:
+                        bookinginfo.isEnoughtAmount = 'No'
+                else:
+                    bookinginfo.membershipAmount = ''
+                    bookinginfo.isEnoughtAmount = ''
+                    bookinginfo.membershipId = ''
 
             except :
                 #return bookingList
