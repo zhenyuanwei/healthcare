@@ -399,7 +399,7 @@ def getServiceList(doctorservice = ''):
             except :
                 print '----------------------there is no service =' + serviceId
                 
-    return serviceTypeList
+    return sorted(serviceTypeList, key=lambda service:service.serviceperiod)
 
 def booking(request):
     name = request.GET['name']
