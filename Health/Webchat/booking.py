@@ -30,8 +30,8 @@ starttime = 7
 endtime = 22
 canceltime = 1
 #booking time scale
-#bookingscale = 15
-bookingscale = 10
+bookingscale = 15
+#bookingscale = 10
 multiscale = 60 / bookingscale
 bookingDays = int(getMessage(messageId = 'bookingDay'))
 
@@ -149,7 +149,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         #check the service provide by the selcted doctor 20170311
         
         # delete how many bookingscale
-        backCount = int(math.ceil((selectedService.serviceperiod -1) / bookingscale))
+        backCount = int(math.ceil(float(selectedService.serviceperiod) / float(bookingscale)))
 
         dayList = getDaysList()
         if queryDate == '' :
@@ -313,7 +313,12 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 servicebookendtime = getTime(value=i + backCount, now=now)
+
                 if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
+                    addflag = False
+                    break
+
+                if time < bookedtime and servicebookendtime > bookedEndTime :
                     addflag = False
                     break
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
@@ -322,19 +327,19 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                     addflag = False
 
                     # delete the time scale for enough time to do selected service before the next booking
-                    count = len(timeList)
+                    '''count = len(timeList)
                     tmpBackCount = backCount
                     if count < tmpBackCount :
                         tmpBackCount = count
                     for j in range(0, tmpBackCount) :
-                        del timeList[count - j -1]
+                        del timeList[count - j -1]'''
                     # delete the time scale for enough time to do selected service before the next booking
                     if serviceperiod > 0 :    
-                        breakcount = int((serviceperiod - 1) / bookingscale)
+                        breakcount = int((serviceperiod) / bookingscale)
 
                     break
                     #check booking for avoiding double booking
-
+            #print(time, bookedtime, bookedEndTime, servicebookendtime, addflag)
             if addflag :
                 timeList.append(time)
 
