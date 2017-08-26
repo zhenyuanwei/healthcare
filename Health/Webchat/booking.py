@@ -30,7 +30,8 @@ starttime = 7
 endtime = 22
 canceltime = 1
 #booking time scale
-bookingscale = 15
+#bookingscale = 15
+bookingscale = 10
 multiscale = 60 / bookingscale
 bookingDays = int(getMessage(messageId = 'bookingDay'))
 
