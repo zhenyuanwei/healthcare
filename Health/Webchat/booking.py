@@ -344,7 +344,6 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 timeList.append(time)
 
             i = i + 1 + breakcount
-            print(breakcount)
 
         # check doctor vacation to avoid booking in vacation period
         vacationTimeList = []
