@@ -335,15 +335,16 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                         del timeList[count - j -1]'''
                     # delete the time scale for enough time to do selected service before the next booking
                     if serviceperiod > 0 :    
-                        breakcount = int((serviceperiod) / bookingscale)
+                        breakcount = int((serviceperiod - 1) / bookingscale)
 
                     break
                     #check booking for avoiding double booking
-            #print(time, bookedtime, bookedEndTime, servicebookendtime, addflag)
+            print(time, bookedtime, bookedEndTime, servicebookendtime, addflag)
             if addflag :
                 timeList.append(time)
 
             i = i + 1 + breakcount
+            print(breakcount)
 
         # check doctor vacation to avoid booking in vacation period
         vacationTimeList = []
