@@ -30,7 +30,8 @@ starttime = 7
 endtime = 22
 canceltime = 1
 #booking time scale
-bookingscale = 15
+#bookingscale = 15
+bookingscale = 10
 multiscale = 60 / bookingscale
 bookingDays = int(getMessage(messageId = 'bookingDay'))
 
@@ -148,12 +149,12 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         #check the service provide by the selcted doctor 20170311
 
         # delete how many bookingscale
-        backCount = int(math.ceil((selectedService.serviceperiod -1) / bookingscale))
+        backCount = int(math.ceil(float(selectedService.serviceperiod) / float(bookingscale)) - 1)
 
         dayList = getDaysList()
         if queryDate == '' :
             queryDate = dayList[0]
-        timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount)
+        timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount, service_period=selectedService.serviceperiod)
 
         try :
             tmpdoctor = DoctorInfo.objects.get(id = doctorId)
@@ -205,7 +206,7 @@ def getDaysList(length = bookingDays):
 
     return dayList
 
-def getTimeList(doctorId = '', queryDate = '', backCount = 0):
+def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
     timeList = []
     #today = datetime.datetime.now().strftime('%Y/%m/%d')
     #now = int(datetime.datetime.now().strftime('%H')) + timeBJ + 1
@@ -311,11 +312,30 @@ def getTimeList(doctorId = '', queryDate = '', backCount = 0):
                 # bug fixing for booking when the service started 2016/11/26 end
 
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
-                servicebookendtime = getTime(value=i + backCount, now=now)
+                time_Hour = int(time.split(':')[0])
+                time_Minutes = int(time.split(':')[1])
+                servicebookend_Minute = bookedMinutes + service_period
+                servicebookend_Hour = bookedHour
+                if servicebookend_Minute > 59:
+                    servicebookend_Hour = time_Hour + 1
+                    servicebookend_Minute = servicebookend_Minute - 60
+                if servicebookend_Hour < 10:
+                    servicebookend_Hour = '0' + str(servicebookend_Hour) + ':'
+                else:
+                    servicebookend_Hour = str(servicebookend_Hour) + ':'
+                if servicebookend_Minute < 10 :
+                    servicebookendtime = servicebookend_Hour  + '0' + str(servicebookend_Minute)
+                else :
+                    servicebookendtime = servicebookend_Hour  + str(servicebookend_Minute)
+
                 if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
                     addflag = False
                     break
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
+
+                if time < bookedtime and servicebookendtime > bookedEndTime :
+                    addflag = False
+                    break
 
                 if bookedtime == time :
                     addflag = False
@@ -436,8 +456,10 @@ def booking(request):
     #if not checkDBFlag :    
     selectedService = ServiceType.objects.get(id = bookeditem)
     # delete how many bookingscale
-    backCount = int((selectedService.serviceperiod -1) / bookingscale)
-    timeList = getTimeList(doctorId = bookeddoctor, queryDate = bookeddate, backCount = backCount)
+    # Todo : check if it need to user math.ceil update as 20170901
+    backCount = int(math.ceil(float(selectedService.serviceperiod) / float(bookingscale)) - 1)
+    #backCount = int((selectedService.serviceperiod -1) / bookingscale)
+    timeList = getTimeList(doctorId = bookeddoctor, queryDate = bookeddate, backCount = backCount, service_period = selectedService.serviceperiod)
     if bookedhour not in timeList :
         #checkDBFlag = True
         checkFlag = False
