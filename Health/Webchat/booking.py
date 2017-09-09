@@ -314,8 +314,8 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
                 time_Hour = int(time.split(':')[0])
                 time_Minutes = int(time.split(':')[1])
-                servicebookend_Minute = bookedMinutes + service_period
-                servicebookend_Hour = bookedHour
+                servicebookend_Minute = time_Minutes + service_period
+                servicebookend_Hour = time_Hour
                 if servicebookend_Minute > 59:
                     servicebookend_Hour = time_Hour + 1
                     servicebookend_Minute = servicebookend_Minute - 60
@@ -340,14 +340,16 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
                 if bookedtime == time :
                     addflag = False
 
+                    # bug fixing 20170909 due to delete by servicebookendtime check
                     # delete the time scale for enough time to do selected service before the next booking
-                    count = len(timeList)
+                    '''count = len(timeList)
                     tmpBackCount = backCount
                     if count < tmpBackCount :
                         tmpBackCount = count
                     for j in range(0, tmpBackCount) :
-                        del timeList[count - j -1]
+                        del timeList[count - j -1]'''
                     # delete the time scale for enough time to do selected service before the next booking
+                    # bug fixing 20170909
                     if serviceperiod > 0 :
                         breakcount = int((serviceperiod - 1) / bookingscale)
 
