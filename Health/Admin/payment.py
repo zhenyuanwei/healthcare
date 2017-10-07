@@ -537,13 +537,13 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     transactionList = Transaction.objects.all()
     
     if querydate != '' :
-        transactionList = Transaction.objects.filter(transactionDate=querydate)
+        transactionList = transactionList.filter(transactionDate=querydate)
     
     if queryyear != '' :
-        transactionList = Transaction.objects.filter(transactionDate__year=queryyear)
-    
+        transactionList = transactionList.filter(transactionDate__year=queryyear)
+
     if querymonth != '' :
-        transactionList = Transaction.objects.filter(transactionDate__month=querymonth)
+        transactionList = transactionList.filter(transactionDate__month=querymonth)
     
     if doctorId != '' :
         transactionList = transactionList.filter(doctorId=doctorId)
