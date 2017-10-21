@@ -164,8 +164,8 @@ def doctorBooking(request):
             booking.bookeditem = service.servicename
             bookingList.append(booking)
         '''
-        bookingList = getDoctorBookingList(doctorId=doctorId, date=today)
-        bookingList.append(getDoctorBookingList(doctorId=doctorId, date=nextDay))
+        bookingList = getDoctorBookingList(doctorId=doctorId, date=nextDay)
+        #bookingList.append(getDoctorBookingList(doctorId=doctorId, date=nextDay))
         # update by 20171021
 
         outDic['bookingList'] = bookingList
