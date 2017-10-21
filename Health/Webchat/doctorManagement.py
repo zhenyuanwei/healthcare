@@ -12,7 +12,7 @@ from HealthModel.models import BookingInfo
 from HealthModel.models import ServiceType
 from HealthModel.models import Vacation
 from datetime import time
-from Health.Admin.common import getToday
+from Health.Admin.common import getToday, getNextDay
 from Health.Webchat.booking import getDaysList
 from Health.Webchat.booking import bookingDays
 from django.views.decorators.csrf import csrf_exempt
@@ -147,7 +147,10 @@ def doctorBooking(request):
         doctor = DoctorInfo.objects.get(webchatid=openId)
         doctorId = doctor.id
         today = getToday().strftime('%Y/%m/%d')
-        
+        nextDay = getNextDay().strftime('%Y/%m/%d')
+
+        # update by 20171021
+        '''
         bookingList = []
         tmpList = BookingInfo.objects.filter(bookeddoctor=doctorId)
         tmpList = tmpList.filter(status='1')
@@ -160,7 +163,11 @@ def doctorBooking(request):
             booking.bookedtime = time
             booking.bookeditem = service.servicename
             bookingList.append(booking)
-            
+        '''
+        bookingList = getDoctorBookingList(doctorId=doctorId, date=today)
+        bookingList.append(getDoctorBookingList(doctorId=doctorId, date=nextDay))
+        # update by 20171021
+
         outDic['bookingList'] = bookingList
         usedTemplate = get_template('webchat/doctorbookinglist.html')
         html = usedTemplate.render(outDic)
@@ -169,7 +176,23 @@ def doctorBooking(request):
         usedTemplate = get_template('webchat/doctorbind.html')
         html = usedTemplate.render(outDic)
     finally:
-        return HttpResponse(html) 
+        return HttpResponse(html)
+
+def getDoctorBookingList(doctorId, date):
+    bookingList = []
+    tmpList = BookingInfo.objects.filter(bookeddoctor=doctorId)
+    tmpList = tmpList.filter(status='1')
+    tmpList = tmpList.filter(bookedtime__startswith=date)
+    tmpList = tmpList.order_by('bookedtime')
+    for booking in tmpList:
+        serviceId = booking.bookeditem
+        service = ServiceType.objects.get(id=serviceId)
+        #time = booking.bookedtime.split(' ')[1]
+        time = booking.bookedtime
+        booking.bookedtime = time
+        booking.bookeditem = service.servicename
+        bookingList.append(booking)
+    return bookingList
 
 def goVacationApply(request):
     #get webchat user

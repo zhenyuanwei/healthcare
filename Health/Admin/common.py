@@ -39,6 +39,11 @@ def getToday():
     today = datetime.now() + timedelta(hours=timeBJ)
     return today
 
+def getNextDay():
+    timeBJ = 8
+    day = datetime.now() + timedelta(hours=timeBJ) + timedelta(days=1)
+    return day
+
 def getMessage(messageId):
     message = ''
     try :
