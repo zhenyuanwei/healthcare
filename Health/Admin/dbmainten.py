@@ -19,12 +19,13 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from datetime import timedelta
-from Health.Admin.common import checkSession, getToday
+from Health.Admin.common import getToday
 from Health.Admin.common import createResponseDic
 from Health.Webchat.booking import getDaysList
 from Health.Webchat.booking import bookingDays
 from Health.Admin.payment import createPayment
 import Health
+from Health.utils import checksession
 
 timeBJ = 8
 
@@ -34,6 +35,10 @@ def addAdminUser(request):
     return HttpResponse('Insert the admin DB OK!')
 
 def goDoctorInfo(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/doctor.html')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '2'
@@ -43,6 +48,10 @@ def goDoctorInfo(request):
     return HttpResponse(html)
 
 def goDoctorInfoList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/doctorlist.html')
     doctorlist = DoctorInfo.objects.all()
     outDic = createResponseDic(request=request)
@@ -53,6 +62,9 @@ def goDoctorInfoList(request):
 
 @csrf_exempt
 def addDoctorInfo(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
     
     try :
         doctorid = request.POST['doctorid'] 
@@ -87,6 +99,10 @@ def addDoctorInfo(request):
         return goDoctorInfoList(request=request)
 
 def deleteDoctorInfo(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     doctorid = request.GET['id']
     try :
         doctor = DoctorInfo.objects.get(id=doctorid)
@@ -97,6 +113,10 @@ def deleteDoctorInfo(request):
         return goDoctorInfoList(request=request)
     
 def goUpdateDoctorInfo(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     doctorid = request.GET['id']
     try :
         doctor = DoctorInfo.objects.get(id=doctorid)
@@ -120,6 +140,10 @@ def goUpdateDoctorInfo(request):
         return HttpResponse(html)
 
 def checkServiceCan(doctorserviceIds, serviceId):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     serviceCan = 'False'
     doctorserviceIdList = doctorserviceIds.split(',')
     for tmpId in doctorserviceIdList :
@@ -129,6 +153,10 @@ def checkServiceCan(doctorserviceIds, serviceId):
     return serviceCan
 
 def goServiceType(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '3'
     usedTemplate = get_template('admin/servicetype.html')
@@ -136,6 +164,10 @@ def goServiceType(request):
     return HttpResponse(html)
 
 def goServiceTypeUpdate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     serviceid = request.GET['id']
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '3'
@@ -150,6 +182,10 @@ def goServiceTypeUpdate(request):
         return HttpResponse(html)
 
 def deleteServiceType(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     serviceId = request.GET['id']
     try :
         service = ServiceType.objects.get(id=serviceId)
@@ -160,6 +196,10 @@ def deleteServiceType(request):
         return goServiceTypeList(request=request)
 
 def goServiceTypeList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/servicetypelist.html')
     serviceList = ServiceType.objects.all()
     outDic = createResponseDic(request=request)
@@ -169,6 +209,10 @@ def goServiceTypeList(request):
     return HttpResponse(html)
 
 def doServiceType(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     serviceid = request.GET['serviceid']
     servicename = request.GET['servicename']
     servicerate = request.GET['servicerate']
@@ -188,6 +232,10 @@ def doServiceType(request):
         return goServiceTypeList(request=request)
 
 def goMembership(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/membership.html')
     
     outDic = createResponseDic(request=request)
@@ -199,6 +247,10 @@ def goMembership(request):
     return HttpResponse(html)
 
 def goMembershipList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     
     membershiplist = Membership.objects.all()
@@ -216,6 +268,10 @@ def goMembershipList(request):
 
 @csrf_exempt
 def goMembershipMonthlyList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '4'
     
@@ -267,6 +323,10 @@ def goMembershipMonthlyList(request):
 
 @csrf_exempt
 def membershipListQuery(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     
     phonenumber = request.POST['phonenumber']
@@ -286,6 +346,10 @@ def membershipListQuery(request):
     return HttpResponse(html)
 
 def goMembershipUnbind(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     temId = request.GET['id']
     try :
         membership = Membership.objects.get(id = temId, deleteFlag = '0')
@@ -298,6 +362,10 @@ def goMembershipUnbind(request):
         return HttpResponseRedirect("../membershiplist/")
     
 def goMembershipDelete(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     temId = request.GET['id']
     try :
         membership = Membership.objects.get(id = temId)
@@ -308,6 +376,10 @@ def goMembershipDelete(request):
         return HttpResponseRedirect("../membershiplist/")
     
 def goMembershipEnd(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     temId = request.GET['id']
     try :
         membership = Membership.objects.get(id = temId, deleteFlag = '0')
@@ -322,6 +394,10 @@ def goMembershipEnd(request):
         return HttpResponseRedirect("../membershiplist/")
 
 def goMembershipUpdate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     temId = request.GET['id']
     membership = Membership.objects.get(id = temId, deleteFlag = '0')
     discounttype = int(membership.discounttype)
@@ -337,6 +413,10 @@ def goMembershipUpdate(request):
     return HttpResponse(html)
 
 def goMembershipDetail(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '4'
     
@@ -366,6 +446,9 @@ def goMembershipDetail(request):
     return HttpResponse(html)
 
 def goMembershipAmountUpdate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
 
     temId = request.GET['id']
     redirectUrl = request.GET['redirectUrl']
@@ -383,6 +466,10 @@ def goMembershipAmountUpdate(request):
 
 @csrf_exempt
 def doMembership(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     try :
         flag = request.POST['operation']
         try :
@@ -412,6 +499,10 @@ def doMembership(request):
     
 
 def addMembership(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     #vipno = request.GET['vipno']
     vipname = request.POST['vipname']
     #vipnameid = request.GET['vipnameid']
@@ -469,6 +560,10 @@ def addMembership(request):
     return isMember
     
 def updateMembership(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     vipid = request.POST['vipid']
     vipname = request.POST['vipname']
     phonenumber = request.POST['phonenumber']
@@ -495,6 +590,10 @@ def updateMembership(request):
     membership.save()
 
 def updateMembershipAmount(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     vipid = request.POST['vipid']
     username = request.session.get('username')
     amount = 0
@@ -531,6 +630,10 @@ def updateMembershipAmount(request):
     transaction.save()
     
 def goDiscountRateList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/discountlist.html')
     outDic = createResponseDic(request=request)
     serviceRateList = ServiceRate.objects.all()
@@ -540,6 +643,10 @@ def goDiscountRateList(request):
     return HttpResponse(html)
 
 def goDiscountRate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/discount.html')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '7'
@@ -548,6 +655,10 @@ def goDiscountRate(request):
 
 @csrf_exempt
 def doDiscountRate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/discountlist.html')
     try : 
         discountname = request.POST['discountname']
@@ -583,6 +694,10 @@ def doDiscountRate(request):
     return HttpResponse(html)
 
 def deleteDiscountRate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/discountlist.html')
     discountId = request.GET['id']
     discout = ServiceRate.objects.get(id=discountId)
@@ -595,6 +710,10 @@ def deleteDiscountRate(request):
     return HttpResponse(html)
 
 def goUpdateDiscountRate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/discount.html')
     discountId = request.GET['id']
     discout = ServiceRate.objects.get(id=discountId)
@@ -605,6 +724,10 @@ def goUpdateDiscountRate(request):
     return HttpResponse(html)
 
 def goProductList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/productlist.html')
     productList = Product.objects.all()
     outDic = createResponseDic(request=request)
@@ -614,6 +737,10 @@ def goProductList(request):
     return HttpResponse(html)
 
 def goProduct(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/product.html')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
@@ -621,6 +748,10 @@ def goProduct(request):
     return HttpResponse(html)
 
 def goProductUpdate(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/product.html')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
@@ -637,6 +768,10 @@ def goProductUpdate(request):
 
 @csrf_exempt
 def doProduct(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/productlist.html')
     try :
         id = request.POST['productid']
@@ -660,6 +795,10 @@ def doProduct(request):
     return HttpResponse(html)
 
 def deleteProduct(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/productlist.html')
     productId = request.GET['id']
     try :
@@ -676,6 +815,10 @@ def deleteProduct(request):
     return HttpResponse(html)
 
 def goPaymentTypeList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/paymenttypelist.html')
     outDic = createResponseDic(request=request)
     paymentTypeList = PaymentType.objects.all()
@@ -685,6 +828,10 @@ def goPaymentTypeList(request):
     return HttpResponse(html)
 
 def goPaymentType(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     usedTemplate = get_template('admin/paymenttype.html')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '9'
@@ -693,6 +840,10 @@ def goPaymentType(request):
 
 @csrf_exempt
 def doPaymentType(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     paymentType = PaymentType()
     paymentType.paymenttype = request.POST['paymenttype']
     paymentType.paymenttypename = request.POST['paymenttypename']
@@ -704,6 +855,10 @@ def doPaymentType(request):
     return HttpResponse(html)
 
 def goVacatinList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
@@ -717,6 +872,10 @@ def goVacatinList(request):
     return HttpResponse(html)
 
 def doCancelVacation(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
@@ -734,6 +893,10 @@ def doCancelVacation(request):
         return HttpResponseRedirect('../govacationlist/')
     
 def goAdminVacatinApplication(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
@@ -749,6 +912,10 @@ def goAdminVacatinApplication(request):
 
 @csrf_exempt
 def doAdminVacatinApplication(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '10'
     
@@ -774,6 +941,10 @@ def doAdminVacatinApplication(request):
     return HttpResponseRedirect('../govacationlist/')   
 
 def goMessageList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '13'
     messageList = Messages.objects.all()
@@ -783,6 +954,10 @@ def goMessageList(request):
     return HttpResponse(html)
 
 def goAddMessage(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '13'
     usedTemplate = get_template('admin/message.html')
@@ -791,6 +966,10 @@ def goAddMessage(request):
 
 @csrf_exempt
 def doAddMessage(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '13'
     try :

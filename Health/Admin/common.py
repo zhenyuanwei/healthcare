@@ -8,20 +8,6 @@ from datetime import timedelta
 from HealthModel.models import Messages
 from HealthModel.models import Membership
 
-def checkSession(request):
-    returnValue = True
-    try :
-        username = request.session.get('username', default=None)
-        if username == None :
-            returnValue = False
-        
-    except :
-        returnValue = False
-        
-    finally:
-        
-        return returnValue
-    
 def createResponseDic(request):
     outDic = {}
     username = request.session.get('username')

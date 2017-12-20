@@ -10,6 +10,7 @@ from HealthModel.models import AdminUser
 from Health.Admin.common import createResponseDic
 from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
+from Health.utils import checksession
 
 def addAdminUser(request):
     admin = AdminUser(username='test1', password = '123456')
@@ -17,6 +18,10 @@ def addAdminUser(request):
     return HttpResponse('Insert the admin DB OK!')
 
 def goChangePassword(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '11'
     usedTemplate = get_template('admin/changepassword.html')
@@ -25,6 +30,10 @@ def goChangePassword(request):
 
 @csrf_exempt
 def doChangePassword(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '11'
     try :

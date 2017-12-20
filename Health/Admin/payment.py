@@ -22,6 +22,7 @@ from Health.Admin.common import createResponseDic, getDiscount
 from Health.Admin.common import getToday
 from Health.Webchat.myweixin import sendMessage
 from Health.Admin.common import getMessage
+from Health.utils import checksession
 
 timeBJ = 8
 
@@ -39,6 +40,10 @@ class Payment :
     bookingId = ''
 
 def goPrePayment(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     doctorList = DoctorInfo.objects.all()
@@ -67,6 +72,10 @@ def goPrePayment(request):
 
 @csrf_exempt
 def doPrePayment(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
@@ -180,6 +189,10 @@ def doPrePayment(request):
         return HttpResponse(html)
 
 def goPaymentTypeSelect(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     isMembership = True
@@ -207,6 +220,10 @@ def goPaymentTypeSelect(request):
 
 @csrf_exempt
 def doPaymentTypeSelect(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
@@ -252,6 +269,10 @@ def doPaymentTypeSelect(request):
 
 @csrf_exempt
 def doPayment(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
@@ -423,6 +444,10 @@ def createPayment(transaction):
     return payment
 
 def goUnpayedList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
@@ -438,6 +463,10 @@ def goUnpayedList(request):
     return HttpResponse(html)
 
 def goUnpayedCopy(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     #unpayed copy start 20170217
     paymenttype = '00'
     try :
@@ -467,6 +496,10 @@ def goUnpayedCopy(request):
     return HttpResponseRedirect("../gounpayedlist/")
 
 def doDeleteUnpayed(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '5'
     
@@ -489,6 +522,10 @@ def doDeleteUnpayed(request):
     return HttpResponse(html)
 
 def goPaymentList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
@@ -511,6 +548,10 @@ def goPaymentList(request):
     return HttpResponse(html)
 
 def searchPaymentList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
@@ -533,7 +574,6 @@ def searchPaymentList(request):
     return HttpResponse(html)
 
 def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSummary=True):
-    
     transactionList = Transaction.objects.all()
     
     if querydate != '' :
@@ -647,6 +687,10 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     return paymentList
 
 def goPaymentSummaryList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
@@ -671,6 +715,10 @@ def goPaymentSummaryList(request):
     return HttpResponse(html)
 
 def searchPaymentSummaryList(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
@@ -695,6 +743,10 @@ def searchPaymentSummaryList(request):
 
 @csrf_exempt
 def goAccounting(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '6'
     
@@ -767,6 +819,10 @@ def goAccounting(request):
     return HttpResponse(html)
 
 def deletePayment(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     id = request.GET['id']
     operation = request.GET['type']
     try :
@@ -782,6 +838,10 @@ def deletePayment(request):
             return HttpResponseRedirect('../gopaymentlist/')
     
 def cancelPayment(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
     id = request.GET['id']
     try :
         transaction = Transaction.objects.get(id = id)
