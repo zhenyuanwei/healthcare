@@ -26,8 +26,8 @@ import math
 
 "@csrf_exempt"
 timeBJ = 8
-starttime = 7
-endtime = 22
+starttime = 8
+endtime = 21
 canceltime = 1
 #booking time scale
 #bookingscale = 15
