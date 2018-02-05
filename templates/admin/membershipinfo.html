@@ -52,6 +52,7 @@
 				<th>服务项目</th>
 				<th>产品项目</th>
 				<th>金额</th>
+                <th>余额</th>
 				<th>日期</th>
 				
 			</tr>
@@ -65,6 +66,7 @@
 				<td>{{ payment.servicename }}</td>
 				<td>{{ payment.productname }}</td>
 				<td>{{ payment.amount }}</td>
+                <td>{{ payment.preamount }}</td>
 				<td>{{ payment.paymentdate }}</td>
 			</tr>
 		{% endfor %}

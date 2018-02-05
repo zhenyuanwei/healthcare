@@ -338,6 +338,9 @@ def doPayment(request):
                             transaction.paymentType = paymentType
                             transaction.successFlag = '1'
                             transaction.username = username
+                            # add for preamount by 2018/02/05
+                            transaction.preamount = membershipAmount
+                            # add for preamount by 2018/02/05
                             transaction.save()  
                         
                         payment = createPayment(transaction = transaction)
@@ -384,10 +387,17 @@ def createPayment(transaction):
     payment.serviceamount = transaction.serviceamount
     payment.productamount = transaction.productamount
     payment.discount = transaction.discount
-    payment.paymentdate = transaction.transactionDate
+    # update the date show style by 2018/02/05
+    # payment.paymentdate = transaction.transactionDate
+    transactionDate = date.strftime(transaction.transactionDate, '%Y-%m-%d')
+    payment.paymentdate = transactionDate
+    # update the date show style by 2018/02/05
     payment.bookingId = transaction.bookingId
     payment.successFlag = transaction.successFlag
     payment.username = transaction.username
+    # add for preamount by 2018/02/05
+    payment.preamount = transaction.preamount
+    # add for preamount by 2018/02/05
     
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
@@ -626,7 +636,10 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     
     summarydate = ''
     if querydate != '' :
-        summarydate = datetime.strptime(querydate, '%Y-%m-%d').date
+        # update the date show style by 2018/02/05
+        # summarydate = datetime.strptime(querydate, '%Y-%m-%d').date
+        summarydate = querydate
+        # update the date show style by 2018/02/05
     if queryyear != '' :
         summarydate = queryyear
     if querymonth != '' :

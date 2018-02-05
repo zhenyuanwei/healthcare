@@ -91,6 +91,7 @@ class Transaction(models.Model):
     serviceamount = models.FloatField(default = 0)
     productamount = models.FloatField(default = 0)
     amount = models.FloatField(default = 0)
+    preamount = models.FloatField(default = 0)
     discount = models.FloatField(default = 1)
     successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount, 8 deleted
     transactionDate = models.DateField()
