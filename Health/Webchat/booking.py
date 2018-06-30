@@ -132,6 +132,8 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
     try :
         doctorInfoList = DoctorInfo.objects.all()
         doctorInfoList = doctorInfoList.exclude(service = '')
+        doctorInfoList = doctorInfoList.order_by('rank')
+
         if doctorId == '' and doctorservice == '' :
             doctor = doctorInfoList[0]
             doctorId = doctor.id

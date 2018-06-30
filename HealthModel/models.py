@@ -48,6 +48,7 @@ class DoctorInfo(models.Model):
     comments = models.CharField(max_length = 400)
     service = models.CharField(max_length = 200)
     webchatid = models.CharField(max_length = 128)
+    rank = models.IntegerField(default=0)
     
 class ServiceType(models.Model):
     id = models.AutoField(primary_key=True)

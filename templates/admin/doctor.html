@@ -23,11 +23,17 @@
 	   	<label for="comments">医生简介 : </label>
 		<textarea cols="40" rows="8" name="comments" id="comments" maxlength="500">{{ doctorinfo.comments }}</textarea>
 		</div>
+        <!--
+        <div class="ui-field-contain">
+            <label for="rank">排名<b style="color:#FF0000">*</b> : </label>
+            <input type="text" name="rank" id="rank" maxlength="3" value="{{ doctorinfo.rank }}">
+		</div>
+		-->
 		<div class="ui-field-contain">
 		<label for="serviceitem">服务项目 : </label>
 		<fieldset data-role="controlgroup">
 		{% for service in serviceList %}
-			{% if service.checkFlag = 'True' %}
+			{% if service.checkFlag == 'True' %}
 			<label><input type="checkbox" name="service{{service.id}}" id="service{{service.id}}" value="{{service.id}}" checked>{{service.servicename}}</label>
 			{% else %}
 		    <label><input type="checkbox" name="service{{service.id}}" id="service{{service.id}}" value="{{service.id}}" >{{service.servicename}}</label>

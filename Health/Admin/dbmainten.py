@@ -54,6 +54,7 @@ def goDoctorInfoList(request):
 
     usedTemplate = get_template('admin/doctorlist.html')
     doctorlist = DoctorInfo.objects.all()
+    doctorlist = doctorlist.order_by('rank')
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '2'
     outDic['doctorList'] = doctorlist
@@ -72,6 +73,7 @@ def addDoctorInfo(request):
         phoneNumber = request.POST['phonenumber']
         sn = request.POST['sn']
         comments = request.POST['comments']
+        rank = request.POST['rank']
         webchatId = ''
         service = ''
         for key in request.POST.keys() :
@@ -84,6 +86,13 @@ def addDoctorInfo(request):
             # for update doctor
             doctor = DoctorInfo.objects.get(id=doctorid)
             webchatId = doctor.webchatid
+
+        if rank.strip() == '':
+            rank = 99
+        else:
+            rank = int(rank)
+
+        print(rank)
             
         doctor.doctorname = docotrName
         doctor.sn = sn
@@ -91,6 +100,7 @@ def addDoctorInfo(request):
         doctor.comments = comments
         doctor.webchatid = webchatId
         doctor.service = service
+        doctor.rank = rank
         doctor.save()
     except :
         print '-------there is no doctor id = ' + doctorid + '--------'
@@ -131,7 +141,9 @@ def goUpdateDoctorInfo(request):
         serviceList = []
         dbServiceList = ServiceType.objects.all()
         for service in dbServiceList :
-            service.checkFlag = checkServiceCan(doctorserviceIds=doctorserviceIds, serviceId=service.id)
+            checkFlag = checkServiceCan(doctorserviceIds=doctorserviceIds, serviceId=service.id)
+            # print(checkFlag)
+            service.checkFlag = checkFlag
             serviceList.append(service)
         outDic['serviceList'] = serviceList
         
@@ -140,10 +152,6 @@ def goUpdateDoctorInfo(request):
         return HttpResponse(html)
 
 def checkServiceCan(doctorserviceIds, serviceId):
-    res = checksession(request=request)
-    if True != res:
-        return res
-
     serviceCan = 'False'
     doctorserviceIdList = doctorserviceIds.split(',')
     for tmpId in doctorserviceIdList :
