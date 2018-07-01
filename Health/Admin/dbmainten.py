@@ -73,7 +73,10 @@ def addDoctorInfo(request):
         phoneNumber = request.POST['phonenumber']
         sn = request.POST['sn']
         comments = request.POST['comments']
-        rank = request.POST['rank']
+        try :
+            rank = int(request.POST['rank'].strip())
+        except :
+            rank = 99
         webchatId = ''
         service = ''
         for key in request.POST.keys() :
@@ -86,13 +89,6 @@ def addDoctorInfo(request):
             # for update doctor
             doctor = DoctorInfo.objects.get(id=doctorid)
             webchatId = doctor.webchatid
-
-        if rank.strip() == '':
-            rank = 99
-        else:
-            rank = int(rank)
-
-        print(rank)
             
         doctor.doctorname = docotrName
         doctor.sn = sn
