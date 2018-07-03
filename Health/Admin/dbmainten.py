@@ -217,7 +217,10 @@ def doServiceType(request):
     if True != res:
         return res
 
-    serviceid = request.GET['serviceid']
+    try ：
+        serviceid = request.GET['serviceid']
+    except ：
+        serviceid = ''
     servicename = request.GET['servicename']
     servicerate = request.GET['servicerate']
     serviceperiod = request.GET['serviceperiod']
@@ -778,7 +781,10 @@ def doProduct(request):
 
     usedTemplate = get_template('admin/productlist.html')
     try :
-        id = request.POST['productid']
+        try ：
+            id = request.POST['productid']
+        except ：
+            id = ''
         productName = request.POST['productname']
         productPrice = request.POST['productprice']
         if id == '' :
