@@ -217,9 +217,9 @@ def doServiceType(request):
     if True != res:
         return res
 
-    try ：
+    try :
         serviceid = request.GET['serviceid']
-    except ：
+    except :
         serviceid = ''
     servicename = request.GET['servicename']
     servicerate = request.GET['servicerate']
@@ -781,9 +781,9 @@ def doProduct(request):
 
     usedTemplate = get_template('admin/productlist.html')
     try :
-        try ：
+        try :
             id = request.POST['productid']
-        except ：
+        except :
             id = ''
         productName = request.POST['productname']
         productPrice = request.POST['productprice']
