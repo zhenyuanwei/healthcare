@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Health/Admin/dbmainten.py" afterPath="$PROJECT_DIR$/Health/Admin/dbmainten.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HealthModel/models.py" afterPath="$PROJECT_DIR$/HealthModel/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Health$manage.coverage" NAME="manage Coverage Results" MODIFIED="1530348055723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Health$manage.coverage" NAME="manage Coverage Results" MODIFIED="1530657670867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Health$djangowsgi.coverage" NAME="djangowsgi Coverage Results" MODIFIED="1494109530793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Health$wsgi.coverage" NAME="wsgi Coverage Results" MODIFIED="1494109540497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Health" />
     <SUITE FILE_PATH="coverage/Health$Test__.coverage" NAME="Test:  Coverage Results" MODIFIED="1495927182779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -34,7 +34,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dbmainten.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dbmainten.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Health/Admin/dbmainten.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="271">
@@ -69,6 +69,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
               <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="61" column="37" lean-forward="false" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -110,11 +120,11 @@
         <option value="$PROJECT_DIR$/Health/Admin/common.py" />
         <option value="$PROJECT_DIR$/templates/admin/membershipinfo.html" />
         <option value="$PROJECT_DIR$/Health/Admin/payment.py" />
-        <option value="$PROJECT_DIR$/HealthModel/models.py" />
         <option value="$PROJECT_DIR$/Health/Webchat/booking.py" />
         <option value="$PROJECT_DIR$/templates/admin/doctor.html" />
         <option value="$PROJECT_DIR$/templates/admin/doctorlist.html" />
         <option value="$PROJECT_DIR$/Health/Admin/dbmainten.py" />
+        <option value="$PROJECT_DIR$/HealthModel/models.py" />
       </list>
     </option>
   </component>
@@ -172,6 +182,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Health" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Health" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Health" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HealthModel" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -448,13 +472,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1492431388223</updated>
-    </task>
-    <task id="LOCAL-00011" summary="fixing bug for admin login test">
-      <created>1500295203458</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1500295203458</updated>
     </task>
     <task id="LOCAL-00012" summary="fixing bug for admin login test">
       <created>1500295425447</created>
@@ -792,7 +809,14 @@
       <option name="project" value="LOCAL" />
       <updated>1530656972312</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="v1.2.1 bug fixing for product added.">
+      <created>1530657370867</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1530657370867</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1205,14 +1229,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="56" column="41" lean-forward="false" selection-start-line="56" selection-start-column="41" selection-end-line="56" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin/membershiplist.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-824">
@@ -1273,6 +1289,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="802" column="15" lean-forward="false" selection-start-line="802" selection-start-column="15" selection-end-line="802" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="61" column="37" lean-forward="false" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
           <folding />
         </state>
       </provider>

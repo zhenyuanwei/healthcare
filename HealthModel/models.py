@@ -59,7 +59,7 @@ class ServiceType(models.Model):
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     productname = models.CharField(max_length = 50)
-    productprice = models.IntegerField()
+    productprice = models.FloatField()
     
 class ServiceRate(models.Model):
     id = models.AutoField(primary_key=True)
