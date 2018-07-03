@@ -783,14 +783,12 @@ def doProduct(request):
     try :
         try :
             id = request.POST['productid']
+            product = Product.objects.get(id = id)
         except :
-            id = ''
+            product = Product()
         productName = request.POST['productname']
         productPrice = request.POST['productprice']
-        if id == '' :
-            product = Product()
-        else :
-            product = Product.objects.get(id = id)
+        
         product.productname = productName
         product.productprice = productPrice
         product.save()
