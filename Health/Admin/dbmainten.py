@@ -798,8 +798,9 @@ def doProduct(request):
         product.productname = productName
         product.productprice = productPrice
         product.save()
-    except :
+    except BaseException as e:
         print '-----------worry--------------'
+        print(e)
     
     outDic = createResponseDic(request=request)
     outDic['hightlight'] = '8'
