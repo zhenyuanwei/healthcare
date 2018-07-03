@@ -782,13 +782,19 @@ def doProduct(request):
     usedTemplate = get_template('admin/productlist.html')
     try :
         try :
-            id = request.POST['productid']
-            product = Product.objects.get(id = id)
+            productid = request.POST['productid']
         except :
-            product = Product()
+            productid = ''
+
         productName = request.POST['productname']
         productPrice = request.POST['productprice']
-        
+
+        if productid.strip() == '':
+            product = Product()
+            print('------------new product added----------')
+        else:
+            product = Product.objects.get(id=productid)
+
         product.productname = productName
         product.productprice = productPrice
         product.save()
