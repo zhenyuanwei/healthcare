@@ -157,6 +157,11 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
         if queryDate == '' :
             queryDate = dayList[0]
         timeList = getTimeList(doctorId=doctorId, queryDate=queryDate, backCount=backCount, service_period=selectedService.serviceperiod)
+        if len(timeList) > 2:
+            del timeList[0]
+            del timeList[1]
+        else:
+            timelist = []
 
         try :
             tmpdoctor = DoctorInfo.objects.get(id = doctorId)
