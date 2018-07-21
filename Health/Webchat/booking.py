@@ -161,7 +161,7 @@ def initForm(openId='', doctorservice = '', doctorId='', queryDate='', selectedS
             del timeList[0]
             del timeList[1]
         else:
-            timelist = []
+            timeList = []
 
         try :
             tmpdoctor = DoctorInfo.objects.get(id = doctorId)
