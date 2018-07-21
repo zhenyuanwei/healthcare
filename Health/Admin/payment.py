@@ -619,6 +619,8 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal['P00002'] = 0
     paymentTypeTotal['P00003'] = 0
     paymentTypeTotal['P00004'] = 0
+    paymentTypeTotal['OrderTypeA'] = 0 # add by 20180721
+    paymentTypeTotal['OrderTypeB'] = 0 # add by 20180721
     
     adminUserList = AdminUser.objects.all()
     for adminUser in adminUserList :
@@ -639,6 +641,13 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         
         if transaction.paymentType != '02' and transaction.username <> '' :
             paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[transaction.username.upper()] + transaction.amount
+
+        # add summary for ordertype 20180721
+        if transaction.ordertype == 'A':
+            paymentTypeTotal['OrderTypeA'] += transaction.serviceamount * transaction.discount + transaction.productamount
+        elif transaction.ordertype == 'B':
+            paymentTypeTotal['OrderTypeB'] += transaction.serviceamount * transaction.discount + transaction.productamount
+        # add summary for ordertype 20180721
     
     summarydate = ''
     if querydate != '' :
@@ -691,6 +700,24 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.amount = paymentTypeTotal['P00004']
         payment.paymentdate = summarydate
         paymentList.append(payment)
+
+        # add summary for ordertype 20180721
+        payment = Payment()
+        message = getMessage(messageId='OrderTypeA')
+        payment.id = ''
+        payment.servicename = message
+        payment.amount = paymentTypeTotal['OrderTypeA']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+
+        payment = Payment()
+        message = getMessage(messageId='OrderTypeB')
+        payment.id = ''
+        payment.servicename = message
+        payment.amount = paymentTypeTotal['OrderTypeB']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+        # add summary for ordertype 20180721
         
         adminUserList = adminUserList.exclude(username = 'wzy')
         for adminUser in adminUserList :
