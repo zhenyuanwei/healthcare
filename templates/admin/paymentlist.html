@@ -34,7 +34,7 @@
 					<th>No.</th>
 					<th>结账方式</th>
 					<th>会员姓名</th>
-					<!-- <th>会员号</th> -->
+					<th>排点钟</th>
 					<th>医生</th>
 					<th>服务项目</th>
 					<th>产品项目</th>
@@ -50,7 +50,13 @@
 					<td>{{ payment.id }}</td>
 				   	<td>{{ payment.paymenttypename }}</td>
 					<td>{{ payment.vipname }}</td>
-					<!-- <td>{{ payment.vipno }}</td> -->
+					{% if payment.ordertype == 'A' %}
+					    <td>排钟</td>
+                    {% elif payment.ordertype == 'B' %}
+					    <td>点钟</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
 					<td>{{ payment.doctorname }}</td>
 					<td>{{ payment.servicename }}</td>
 					<td>{{ payment.productname }}</td>

@@ -84,6 +84,9 @@ def doPrePayment(request):
         phonenumber = request.POST['phonenumber']
         doctor = request.POST['doctor']
         servicetype = request.POST['servicetype']
+        # added by 20180721
+        ordertype = request.POST['ordertype']
+        # added by 20180721
         #servicerate = request.POST['servicerate']
         #servicediscount = request.POST['servicediscount']
         servicediscount = 1
@@ -170,6 +173,7 @@ def doPrePayment(request):
             transaction.paymentType = paymenttype
             transaction.successFlag = '0'
             transaction.transactionDate = today
+            transaction.ordertype = ordertype # added by 20180721
             transaction.save()
             outDic['transactionId'] = transaction.id
         
@@ -398,6 +402,7 @@ def createPayment(transaction):
     # add for preamount by 2018/02/05
     payment.preamount = transaction.preamount
     # add for preamount by 2018/02/05
+    payment.ordertype = transaction.ordertype # added by 20180721
     
     try :
         paymentType = PaymentType.objects.get(paymenttype = transaction.paymentType)
@@ -493,6 +498,7 @@ def goUnpayedCopy(request):
             newTransaction.serviceamount = transaction.serviceamount
             newTransaction.productIds = transaction.productIds
             newTransaction.discount = transaction.discount
+            newTransaction.ordertype = transaction.ordertype  # added by 20180721
             newTransaction.paymentType = paymenttype
             newTransaction.successFlag = '0'
             newTransaction.transactionDate = getToday()
