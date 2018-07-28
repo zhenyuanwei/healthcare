@@ -97,7 +97,7 @@ class Transaction(models.Model):
     successFlag = models.CharField(max_length = 1) #0 unpayed, 1 payed, 9 membership add amount, 8 deleted
     transactionDate = models.DateField()
     username = models.CharField(max_length = 10, default = 'admin')
-    ordertype = models.CharField(default='', max_length=1) # A define somebody, B assigned by shop
+    ordertype = models.CharField(default='', max_length=1) # A define somebody, B assigned by shop, C others
     
 class Vacation(models.Model):
     id = models.AutoField(primary_key=True) 
