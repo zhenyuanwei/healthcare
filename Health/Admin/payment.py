@@ -951,26 +951,29 @@ def bookedSummary(request):
     paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False)
     for payment in paymentList:
         doctorId = payment.doctorId
-        if doctors_summary.has_key(doctorId):
-            doctor_summary = doctors_summary[doctorId]
-        else:
-            doctor_summary = {}
-            doctor_summary['doctorname'] = payment.doctorname
-            doctors_summary[doctorId] = doctor_summary
-        servicetypeId = payment.servicetypeId
-        if servicetypeId != '':
-            if doctor_summary.has_key(servicetypeId):
-                servicetypeContents = doctor_summary[servicetypeId]
+        if doctorId != '':
+            if doctors_summary.has_key(doctorId):
+                doctor_summary = doctors_summary[doctorId]
             else:
-                servicetypeContents = {}
-                servicetypeContents['servicename'] = payment.servicename
-                servicetypeContents['OrderTypeA'] = 0
-                servicetypeContents['OrderTypeB'] = 0
-                doctor_summary[servicetypeId] = servicetypeContents
-            if payment.ordertype == 'A':
-                servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
-            elif payment.ordertype == 'B':
-                servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+                doctor_summary = {}
+                doctor_summary['doctorname'] = payment.doctorname
+                doctors_summary[doctorId] = doctor_summary
+
+            servicetypeId = payment.servicetypeId
+            if servicetypeId != '':
+                if doctor_summary.has_key(servicetypeId):
+                    servicetypeContents = doctor_summary[servicetypeId]
+                else:
+                    servicetypeContents = {}
+                    servicetypeContents['servicename'] = payment.servicename
+                    servicetypeContents['OrderTypeA'] = 0
+                    servicetypeContents['OrderTypeB'] = 0
+                    doctor_summary[servicetypeId] = servicetypeContents
+                if payment.ordertype == 'A':
+                    servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
+                elif payment.ordertype == 'B':
+                    servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+
     outDic['doctors_summary'] = doctors_summary
     # print(doctors_summary)
 
