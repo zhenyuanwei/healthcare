@@ -958,18 +958,19 @@ def bookedSummary(request):
             doctor_summary['doctorname'] = payment.doctorname
             doctors_summary[doctorId] = doctor_summary
         servicetypeId = payment.servicetypeId
-        if doctor_summary.has_key(servicetypeId):
-            servicetypeContents = doctor_summary[servicetypeId]
-        else:
-            servicetypeContents = {}
-            servicetypeContents['servicename'] = payment.servicename
-            servicetypeContents['OrderTypeA'] = 0
-            servicetypeContents['OrderTypeB'] = 0
-            doctor_summary[servicetypeId] = servicetypeContents
-        if payment.ordertype == 'A':
-            servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
-        elif payment.ordertype == 'B':
-            servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+        if servicetypeId != '':
+            if doctor_summary.has_key(servicetypeId):
+                servicetypeContents = doctor_summary[servicetypeId]
+            else:
+                servicetypeContents = {}
+                servicetypeContents['servicename'] = payment.servicename
+                servicetypeContents['OrderTypeA'] = 0
+                servicetypeContents['OrderTypeB'] = 0
+                doctor_summary[servicetypeId] = servicetypeContents
+            if payment.ordertype == 'A':
+                servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
+            elif payment.ordertype == 'B':
+                servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
     outDic['doctors_summary'] = doctors_summary
     # print(doctors_summary)
 
