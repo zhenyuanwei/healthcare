@@ -970,9 +970,11 @@ def bookedSummary(request):
                     servicetypeContents['OrderTypeB'] = 0
                     doctor_summary[servicetypeId] = servicetypeContents
                 if payment.ordertype == 'A':
-                    servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
+                    # servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
+                    servicetypeContents['OrderTypeA'] += 1
                 elif payment.ordertype == 'B':
-                    servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+                    # servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+                    servicetypeContents['OrderTypeB'] += 1
 
     outDic['doctors_summary'] = doctors_summary
     # print(doctors_summary)
