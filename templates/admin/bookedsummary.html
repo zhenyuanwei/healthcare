@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% block title %}排点钟统计{% endblock %}
+{% block content %}
+<p>
+	<div>
+	<form action="../bookedsummary/" method="post">
+	   	<div class="ui-field-contain">
+	   	<label for="queryyear">年份 : </label>
+	   	<select name="queryyear" id="queryyear" data-mini="true" data-inline="true">
+		    {% for optionyear in yearList %}
+				<option value="{{ optionyear }}" {% if optionyear == year %} selected="selected" {% endif %}>{{ optionyear }}</option>
+			{% endfor %}
+		</select>
+		</div>
+		<div class="ui-field-contain">
+	   	<label for="querymonth">月份 : </label>
+	   	<select name="querymonth" id="querymonth" data-mini="true" data-inline="true">
+	   	{% for optionmonth in monthList %}
+	   		<option value="{{ optionmonth }}" {% if optionmonth == month %} selected="selected" {% endif %}>{{ optionmonth }}</option>
+		{% endfor %}
+		</select>
+	   	</div>
+	   	<div class="ui-field-contain">
+	   	<label for="button"></label>
+		<input class="ui-btn ui-btn-inline" type="submit" value="查询" data-mini="true" data-inline="true">
+	   	</div>
+    </form>
+    <hr>
+    </div>
+    <div class="ui-field-contain">
+	   	<label for="queryyear">年份 : {{ year }}</label>
+        <label for="querymonth">月份 : {{ month }}</label>
+    </div>
+    {% for doctor_summary in doctors_summary.values %}
+        <div class="ui-field-contain">
+	   	    <label for="doctorname">医生 : {{ doctor_summary.doctorname }}</label>
+        </div>
+        <div>
+            <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+                <thead>
+                    <tr>
+                        <th>服务项目</th>
+                        <th>排钟总金额</th>
+                        <th>点钟总金额</th>
+                    </tr>
+                </thead>
+            {% for servicetypeContents in doctor_summary.values %}
+                <tr>
+                    <td>{{ servicetypeContents.servicename }}</td>
+                    <td>{{ servicetypeContents.OrderTypeA }}</td>
+                    <td>{{ servicetypeContents.OrderTypeB }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+
+   </p>
+{% endblock %}

@@ -124,6 +124,7 @@ urlpatterns = [
     url(r'^admin/dovacationapplication/$', dbmainten.doAdminVacatinApplication),
     url(r'^admin/gosendmessage/$', message.goSendMessage),
     url(r'^admin/sendmessage/$', message.sendMessage),
+    url(r'^admin/bookedsummary/$', payment.bookedSummary),     #added by 20180803
 ] 
 
 

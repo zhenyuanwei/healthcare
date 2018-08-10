@@ -915,3 +915,67 @@ def cancelPayment(request):
         
     finally: 
         return HttpResponseRedirect('../gopaymentlist/')
+
+
+@csrf_exempt
+def bookedSummary(request):
+    res = checksession(request=request)
+    if True != res:
+        return res
+
+    outDic = createResponseDic(request=request)
+    outDic['hightlight'] = '6'
+
+    yearStart = getToday().strftime('%Y')
+    yearList = [yearStart]
+    for i in range(1, 3):
+        yearList.append(int(yearStart) - i)
+    outDic['yearList'] = yearList
+
+    today = getToday()
+    currentMonth = today.strftime('%m')
+
+    monthList = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    outDic['monthList'] = monthList
+
+    try:
+        year = request.POST['queryyear']
+        month = request.POST['querymonth']
+        # day = '01'
+    except:
+        year = datetime.strftime(today, '%Y')
+        month = datetime.strftime(today, '%m')
+
+    # calculate the summary the booked or defined by doctor by product
+    doctors_summary = {}
+    paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False)
+    for payment in paymentList:
+        doctorId = payment.doctorId
+        if doctors_summary.has_key(doctorId):
+            doctor_summary = doctors_summary[doctorId]
+        else:
+            doctor_summary = {}
+            doctor_summary['doctorname'] = payment.doctorname
+            doctors_summary[doctorId] = doctor_summary
+        servicetypeId = payment.servicetypeId
+        if doctor_summary.has_key(servicetypeId):
+            servicetypeContents = doctor_summary[servicetypeId]
+        else:
+            servicetypeContents = {}
+            servicetypeContents['servicename'] = payment.servicename
+            servicetypeContents['OrderTypeA'] = 0
+            servicetypeContents['OrderTypeB'] = 0
+            doctor_summary[servicetypeId] = servicetypeContents
+        if payment.ordertype == 'A':
+            servicetypeContents['OrderTypeA'] += payment.serviceamount * payment.discount
+        elif payment.ordertype == 'B':
+            servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
+    outDic['doctors_summary'] = doctors_summary
+    # print(doctors_summary)
+
+    outDic['currentMonth'] = currentMonth
+    outDic['month'] = month
+    outDic['year'] = year
+    usedTemplate = get_template('admin/bookedsummary.html')
+    html = usedTemplate.render(outDic)
+    return HttpResponse(html)
