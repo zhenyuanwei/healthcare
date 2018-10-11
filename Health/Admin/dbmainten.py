@@ -389,11 +389,14 @@ def goMembershipEnd(request):
 
     temId = request.GET['id']
     try :
+        username = request.session['username']
         membership = Membership.objects.get(id = temId, deleteFlag = '0')
         membership.endDate = getToday().strftime('%Y/%m/%d')
         membership.deleteFlag = '1'
         membership.webchatid = ''
         membership.webchatid2 = ''
+        membership.deleteAdminUser = username # add @20181011
+        # print(username)
         membership.save()
     except :
         print '---------there is no membership id = '  + temId + '----------'
