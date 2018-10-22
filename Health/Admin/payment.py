@@ -589,7 +589,7 @@ def searchPaymentList(request):
     html = usedTemplate.render(outDic)
     return HttpResponse(html)
 
-def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSummary=True):
+def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSummary=True, isFullPrice=False):
     transactionList = Transaction.objects.all()
     
     if querydate != '' :
@@ -603,6 +603,13 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     
     if doctorId != '' :
         transactionList = transactionList.filter(doctorId=doctorId)
+
+    # add for no discount membership 20181022
+    if isFullPrice == True:
+        transactionList = transactionList.filter(discount=1)
+    else:
+        transactionList = transactionList.exclude(discount=1)
+    # add for no discount membership 20181022
         
     transactionList = transactionList.exclude(successFlag='0')
     transactionList = transactionList.exclude(successFlag='8')
