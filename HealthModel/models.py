@@ -99,6 +99,9 @@ class Transaction(models.Model):
     transactionDate = models.DateField()
     username = models.CharField(max_length = 10, default = 'admin')
     ordertype = models.CharField(default='', max_length=1) # A define somebody, B assigned by shop, C others
+    # add for no discount membership 20181111
+    membershipType = models.CharField(default='0', max_length=1)
+    # add for no discount membership 20181111
     
 class Vacation(models.Model):
     id = models.AutoField(primary_key=True) 

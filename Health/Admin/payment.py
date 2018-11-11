@@ -94,6 +94,9 @@ def doPrePayment(request):
         amount = 0
         serviceamount = 0
         productamount = 0
+        # add for no discount membership 20181111
+        isFullPriceMembership = '0'
+        # add for no discount membership 20181111
         
         #product amount 
         productIds = ''
@@ -137,6 +140,10 @@ def doPrePayment(request):
                     servicediscount = membership.discountrate2'''
                 servicediscount = getDiscount(phonenumber = phonenumber)    
                 outDic['membership'] = membership
+                # add for no discount membership 20181111
+                if (membership.discountrate == 1) & (membership.discountrate2 == 1):
+                    isFullPriceMembership = '1'
+                # add for no discount membership 20181111
             
         
         amount = serviceamount * float(servicediscount) + productamount
@@ -174,6 +181,9 @@ def doPrePayment(request):
             transaction.successFlag = '0'
             transaction.transactionDate = today
             transaction.ordertype = ordertype # added by 20180721
+            # add for no discount membership 20181111
+            transaction.membershipType = isFullPriceMembership
+            # add for no discount membership 20181111
             transaction.save()
             outDic['transactionId'] = transaction.id
         
@@ -499,6 +509,7 @@ def goUnpayedCopy(request):
             newTransaction.productIds = transaction.productIds
             newTransaction.discount = transaction.discount
             newTransaction.ordertype = transaction.ordertype  # added by 20180721
+            newTransaction.membershipType = transaction.membershipType  # added by 20181111 for fullprice membership
             newTransaction.paymentType = paymenttype
             newTransaction.successFlag = '0'
             newTransaction.transactionDate = getToday()
@@ -606,9 +617,9 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
 
     # add for no discount membership 20181022
     if isFullPrice == True:
-        transactionList = transactionList.filter(discount=1)
+        transactionList = transactionList.filter(membershipType='1')
     else:
-        transactionList = transactionList.exclude(discount=1)
+        transactionList = transactionList.exclude(membershipType='1')
     # add for no discount membership 20181022
         
     transactionList = transactionList.exclude(successFlag='0')
