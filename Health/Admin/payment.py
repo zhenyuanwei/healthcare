@@ -829,6 +829,12 @@ def goAccounting(request):
     doctorMonthService = {}
     doctorDayProduct = {}
     doctorDayService = {}
+    # add by 20181111 for full price membership start
+    doctorMonthServiceFullPrice = {}
+    doctorMonthProductFullPrice = {}
+    doctorDayServiceFullPrice = {}
+    doctorDayProductFullPrice = {}
+    # add by 20181111  for full price membership end
     
     
     
@@ -838,6 +844,13 @@ def goAccounting(request):
         doctorMonthProduct[doctor.id] = 0
         doctorDayService[doctor.id] = 0
         doctorDayProduct[doctor.id] = 0
+        # add by 20181111 for full price membership start
+        doctorMonthServiceFullPrice[doctor.id] = 0
+        doctorMonthProductFullPrice[doctor.id] = 0
+        doctorDayServiceFullPrice[doctor.id] = 0
+        doctorDayProductFullPrice[doctor.id] = 0
+        # add by 20181111  for full price membership end
+
         
     paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False)    
     for payment in paymentList :
@@ -864,6 +877,26 @@ def goAccounting(request):
     
         
     outDic['doctorPaymentList'] = doctorPaymentList
+
+    # add by 20181111 for full price membership start
+    paymentListFull = getPaymentList(queryyear=year, querymonth=month, isSummary=False, isFullPrice=True)
+    for payment in paymentListFull:
+        if payment.doctorId != '':
+            doctorMonthServiceFullPrice[payment.doctorId] = doctorMonthServiceFullPrice[
+                                                       payment.doctorId] + payment.serviceamount * payment.discount
+            doctorMonthProductFullPrice[payment.doctorId] = doctorMonthProductFullPrice[payment.doctorId] + payment.productamount
+
+    doctorFullPricePaymentList = []
+    for doctor in doctorList:
+        payment = Payment()
+        payment.paymenttypename = doctor.doctorname
+        payment.monthserviceamount = doctorMonthServiceFullPrice[doctor.id]
+        payment.monthproductamount = doctorMonthProductFullPrice[doctor.id]
+        doctorFullPricePaymentList.append(payment)
+
+    outDic['doctorFullPricePaymentList'] = doctorFullPricePaymentList
+    # add by 20181111  for full price membership end
+
     #outDic['day'] = day
     outDic['month'] = month 
     outDic['year'] = year 
