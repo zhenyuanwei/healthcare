@@ -37,21 +37,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paymentlist.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="paymentlist.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/admin/paymentlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="345">
+              <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paymentsummarylist.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="paymentsummarylist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin/paymentsummarylist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+            <state relative-caret-position="326">
+              <caret line="32" column="12" lean-forward="true" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -144,8 +144,8 @@
         <option value="$PROJECT_DIR$/HealthModel/models.py" />
         <option value="$PROJECT_DIR$/templates/admin/accounting.html" />
         <option value="$PROJECT_DIR$/Health/Admin/payment.py" />
-        <option value="$PROJECT_DIR$/templates/admin/paymentlist.html" />
         <option value="$PROJECT_DIR$/templates/admin/paymentsummarylist.html" />
+        <option value="$PROJECT_DIR$/templates/admin/paymentlist.html" />
       </list>
     </option>
   </component>
@@ -555,13 +555,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492431388223</updated>
     </task>
-    <task id="LOCAL-00033" summary="fixing bug for admin login test">
-      <created>1500300259732</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1500300259732</updated>
-    </task>
     <task id="LOCAL-00034" summary="fixing bug for admin login test">
       <created>1500300379624</created>
       <option name="number" value="00034" />
@@ -898,7 +891,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543640045355</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="v2.04 FullPrice Membership added layout">
+      <created>1543640153811</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1543640153811</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -950,7 +950,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add query for next day for doctor" />
     <MESSAGE value="v1.1 add session check for admin" />
     <MESSAGE value="v1.1.1 add preamount for payment log" />
     <MESSAGE value="v1.2 add doctor rank" />
@@ -975,7 +974,8 @@
     <MESSAGE value="v2.01 GitFee membership added" />
     <MESSAGE value="v2.02 FullPrice Membership added." />
     <MESSAGE value="v2.03 FullPrice Membership added layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.03 FullPrice Membership added layout" />
+    <MESSAGE value="v2.04 FullPrice Membership added layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.04 FullPrice Membership added layout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1345,18 +1345,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/paymentlist.html">
+    <entry file="file://$PROJECT_DIR$/templates/admin/paymentsummarylist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="23" selection-end-column="13" />
+        <state relative-caret-position="326">
+          <caret line="32" column="12" lean-forward="true" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/paymentsummarylist.html">
+    <entry file="file://$PROJECT_DIR$/templates/admin/paymentlist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+        <state relative-caret-position="345">
+          <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
           <folding />
         </state>
       </provider>
