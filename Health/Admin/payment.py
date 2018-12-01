@@ -594,7 +594,13 @@ def searchPaymentList(request):
     
     querydate = request.GET['querydate']
     doctorId = request.GET['doctorid']
-    paymentList = getPaymentList(querydate=querydate, doctorId=doctorId)
+    # add for membershiptype 20181201
+    membershipType = request.GET['membershipType']
+    isFullPrice = True
+    if membershipType == '0':
+        isFullPrice = False
+    paymentList = getPaymentList(querydate=querydate, doctorId=doctorId, isFullPrice=isFullPrice)
+    # add for membershiptype 20181201
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentlist.html')
     html = usedTemplate.render(outDic)
@@ -799,7 +805,13 @@ def searchPaymentSummaryList(request):
     queryyear = request.GET['queryyear']
     querymonth = request.GET['querymonth']
     doctorId = request.GET['doctorid']
-    paymentList = getPaymentList(queryyear=queryyear, querymonth=querymonth, doctorId=doctorId)
+    # add for fullprice membership 20181201
+    membershipType = request.GET['membershipType']
+    isFullPrice = True
+    if membershipType == '0':
+        isFullPrice= False
+    paymentList = getPaymentList(queryyear=queryyear, querymonth=querymonth, doctorId=doctorId, isFullPrice=isFullPrice)
+    # add for fullprice membership 20181201
     outDic['paymentList'] = paymentList
     usedTemplate = get_template('admin/paymentsummarylist.html')
     html = usedTemplate.render(outDic)
