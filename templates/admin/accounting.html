@@ -27,7 +27,27 @@
     </form>
     <hr>
     </div>
-    
+
+    <div>
+        <p>赠费会员汇总</p>
+	    <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+			<thead>
+				<tr>
+					<th>医生姓名</th>
+					<th>服务项目{{ year }}年{{ month }}月总金额</th>
+					<th>产品项目{{ year }}年{{ month }}月总金额</th>
+				</tr>
+			</thead>
+    	{% for payment in doctorFullPricePaymentList %}
+	    	<tr>
+				<td>{{ payment.paymenttypename }}</td>
+				<td>{{ payment.monthserviceamount }}</td>
+				<td>{{ payment.monthproductamount }}</td>
+			</tr>
+		{% endfor %}
+        </table>
+    </div>
+    <hr>
     <div>
         <p>折扣会员汇总</p>
 	    <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
@@ -51,29 +71,7 @@
 		{% endfor %}
         </table>
     </div>
-    <hr>
 
-    <!--
-    <div>
-        <p>赠费会员汇总</p>
-	    <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
-			<thead>
-				<tr>
-					<th>医生姓名</th>
-					<th>服务项目{{ year }}年{{ month }}月总金额</th>
-					<th>产品项目{{ year }}年{{ month }}月总金额</th>
-				</tr>
-			</thead>
-    	{% for payment in doctorFullPricePaymentList %}
-	    	<tr>
-				<td>{{ payment.paymenttypename }}</td>
-				<td>{{ payment.monthserviceamount }}</td>
-				<td>{{ payment.monthproductamount }}</td>
-			</tr>
-		{% endfor %}
-        </table>
-    </div>
-    -->
 
    </p>
 {% endblock %}
