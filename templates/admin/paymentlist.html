@@ -19,7 +19,9 @@
 			{% for doctor in doctrList %}
 				<option value="{{ doctor.id }}">{{ doctor.doctorname }}</option>
 			{% endfor %}
-		</select><br>
+		</select>
+        </div>
+        <div>
         <label for="membershipType">会员类型 : </label>
         <select name="membershipType" id="membershipType" data-mini="true" data-inline="true">
 	   		<option value="1">赠费会员</option>
