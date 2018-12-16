@@ -14,6 +14,31 @@
 	{% if paymentList|length == 0 %}
 		<div class="ui-field-contain">今天到目前为止，没有结账记录！</div>
 	{% else %}
+        <p>赠费会员</p>
+		<table data-role="table" class="ui-responsive">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>姓名</th>
+					<!-- <th>结账方式</th> -->
+					<th>项目</th>
+					<th>金额</th>
+					<th>日期</th>
+				</tr>
+			</thead>
+			{% for payment in fullpricepaymentList %}
+				<tr>
+					<td>{{ payment.id }}</td>
+					<td>{{ payment.vipname }}</td>
+					<!-- <td>{{ payment.paymenttypename }}</td> -->
+					<td>{{ payment.servicename }}</td>
+					<td>{{ payment.amount }}</td>
+					<td>{{ payment.paymentdate }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+        <p>折扣会员</p>
 		<table data-role="table" class="ui-responsive">
 			<thead>
 				<tr>

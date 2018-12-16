@@ -90,6 +90,12 @@ def goDoctorQuery(request):
         today = getToday().strftime('%Y-%m-%d')
         paymentList = getPaymentList(doctorId=doctorId, querydate=today)
         outDic['paymentList'] = paymentList
+
+        # fullprice 20181216
+        fullpricepaymentList = getPaymentList(doctorId=doctorId, querydate=today, isFullPrice=True)
+        outDic['fullpricepaymentList'] = fullpricepaymentList
+        # fullprice 20181216
+
         usedTemplate = get_template('webchat/doctorpaymentlist.html')
         html = usedTemplate.render(outDic)
     except :
@@ -120,6 +126,12 @@ def goDoctorMonthQuery(request):
         month = today.strftime('%m')
         paymentList = getPaymentList(doctorId=doctorId, queryyear=year, querymonth=month)
         outDic['paymentList'] = paymentList
+
+        # fullprice 20181216
+        fullpricepaymentList = getPaymentList(doctorId=doctorId, queryyear=year, querymonth=month, isFullPrice=True)
+        outDic['fullpricepaymentList'] = fullpricepaymentList
+        # fullprice 20181216
+
         usedTemplate = get_template('webchat/doctorpaymentlist.html')
         html = usedTemplate.render(outDic)
     except :
