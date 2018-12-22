@@ -4,7 +4,6 @@
     <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Health/Admin/payment.py" afterPath="$PROJECT_DIR$/Health/Admin/payment.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html" afterPath="$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,18 +39,18 @@
       <file leaf-file-name="doctorManagement.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Health/Webchat/doctorManagement.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="130" column="39" lean-forward="false" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
+            <state relative-caret-position="296">
+              <caret line="126" column="32" lean-forward="false" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="doctorpaymentlist.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="doctorpaymentlist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+            <state relative-caret-position="-79">
+              <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -61,17 +60,17 @@
         <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
-              <caret line="49" column="31" lean-forward="true" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
+              <caret line="49" column="31" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="payment.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="payment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="395" column="4" lean-forward="false" selection-start-line="395" selection-start-column="4" selection-end-line="395" selection-end-column="4" />
+            <state relative-caret-position="155">
+              <caret line="752" column="49" lean-forward="false" selection-start-line="752" selection-start-column="49" selection-end-line="752" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -146,8 +145,8 @@
         <option value="$PROJECT_DIR$/templates/admin/paymentlist.html" />
         <option value="$PROJECT_DIR$/Health/Webchat/booking.py" />
         <option value="$PROJECT_DIR$/Health/Webchat/doctorManagement.py" />
-        <option value="$PROJECT_DIR$/Health/Admin/payment.py" />
         <option value="$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html" />
+        <option value="$PROJECT_DIR$/Health/Admin/payment.py" />
       </list>
     </option>
   </component>
@@ -557,13 +556,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492431388223</updated>
     </task>
-    <task id="LOCAL-00037" summary="fixing bug for admin login test">
-      <created>1500300800560</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1500300800560</updated>
-    </task>
     <task id="LOCAL-00038" summary="fixing bug for admin login test">
       <created>1500300998450</created>
       <option name="number" value="00038" />
@@ -900,7 +892,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544961755887</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="v2.10 FullPrice Membership added layout for wechat doctor summary">
+      <created>1545438978838</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1545438978839</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -952,7 +951,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v1.2.1 bug fixing for product added." />
     <MESSAGE value="v1.2.2 doctor rank added" />
     <MESSAGE value="v1.3 doctor rank added" />
     <MESSAGE value="v1.4 add ordertype for transactions" />
@@ -977,7 +975,8 @@
     <MESSAGE value="v2.05 FullPrice Membership added layout" />
     <MESSAGE value="v2.06 FullPrice Membership added layout for doctor summary" />
     <MESSAGE value="v2.07 FullPrice Membership added layout for wechat doctor summary" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.07 FullPrice Membership added layout for wechat doctor summary" />
+    <MESSAGE value="v2.10 FullPrice Membership added layout for wechat doctor summary" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.10 FullPrice Membership added layout for wechat doctor summary" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1329,31 +1328,31 @@
     <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
-          <caret line="49" column="31" lean-forward="true" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Webchat/doctorManagement.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="130" column="39" lean-forward="false" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="395" column="4" lean-forward="false" selection-start-line="395" selection-start-column="4" selection-end-line="395" selection-end-column="4" />
+          <caret line="49" column="31" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        <state relative-caret-position="-79">
+          <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Health/Webchat/doctorManagement.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="126" column="32" lean-forward="false" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="752" column="49" lean-forward="false" selection-start-line="752" selection-start-column="49" selection-end-line="752" selection-end-column="49" />
           <folding />
         </state>
       </provider>
