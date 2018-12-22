@@ -23,6 +23,7 @@
 					<!-- <th>结账方式</th> -->
 					<th>项目</th>
 					<th>排点钟</th>
+                    <th>金额</th>
 					<th>日期</th>
 				</tr>
 			</thead>
@@ -40,6 +41,7 @@
                         {% else %}
                             <td>{{ payment.ordertype }}</td>
                         {% endif %}
+                        <td>{{ payment.amount }}</td>
                         <td>{{ payment.paymentdate }}</td>
                     </tr>
                 {% endif %}
@@ -55,6 +57,7 @@
 					<!-- <th>结账方式</th> -->
 					<th>项目</th>
 					<th>排点钟</th>
+                    <th>金额</th>
 					<th>日期</th>
 				</tr>
 			</thead>
@@ -73,6 +76,7 @@
                         {% else %}
                             <td>{{ payment.ordertype }}</td>
                         {% endif %}
+                         <td>{{ payment.amount }}</td>
                         <td>{{ payment.paymentdate }}</td>
                     </tr>
                 {% endif %}
