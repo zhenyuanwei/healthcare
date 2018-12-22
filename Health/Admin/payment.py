@@ -750,7 +750,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         message = getMessage(messageId='OrderTypeA')
         payment.id = 'O1'
         payment.servicename = message
-        payment.amount = paymentTypeTotal['OrderTypeACount']
+        payment.ordertype = paymentTypeTotal['OrderTypeACount']
         payment.paymentdate = summarydate
         paymentList.append(payment)
 
@@ -758,7 +758,7 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         message = getMessage(messageId='OrderTypeB')
         payment.id = 'O2'
         payment.servicename = message
-        payment.amount = paymentTypeTotal['OrderTypeBCount']
+        payment.ordertype = paymentTypeTotal['OrderTypeBCount']
         payment.paymentdate = summarydate
         paymentList.append(payment)
         # add summary for ordertype 20180721

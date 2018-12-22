@@ -49,8 +49,8 @@
       <file leaf-file-name="doctorpaymentlist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-79">
-              <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+            <state relative-caret-position="266">
+              <caret line="68" column="47" lean-forward="false" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -59,8 +59,8 @@
       <file leaf-file-name="prepaymentlist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="49" column="31" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
+            <state relative-caret-position="341">
+              <caret line="53" column="49" lean-forward="true" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -70,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="155">
-              <caret line="752" column="49" lean-forward="false" selection-start-line="752" selection-start-column="49" selection-end-line="752" selection-end-column="49" />
+              <caret line="752" column="36" lean-forward="true" selection-start-line="752" selection-start-column="36" selection-end-line="752" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -556,13 +556,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492431388223</updated>
     </task>
-    <task id="LOCAL-00038" summary="fixing bug for admin login test">
-      <created>1500300998450</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1500300998450</updated>
-    </task>
     <task id="LOCAL-00039" summary="fixing bug for admin login test">
       <created>1500301111108</created>
       <option name="number" value="00039" />
@@ -899,7 +892,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545438978839</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="v2.11 FullPrice Membership added layout for wechat doctor summary">
+      <created>1545440654302</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1545440654302</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -916,7 +916,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32164633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -951,7 +951,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v1.2.2 doctor rank added" />
     <MESSAGE value="v1.3 doctor rank added" />
     <MESSAGE value="v1.4 add ordertype for transactions" />
     <MESSAGE value="v1.41 add ordertype for transactions for summary" />
@@ -976,7 +975,8 @@
     <MESSAGE value="v2.06 FullPrice Membership added layout for doctor summary" />
     <MESSAGE value="v2.07 FullPrice Membership added layout for wechat doctor summary" />
     <MESSAGE value="v2.10 FullPrice Membership added layout for wechat doctor summary" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.10 FullPrice Membership added layout for wechat doctor summary" />
+    <MESSAGE value="v2.11 FullPrice Membership added layout for wechat doctor summary" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.11 FullPrice Membership added layout for wechat doctor summary" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1325,22 +1325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="49" column="31" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="49" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Health/Webchat/doctorManagement.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1349,10 +1333,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="53" column="49" lean-forward="true" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="68" column="47" lean-forward="false" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
-          <caret line="752" column="49" lean-forward="false" selection-start-line="752" selection-start-column="49" selection-end-line="752" selection-end-column="49" />
+          <caret line="752" column="36" lean-forward="true" selection-start-line="752" selection-start-column="36" selection-end-line="752" selection-end-column="36" />
           <folding />
         </state>
       </provider>
