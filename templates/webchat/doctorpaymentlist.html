@@ -22,19 +22,27 @@
 					<th>姓名</th>
 					<!-- <th>结账方式</th> -->
 					<th>项目</th>
-					<th>金额</th>
+					<th>排点钟</th>
 					<th>日期</th>
 				</tr>
 			</thead>
 			{% for payment in fullpricepaymentList %}
-				<tr>
-					<td>{{ payment.id }}</td>
-					<td>{{ payment.vipname }}</td>
-					<!-- <td>{{ payment.paymenttypename }}</td> -->
-					<td>{{ payment.servicename }}</td>
-					<td>{{ payment.amount }}</td>
-					<td>{{ payment.paymentdate }}</td>
-				</tr>
+                {% if payment.id != '' %}
+                    <tr>
+                        <td>{{ payment.id }}</td>
+                        <td>{{ payment.vipname }}</td>
+                        <!-- <td>{{ payment.paymenttypename }}</td> -->
+                        <td>{{ payment.servicename }}</td>
+                        {% if payment.ordertype == 'A' %}
+                            <td>排钟</td>
+                        {% elif payment.ordertype == 'B' %}
+                            <td>点钟</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td>{{ payment.paymentdate }}</td>
+                    </tr>
+                {% endif %}
 			{% endfor %}
 		</table>
 
@@ -46,19 +54,29 @@
 					<th>姓名</th>
 					<!-- <th>结账方式</th> -->
 					<th>项目</th>
-					<th>金额</th>
+					<th>排点钟</th>
 					<th>日期</th>
 				</tr>
 			</thead>
 			{% for payment in paymentList %}
-				<tr>
-					<td>{{ payment.id }}</td>
-					<td>{{ payment.vipname }}</td>
-					<!-- <td>{{ payment.paymenttypename }}</td> -->
-					<td>{{ payment.servicename }}</td>
-					<td>{{ payment.amount }}</td>
-					<td>{{ payment.paymentdate }}</td>
-				</tr>
+
+                {% if payment.id != '' %}
+                    <tr>
+                        <td>{{ payment.id }}</td>
+                        <td>{{ payment.vipname }}</td>
+                        <!-- <td>{{ payment.paymenttypename }}</td> -->
+                        <td>{{ payment.servicename }}</td>
+                        {% if payment.ordertype == 'A' %}
+                            <td>排钟</td>
+                        {% elif payment.ordertype == 'B' %}
+                            <td>点钟</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td>{{ payment.paymentdate }}</td>
+                    </tr>
+                {% endif %}
+
 			{% endfor %}
 		</table>
 	{% endif %}

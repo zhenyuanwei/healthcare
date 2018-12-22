@@ -645,6 +645,8 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
     paymentTypeTotal['P00004'] = 0
     paymentTypeTotal['OrderTypeA'] = 0 # add by 20180721
     paymentTypeTotal['OrderTypeB'] = 0 # add by 20180721
+    paymentTypeTotal['OrderTypeACount'] = 0  # add by 20180721
+    paymentTypeTotal['OrderTypeBCount'] = 0  # add by 20180721
     
     adminUserList = AdminUser.objects.all()
     for adminUser in adminUserList :
@@ -669,8 +671,10 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         # add summary for ordertype 20180721
         if transaction.ordertype == 'A':
             paymentTypeTotal['OrderTypeA'] += transaction.serviceamount * transaction.discount + transaction.productamount
+            paymentTypeTotal['OrderTypeACount'] = paymentTypeTotal['OrderTypeACount'] + 1
         elif transaction.ordertype == 'B':
             paymentTypeTotal['OrderTypeB'] += transaction.serviceamount * transaction.discount + transaction.productamount
+            paymentTypeTotal['OrderTypeBCount'] = paymentTypeTotal['OrderTypeBCount'] + 1
         # add summary for ordertype 20180721
     
     summarydate = ''
@@ -739,6 +743,22 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
         payment.id = ''
         payment.servicename = message
         payment.amount = paymentTypeTotal['OrderTypeB']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+
+        payment = Payment()
+        message = getMessage(messageId='OrderTypeA')
+        payment.id = 'OrderTypeACount'
+        payment.servicename = message
+        payment.amount = paymentTypeTotal['OrderTypeACount']
+        payment.paymentdate = summarydate
+        paymentList.append(payment)
+
+        payment = Payment()
+        message = getMessage(messageId='OrderTypeB')
+        payment.id = 'OrderTypeBCount'
+        payment.servicename = message
+        payment.amount = paymentTypeTotal['OrderTypeBCount']
         payment.paymentdate = summarydate
         paymentList.append(payment)
         # add summary for ordertype 20180721
