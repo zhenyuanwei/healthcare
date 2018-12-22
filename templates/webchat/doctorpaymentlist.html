@@ -38,7 +38,7 @@
                         {% elif payment.ordertype == 'B' %}
                             <td>点钟</td>
                         {% else %}
-                            <td></td>
+                            <td>{{ payment.ordertype }}</td>
                         {% endif %}
                         <td>{{ payment.paymentdate }}</td>
                     </tr>
@@ -71,7 +71,7 @@
                         {% elif payment.ordertype == 'B' %}
                             <td>点钟</td>
                         {% else %}
-                            <td></td>
+                            <td>{{ payment.ordertype }}</td>
                         {% endif %}
                         <td>{{ payment.paymentdate }}</td>
                     </tr>
