@@ -1059,6 +1059,7 @@ def bookedSummary(request):
                     # servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
                     servicetypeContents['OrderTypeB'] += 1
 
+    '''
     paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False)
     for payment in paymentList:
         doctorId = payment.doctorId
@@ -1086,6 +1087,7 @@ def bookedSummary(request):
                 elif payment.ordertype == 'B':
                     # servicetypeContents['OrderTypeB'] += payment.serviceamount * payment.discount
                     servicetypeContents['OrderTypeB'] += 1
+    '''
 
     paymentList = getPaymentList(queryyear=year, querymonth=month, isSummary=False, isFullPrice=True)
     for payment in paymentList:
