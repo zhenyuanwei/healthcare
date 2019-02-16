@@ -665,8 +665,23 @@ def getPaymentList(querydate='', doctorId='', queryyear='', querymonth='', isSum
             
         paymentTypeTotal['P00003'] = paymentTypeTotal['P00003'] + transaction.serviceamount * transaction.discount
         
-        if transaction.paymentType != '02' and transaction.username <> '' :
-            paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[transaction.username.upper()] + transaction.amount
+        # Just calculate cash 01, wechat 03, alipay 05, duolabao 06  2019/02/16
+        # if transaction.paymentType != '02' and transaction.username <> '' :
+        #     paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[transaction.username.upper()] + transaction.amount
+        if transaction.username <> '':
+            if transaction.paymentType == '01':
+                paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[
+                                                                     transaction.username.upper()] + transaction.amount
+            elif transaction.paymentType == '03':
+                paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[
+                                                                     transaction.username.upper()] + transaction.amount
+            elif transaction.paymentType == '05':
+                paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[
+                                                                     transaction.username.upper()] + transaction.amount
+            elif transaction.paymentType == '06':
+                paymentTypeTotal[transaction.username.upper()] = paymentTypeTotal[
+                                                                     transaction.username.upper()] + transaction.amount
+        # Just calculate cash 01, wechat 03, alipay 05, duolabao 06  2019/02/16
 
         # add summary for ordertype 20180721
         if transaction.ordertype == 'A':
