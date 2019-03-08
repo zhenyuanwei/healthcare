@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Health.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Health.iml" afterDir="false" />
+    <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="v2.1 calculate only cash for admin and mishu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Health/Admin/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Health/Admin/payment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Health/Webchat/booking.py" beforeDir="false" afterPath="$PROJECT_DIR$/Health/Webchat/booking.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,17 +27,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Health/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="118" column="62" selection-start-line="118" selection-start-column="62" selection-end-line="118" selection-end-column="62" />
+            <state relative-caret-position="303">
+              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
+        <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="680" column="47" selection-start-line="680" selection-start-column="47" selection-end-line="680" selection-end-column="47" />
+            <state relative-caret-position="188">
+              <caret line="332" column="64" selection-start-line="332" selection-start-column="64" selection-end-line="332" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="79" column="14" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -102,8 +110,8 @@
         <option value="$PROJECT_DIR$/templates/admin/paymentlist.html" />
         <option value="$PROJECT_DIR$/Health/Webchat/doctorManagement.py" />
         <option value="$PROJECT_DIR$/templates/webchat/doctorpaymentlist.html" />
-        <option value="$PROJECT_DIR$/Health/Webchat/booking.py" />
         <option value="$PROJECT_DIR$/Health/Admin/payment.py" />
+        <option value="$PROJECT_DIR$/Health/Webchat/booking.py" />
       </list>
     </option>
   </component>
@@ -136,7 +144,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -148,6 +155,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,14 +322,8 @@
       <updated>1492431388223</updated>
       <workItem from="1549807139338" duration="467000" />
       <workItem from="1549807839008" duration="30000" />
-      <workItem from="1550281296175" duration="498000" />
-    </task>
-    <task id="LOCAL-00044" summary="fixing bug for booking period">
-      <created>1503743666466</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1503743666466</updated>
+      <workItem from="1550281296175" duration="861000" />
+      <workItem from="1552039507166" duration="1232000" />
     </task>
     <task id="LOCAL-00045" summary="fixing bug for booking period">
       <created>1503744432681</created>
@@ -659,7 +661,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549802283451</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="v2.1 calculate only cash for admin and mishu">
+      <created>1550281968774</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1550281968775</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -668,13 +677,12 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="995000" />
+    <option name="totallyTimeSpent" value="2590000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21001616" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21324718" />
       <window_info id="Structure" order="1" weight="0.24959612" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -714,7 +722,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v1.5 Add the booked service summary page" />
     <MESSAGE value="v1.51 delete only product item from booked summary page" />
     <MESSAGE value="v1.52 delete no doctor item from booked summary page" />
     <MESSAGE value="v1.53 排点钟按个数统计" />
@@ -739,7 +746,8 @@
     <MESSAGE value="v2.15 FullPrice Membership added layout for wechat doctor summary" />
     <MESSAGE value="update the start time to 8:00AM" />
     <MESSAGE value="bug fix for define or ordered count" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fix for define or ordered count" />
+    <MESSAGE value="v2.1 calculate only cash for admin and mishu" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.1 calculate only cash for admin and mishu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1009,13 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1470">
-          <caret line="100" column="90" selection-start-line="100" selection-start-column="82" selection-end-line="100" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin/prepaymentlist.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
@@ -1038,14 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/idea.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -1060,17 +1053,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/urls.py">
+    <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="118" column="62" selection-start-line="118" selection-start-column="62" selection-end-line="118" selection-end-column="62" />
+        <state relative-caret-position="91">
+          <caret line="659" column="23" selection-start-line="659" selection-start-column="23" selection-end-line="659" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/Admin/payment.py">
+    <entry file="file://$PROJECT_DIR$/Health/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="680" column="47" selection-start-line="680" selection-start-column="47" selection-end-line="680" selection-end-column="47" />
+        <state relative-caret-position="303">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="79" column="14" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="332" column="64" selection-start-line="332" selection-start-column="64" selection-end-line="332" selection-end-column="64" />
         </state>
       </provider>
     </entry>

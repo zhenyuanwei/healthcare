@@ -330,7 +330,9 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
                 else :
                     servicebookendtime = servicebookend_Hour  + str(servicebookend_Minute)
 
-                if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
+                # Bug fixed for to complete the service 20190308
+                # if servicebookendtime > bookedtime and servicebookendtime < bookedEndTime :
+                if servicebookendtime > bookedtime:
                     addflag = False
                     break
                 #bug fixing for booking when the service endtime in bookinglist 2017/05/18
