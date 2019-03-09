@@ -295,13 +295,19 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
                 bookedMinutes = int(bookedtime.split(':')[1])
                 bookedEndMinute = bookedMinutes + serviceperiod
                 bookedEndHour = bookedHour
-                if bookedEndMinute > 59 :
+                # bug fixing for service period > 80 item 20190309
+                if bookedEndMinute > 119:
+                    bookedEndHour = bookedHour + 2
+                    bookedEndMinute = bookedEndMinute - 120
+                elif bookedEndMinute > 59 :
                     bookedEndHour = bookedHour + 1
                     bookedEndMinute = bookedEndMinute - 60
+
                 if bookedEndHour < 10 :
                     bookedEndTime = '0' + str(bookedEndHour) + ':'
                 else :
                     bookedEndTime = str(bookedEndHour) + ':'
+
                 if bookedEndMinute < 10 :
                     bookedEndTime = bookedEndTime  + '0' + str(bookedEndMinute)
                 else :
@@ -318,13 +324,19 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
                 time_Minutes = int(time.split(':')[1])
                 servicebookend_Minute = time_Minutes + service_period
                 servicebookend_Hour = time_Hour
-                if servicebookend_Minute > 59:
+                # bug fixing for service period > 80 item 20190309
+                if servicebookend_Minute > 119:
+                    servicebookend_Hour = time_Hour + 2
+                    servicebookend_Minute = servicebookend_Minute - 120
+                elif servicebookend_Minute > 59:
                     servicebookend_Hour = time_Hour + 1
                     servicebookend_Minute = servicebookend_Minute - 60
+
                 if servicebookend_Hour < 10:
                     servicebookend_Hour = '0' + str(servicebookend_Hour) + ':'
                 else:
                     servicebookend_Hour = str(servicebookend_Hour) + ':'
+
                 if servicebookend_Minute < 10 :
                     servicebookendtime = servicebookend_Hour  + '0' + str(servicebookend_Minute)
                 else :
