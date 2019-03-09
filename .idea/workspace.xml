@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="v2.1 calculate only cash for admin and mishu">
+    <list default="true" id="b4827d00-dac0-43ff-9f5c-084a1b93b1b4" name="Default" comment="v2.11 Bug fixing for booking time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Health/Webchat/booking.py" beforeDir="false" afterPath="$PROJECT_DIR$/Health/Webchat/booking.py" afterDir="false" />
     </list>
@@ -23,12 +23,12 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Health/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="303">
-              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
+              <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -36,17 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="332" column="64" selection-start-line="332" selection-start-column="64" selection-end-line="332" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="79" column="14" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="14" />
+            <state relative-caret-position="128">
+              <caret line="332" column="91" selection-start-line="332" selection-start-column="91" selection-end-line="332" selection-end-column="91" />
             </state>
           </provider>
         </entry>
@@ -149,6 +140,11 @@
           <expand>
             <path>
               <item name="Health" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Health" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Health" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Health" type="462c0819:PsiDirectoryNode" />
               <item name="Health" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -323,14 +319,8 @@
       <workItem from="1549807139338" duration="467000" />
       <workItem from="1549807839008" duration="30000" />
       <workItem from="1550281296175" duration="861000" />
-      <workItem from="1552039507166" duration="1232000" />
-    </task>
-    <task id="LOCAL-00045" summary="fixing bug for booking period">
-      <created>1503744432681</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1503744432681</updated>
+      <workItem from="1552039507166" duration="1769000" />
+      <workItem from="1552093786427" duration="129000" />
     </task>
     <task id="LOCAL-00046" summary="fixing bug for booking period">
       <created>1503745898004</created>
@@ -668,7 +658,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550281968775</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="v2.11 Bug fixing for booking time">
+      <created>1552040772564</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1552040772565</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -677,12 +674,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2590000" />
+    <option name="totallyTimeSpent" value="3256000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21324718" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21647818" />
       <window_info id="Structure" order="1" weight="0.24959612" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -722,7 +720,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v1.51 delete only product item from booked summary page" />
     <MESSAGE value="v1.52 delete no doctor item from booked summary page" />
     <MESSAGE value="v1.53 排点钟按个数统计" />
     <MESSAGE value="v1.55 modify the summary page for defined or booked" />
@@ -747,7 +744,8 @@
     <MESSAGE value="update the start time to 8:00AM" />
     <MESSAGE value="bug fix for define or ordered count" />
     <MESSAGE value="v2.1 calculate only cash for admin and mishu" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.1 calculate only cash for admin and mishu" />
+    <MESSAGE value="v2.11 Bug fixing for booking time" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.11 Bug fixing for booking time" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1035,7 +1033,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="126" column="30" selection-start-line="126" selection-start-column="30" selection-end-line="126" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1060,24 +1057,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Health/urls.py">
+    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
+        <state relative-caret-position="1155">
+          <caret line="79" column="14" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HealthModel/models.py">
+    <entry file="file://$PROJECT_DIR$/Health/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="79" column="14" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="14" />
+        <state relative-caret-position="303">
+          <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Health/Webchat/booking.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="332" column="64" selection-start-line="332" selection-start-column="64" selection-end-line="332" selection-end-column="64" />
+        <state relative-caret-position="128">
+          <caret line="332" column="91" selection-start-line="332" selection-start-column="91" selection-end-line="332" selection-end-column="91" />
         </state>
       </provider>
     </entry>
