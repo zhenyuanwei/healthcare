@@ -26,8 +26,31 @@ import math
 
 "@csrf_exempt"
 timeBJ = 8
-starttime = 8  #booking start time
-endtime = 21  #booking end time
+# starttime = 8  #booking start time
+# endtime = 21  #booking end time
+# add by 20190429
+def getStartTime(queryDate):
+    value = 7
+
+    if queryDate[5:] < '05/01':
+        value = 8
+    elif queryDate[5:] >= '11/01':
+        value = 8
+
+    return value
+
+def getEndTime(queryDate):
+    value = 22
+
+    if queryDate[5:] < '05/01':
+        value = 21
+    elif queryDate[5:] >= '11/01':
+        value = 21
+
+    return value
+
+# add by 20190429
+
 canceltime = 1
 #booking time scale
 #bookingscale = 15
@@ -198,7 +221,7 @@ def getDaysList(length = bookingDays):
     #now = int(today.strftime('%H')) + 1
     now = int(today.strftime('%H'))
     #update for booking in now 2016/1126 end
-
+    endtime = getEndTime(today.strftime('%Y/%m/%d'))
     if now >= endtime :
         for i in range(1, length + 1):
             dayList.append((today + datetime.timedelta(days=i)).strftime('%Y/%m/%d'))
@@ -219,13 +242,16 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
     now_minutes = getToday().strftime('%M')
     #update for booking in now 2016/1126 end
 
-    if now < starttime :
+    starttime = getStartTime(today)
+    endtime = getEndTime(today)
+
+    if now < starttime:
         now = starttime
         #update for booking in now 2016/1126 start
         now_minutes = '00'
         #update for booking in now 2016/1126 end
 
-    if now >= endtime :
+    if now >= endtime:
         now = starttime
         #update for booking in now 2016/1126 start
         now_minutes = '00'
@@ -248,6 +274,8 @@ def getTimeList(service_period, doctorId = '', queryDate = '', backCount = 0):
             #update for booking in now 2016/1126 end
 
     elif queryDate <> '' :
+        starttime = getStartTime(queryDate)
+        endtime = getEndTime(queryDate)
         if today < queryDate :
             now = starttime
             #update for booking in now 2016/1126 start
